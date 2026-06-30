@@ -614,79 +614,6 @@
     .matchday-bar strong { color: var(--vdc-blue); }
     .matchday-bar .red  { color: var(--val-red); }
 
-    /* ── ABOUT ── */
-    #about {
-      padding: 80px 2rem;
-      max-width: 1280px;
-      margin: 0 auto;
-    }
-
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 5rem;
-      align-items: start;
-    }
-
-    .about-text p {
-      color: var(--muted);
-      line-height: 1.75;
-      font-size: 0.88rem;
-      margin-top: 1rem;
-    }
-
-    .about-text a { color: var(--vdc-blue); text-decoration: none; }
-    .about-text a:hover { text-decoration: underline; }
-
-    .vdc-callout {
-      margin-top: 1.5rem;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-left: 3px solid var(--vdc-blue);
-      padding: 1rem 1.2rem;
-    }
-
-    .vdc-callout .callout-label {
-      font-size: 0.62rem;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--vdc-blue);
-      margin-bottom: 0.4rem;
-    }
-
-    .vdc-callout p {
-      font-size: 0.78rem;
-      color: var(--muted);
-      line-height: 1.6;
-    }
-
-    .vdc-callout a { color: var(--vdc-blue); text-decoration: none; }
-
-    .how-steps { display: flex; flex-direction: column; gap: 1.1rem; }
-
-    .step {
-      display: flex;
-      align-items: flex-start;
-      gap: 1rem;
-      padding: 1rem 1.1rem;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-left: 3px solid var(--vdc-blue);
-    }
-
-    .step-num {
-      font-family: var(--font-display);
-      font-size: 1.8rem;
-      line-height: 1;
-      color: var(--vdc-blue);
-      opacity: 0.35;
-      min-width: 1.8rem;
-    }
-
-    .step-body strong { display: block; font-size: 0.84rem; font-weight: 700; margin-bottom: 3px; }
-    .step-body span   { font-size: 0.76rem; color: var(--muted); line-height: 1.5; }
-
     /* ── FOOTER ── */
     footer {
       border-top: 1px solid var(--border);
@@ -1039,8 +966,7 @@
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
       .hero { padding: 70px 1.2rem 90px; }
-      #shop, #about, #order { padding: 50px 1.2rem; }
-      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      #shop, #order { padding: 50px 1.2rem; }
       .order-layout { grid-template-columns: 1fr; gap: 2rem; }
       .drop-meta { gap: 1.2rem; }
       .section-header { flex-direction: column; align-items: flex-start; }
@@ -1062,7 +988,6 @@
   <ul class="nav-links">
     <li><a href="#shop">Shop</a></li>
     <li><a href="#order">Order</a></li>
-    <li><a href="#about">About</a></li>
     <li><a href="./interest.html">Interest Form ↗</a></li>
     <li><a href="https://vdc.gg" target="_blank" rel="noopener">vdc.gg ↗</a></li>
     <li><a href="#order" class="nav-cta">Order Now</a></li>
@@ -1080,7 +1005,6 @@
 <div class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation">
   <a href="#shop">Shop</a>
   <a href="#order">Order</a>
-  <a href="#about">About</a>
   <a href="./interest.html">Interest Form ↗</a>
   <a href="https://vdc.gg" target="_blank" rel="noopener">vdc.gg ↗</a>
   <a href="#order" class="mobile-nav-cta">Order Now</a>
@@ -1323,51 +1247,6 @@
       </div>
     </div>
 
-  </div>
-</section>
-
-<!-- ABOUT -->
-<div class="divider"><div class="divider-line"></div><div class="divider-diamond"></div><div class="divider-line"></div></div>
-
-<section id="about">
-  <div class="about-grid">
-    <div class="about-text">
-      <h2 style="font-family:var(--font-display);font-size:2rem;letter-spacing:0.06em;margin-bottom:0.2rem;">ABOUT <span style="color:var(--vdc-blue);">BOBERT × LG</span></h2>
-      <p><strong>Bobert</strong> is a VDC player and digital artist who designed this drop as a love letter to <strong>Light Garden</strong> — their franchise in the Valorant Draft Circuit, a free community-run NA VALORANT league. This is a community pop-up, not an official LG store.</p>
-      <p>Small batches, one drop per season. When it's gone, it's done.</p>
-      <div class="vdc-callout">
-        <div class="callout-label">Not in VDC yet?</div>
-        <p>Sign up free at <a href="https://vdc.gg" target="_blank">vdc.gg</a> · Join Discord at <a href="https://discord.gg/valorantdraftcircuit" target="_blank">discord.gg/valorantdraftcircuit</a> · All ranks welcome.</p>
-      </div>
-      <p style="margin-top:1rem;">Questions? Email <a class="obf-email" data-u="evangelinagrimes" data-d="gmail.com"></a> or DM us on Discord.</p>
-    </div>
-
-    <div>
-      <h2 style="font-family:var(--font-display);font-size:2rem;letter-spacing:0.06em;margin-bottom:1.2rem;">PRICING <span style="color:var(--vdc-blue);">SUMMARY</span></h2>
-      <div class="how-steps">
-        <div class="step">
-          <div class="step-num" style="font-size:1.2rem;opacity:1;color:var(--text);">$10</div>
-          <div class="step-body">
-            <strong>LG Sticker Pack</strong>
-            <span>5 holographic die-cuts · UV coated · Waterproof</span>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-num" style="font-size:1.2rem;opacity:1;color:var(--text);">$12</div>
-          <div class="step-body">
-            <strong>LG Key Chain</strong>
-            <span>Double-sided acrylic · ~2" charm · Steel split ring</span>
-          </div>
-        </div>
-        <div class="step" style="border-left-color:var(--gold);">
-          <div class="step-num" style="font-size:1rem;opacity:1;color:var(--gold);" aria-hidden="true">📦</div>
-          <div class="step-body">
-            <strong>Shipping</strong>
-            <span>Calculated at checkout based on your location.</span>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 </section>
 
