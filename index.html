@@ -1,0 +1,1657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>THE DRIP — Bobert × LG Merch Drop</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:          #060D06;
+      --bg-mid:      #0A130A;
+      --surface:     #0E1A0E;
+      --border:      #183018;
+      --border-bright: #225022;
+      --vdc-blue:    #5CB83A;
+      --vdc-blue-dk: #3F8A26;
+      --val-red:     #FF4655;
+      --gold:        #C8A84B;
+      --text:        #EEF5EE;
+      --muted:       #587858;
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-body:    'Inter', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      height: 58px;
+      background: rgba(6,13,6,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-left { display: flex; align-items: center; gap: 1rem; }
+
+    .vdc-pill {
+      background: var(--vdc-blue);
+      color: #fff;
+      font-family: var(--font-display);
+      font-size: 1rem;
+      letter-spacing: 0.12em;
+      padding: 3px 10px 1px;
+      clip-path: polygon(5px 0%, 100% 0%, calc(100% - 5px) 100%, 0% 100%);
+    }
+
+    .nav-subtitle {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    .nav-cta {
+      background: var(--vdc-blue) !important;
+      color: #fff !important;
+      padding: 5px 14px;
+      clip-path: polygon(4px 0%, 100% 0%, calc(100% - 4px) 100%, 0% 100%);
+    }
+
+    .nav-cta:hover { background: var(--vdc-blue-dk) !important; }
+
+    /* ── TICKER ── */
+    .ticker-wrap {
+      background: var(--vdc-blue);
+      overflow: hidden;
+      white-space: nowrap;
+      padding: 5px 0;
+    }
+
+    .ticker-inner {
+      display: inline-block;
+      animation: ticker 28s linear infinite;
+    }
+
+    .ticker-inner span {
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      letter-spacing: 0.14em;
+      color: #fff;
+      padding: 0 2.5rem;
+    }
+
+    .ticker-inner span.sep { color: rgba(255,255,255,0.35); padding: 0; }
+
+    @keyframes ticker {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 90px 2rem 110px;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 55% at 50% 0%, rgba(92,184,58,0.12) 0%, transparent 65%),
+        radial-gradient(ellipse 40% 30% at 80% 80%, rgba(255,70,85,0.05) 0%, transparent 60%),
+        repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(92,184,58,0.03) 39px, rgba(92,184,58,0.03) 40px),
+        repeating-linear-gradient(90deg, transparent, transparent 79px, rgba(92,184,58,0.02) 79px, rgba(92,184,58,0.02) 80px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .hero-logo-bg {
+      position: absolute;
+      width: 100%;
+      max-width: 660px;
+      top: 42%;
+      left: 50%;
+      transform: translate(-50%, -40%);
+      opacity: 0.09;
+      pointer-events: none;
+      user-select: none;
+      z-index: 0;
+      -webkit-mask-image: linear-gradient(to bottom, black 25%, rgba(0,0,0,0.6) 60%, transparent 88%);
+      mask-image: linear-gradient(to bottom, black 25%, rgba(0,0,0,0.6) 60%, transparent 88%);
+    }
+
+    .hero > *:not(.hero-logo-bg) {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--vdc-blue);
+      margin-bottom: 1.4rem;
+      position: relative;
+    }
+
+    .hero-eyebrow .dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--val-red);
+      animation: pulse 1.8s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.4; transform: scale(0.7); }
+    }
+
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(3.8rem, 11vw, 9rem);
+      line-height: 0.9;
+      letter-spacing: 0.02em;
+      margin-bottom: 1.4rem;
+      position: relative;
+    }
+
+    .hero h1 .line-blue { color: var(--vdc-blue); }
+    .hero h1 .line-red  { color: var(--val-red); }
+
+    .hero-sub {
+      font-size: 0.95rem;
+      color: var(--muted);
+      max-width: 440px;
+      line-height: 1.65;
+      margin-bottom: 2.4rem;
+      position: relative;
+    }
+
+    .hero-sub strong { color: var(--text); }
+    .hero-sub .vdc-tag { color: var(--vdc-blue); font-weight: 700; }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: center;
+      position: relative;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      background: var(--vdc-blue);
+      color: #fff;
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      letter-spacing: 0.12em;
+      padding: 13px 36px 11px;
+      text-decoration: none;
+      clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .btn-primary:hover { background: var(--vdc-blue-dk); transform: translateY(-2px); }
+
+    .btn-ghost {
+      display: inline-block;
+      background: transparent;
+      border: 1px solid var(--border-bright);
+      color: var(--muted);
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      letter-spacing: 0.12em;
+      padding: 13px 28px 11px;
+      text-decoration: none;
+      clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .btn-ghost:hover { border-color: var(--vdc-blue); color: var(--vdc-blue); }
+
+    .drop-meta {
+      margin-top: 1.8rem;
+      display: flex;
+      gap: 2rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      position: relative;
+    }
+
+    .meta-item { text-align: center; }
+
+    .meta-label {
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 2px;
+    }
+
+    .meta-value {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      letter-spacing: 0.06em;
+      color: var(--text);
+    }
+
+    #countdown { color: var(--gold); }
+
+    /* ── DIVIDER ── */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .divider-line { flex: 1; height: 1px; background: var(--border); }
+    .divider-diamond { width: 8px; height: 8px; background: var(--vdc-blue); transform: rotate(45deg); opacity: 0.6; }
+
+    /* ── SHOP SECTION ── */
+    #shop {
+      padding: 60px 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+    }
+
+    .section-header h2 {
+      font-family: var(--font-display);
+      font-size: 2.2rem;
+      letter-spacing: 0.06em;
+      line-height: 1;
+    }
+
+    .section-header h2 span { color: var(--vdc-blue); }
+
+    .section-meta {
+      font-size: 0.72rem;
+      color: var(--muted);
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-align: right;
+      line-height: 1.6;
+    }
+
+    /* ── PRODUCT GRID ── */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .product-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transition: border-color 0.25s, transform 0.2s, box-shadow 0.25s;
+      cursor: pointer;
+    }
+
+    .product-card:hover {
+      border-color: var(--vdc-blue);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(92,184,58,0.12);
+    }
+
+    .product-card.limited::after {
+      content: 'LIMITED';
+      position: absolute;
+      top: 14px; right: 0;
+      background: var(--gold);
+      color: #0B0D14;
+      font-size: 0.58rem;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      padding: 4px 10px;
+      clip-path: polygon(7px 0%, 100% 0%, 100% 100%, 0% 100%);
+    }
+
+    .product-img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      background: var(--bg-mid);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+    }
+
+    .product-img::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 40px; height: 3px;
+      background: var(--vdc-blue);
+    }
+
+    /* ── PRODUCT CAROUSEL ── */
+    .product-slides { width: 100%; align-self: stretch; position: relative; }
+
+    .product-slide {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+      pointer-events: none;
+    }
+
+    .product-slide.active { opacity: 1; pointer-events: auto; }
+
+    .product-slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .placeholder-img {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background: var(--bg-mid);
+    }
+
+    .ph-icon { font-size: 1.8rem; opacity: 0.2; line-height: 1; }
+    .ph-label { font-family: var(--font-display); font-size: 1.05rem; letter-spacing: 0.1em; color: var(--muted); }
+    .ph-variant { font-size: 0.6rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--vdc-blue); opacity: 0.7; }
+
+    .slide-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0,0,0,0.5);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: rgba(255,255,255,0.75);
+      font-size: 1.4rem;
+      line-height: 1;
+      width: 26px;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 3;
+      transition: background 0.15s, color 0.15s;
+      padding: 0;
+    }
+
+    .slide-btn:hover { background: rgba(0,0,0,0.8); color: #fff; }
+    .slide-prev { left: 0; }
+    .slide-next { right: 0; }
+
+    .slide-dots {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 6px;
+      z-index: 3;
+    }
+
+    .slide-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: rgba(255,255,255,0.2);
+      border: none; cursor: pointer; padding: 0;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .slide-dot.active { background: var(--vdc-blue); transform: scale(1.35); }
+
+    .product-info {
+      padding: 1.2rem 1.3rem 1.5rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .product-tag {
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--vdc-blue);
+      margin-bottom: 0.35rem;
+    }
+
+    .product-name {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      letter-spacing: 0.04em;
+      line-height: 1.1;
+      margin-bottom: 0.5rem;
+    }
+
+    .product-desc {
+      font-size: 0.77rem;
+      color: var(--muted);
+      line-height: 1.55;
+      flex: 1;
+    }
+
+    .product-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 1.1rem;
+    }
+
+    .product-price {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      color: var(--text);
+    }
+
+    .product-price .currency {
+      font-size: 0.85rem;
+      color: var(--muted);
+      vertical-align: super;
+      font-family: var(--font-body);
+      font-weight: 600;
+    }
+
+    .btn-order {
+      display: inline-block;
+      background: transparent;
+      border: 1px solid var(--vdc-blue);
+      color: var(--vdc-blue);
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      letter-spacing: 0.1em;
+      padding: 8px 20px 6px;
+      text-decoration: none;
+      cursor: pointer;
+      clip-path: polygon(5px 0%, 100% 0%, calc(100% - 5px) 100%, 0% 100%);
+      transition: background 0.18s, color 0.18s;
+    }
+
+    .btn-order:hover { background: var(--vdc-blue); color: #fff; }
+
+    /* ── HOW TO ORDER CALLOUT ── */
+    .order-callout {
+      margin: 0 auto 0;
+      max-width: 1100px;
+      padding: 0 2rem;
+    }
+
+    .order-callout-inner {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--vdc-blue);
+      padding: 1.2rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+    }
+
+    .callout-icon {
+      font-size: 1.5rem;
+      line-height: 1;
+    }
+
+    .callout-text strong {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+
+    .callout-text span {
+      font-size: 0.76rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* ── ORDER FORM SECTION ── */
+    #order {
+      padding: 60px 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .order-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    .order-info h2 {
+      font-family: var(--font-display);
+      font-size: 2.2rem;
+      letter-spacing: 0.06em;
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+
+    .order-info h2 span { color: var(--vdc-blue); }
+
+    .order-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .order-step {
+      display: flex;
+      gap: 0.9rem;
+      align-items: flex-start;
+    }
+
+    .order-step-num {
+      width: 26px;
+      height: 26px;
+      background: var(--vdc-blue);
+      color: #fff;
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      clip-path: polygon(3px 0%, 100% 0%, calc(100% - 3px) 100%, 0% 100%);
+    }
+
+    .order-step-body strong {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+
+    .order-step-body span {
+      font-size: 0.74rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* ── FORM WRAPPER ── */
+    .form-wrapper {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .form-wrapper::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--vdc-blue);
+    }
+
+    .form-header {
+      padding: 1.1rem 1.4rem 0.8rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .form-header-title {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      letter-spacing: 0.1em;
+      color: var(--text);
+    }
+
+    .form-header-badge {
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--vdc-blue);
+      background: rgba(92,184,58,0.1);
+      border: 1px solid rgba(92,184,58,0.25);
+      padding: 3px 8px;
+      border-radius: 2px;
+    }
+
+    /* Shopify Buy Button container */
+    .shopify-embed {
+      padding: 1.5rem;
+      min-height: 400px;
+    }
+
+    .shopify-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 360px;
+      border: 1px dashed var(--border-bright);
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .form-note {
+      padding: 0.8rem 1.4rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.7rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* ── MATCH DAY BANNER ── */
+    .matchday-bar {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 2rem;
+      text-align: center;
+    }
+
+    .matchday-bar p {
+      font-size: 0.78rem;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+
+    .matchday-bar strong { color: var(--vdc-blue); }
+    .matchday-bar .red  { color: var(--val-red); }
+
+    /* ── ABOUT ── */
+    #about {
+      padding: 60px 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .about-text p {
+      color: var(--muted);
+      line-height: 1.75;
+      font-size: 0.88rem;
+      margin-top: 1rem;
+    }
+
+    .about-text a { color: var(--vdc-blue); text-decoration: none; }
+    .about-text a:hover { text-decoration: underline; }
+
+    .vdc-callout {
+      margin-top: 1.5rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--vdc-blue);
+      padding: 1rem 1.2rem;
+    }
+
+    .vdc-callout .callout-label {
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--vdc-blue);
+      margin-bottom: 0.4rem;
+    }
+
+    .vdc-callout p {
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .vdc-callout a { color: var(--vdc-blue); text-decoration: none; }
+
+    .how-steps { display: flex; flex-direction: column; gap: 1.1rem; }
+
+    .step {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1rem 1.1rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--vdc-blue);
+    }
+
+    .step-num {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      line-height: 1;
+      color: var(--vdc-blue);
+      opacity: 0.35;
+      min-width: 1.8rem;
+    }
+
+    .step-body strong { display: block; font-size: 0.84rem; font-weight: 700; margin-bottom: 3px; }
+    .step-body span   { font-size: 0.76rem; color: var(--muted); line-height: 1.5; }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+    }
+
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+
+    .footer-vdc-row {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-vdc-pill {
+      background: var(--vdc-blue);
+      color: #fff;
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      padding: 2px 8px 0;
+      clip-path: polygon(4px 0%, 100% 0%, calc(100% - 4px) 100%, 0% 100%);
+    }
+
+    .footer-wordmark {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      letter-spacing: 0.08em;
+    }
+
+    .footer-wordmark span { color: var(--val-red); }
+
+    .footer-tagline {
+      font-size: 0.7rem;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+      line-height: 1.6;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      text-align: right;
+    }
+
+    .footer-links a {
+      font-size: 0.72rem;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.06em;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--vdc-blue); }
+
+    .footer-legal {
+      width: 100%;
+      border-top: 1px solid var(--border);
+      margin-top: 1.2rem;
+      padding-top: 1rem;
+      font-size: 0.68rem;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    /* ── CART BUTTON (NAV) ── */
+    .cart-btn {
+      background: transparent;
+      border: 1px solid var(--border-bright);
+      color: var(--muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 5px 14px;
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      letter-spacing: 0.1em;
+      clip-path: polygon(4px 0%, 100% 0%, calc(100% - 4px) 100%, 0% 100%);
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .cart-btn:hover { border-color: var(--vdc-blue); color: var(--vdc-blue); }
+
+    .cart-count {
+      background: var(--vdc-blue);
+      color: #fff;
+      font-family: var(--font-body);
+      font-size: 0.6rem;
+      font-weight: 700;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+    }
+    .cart-count.visible { display: flex; }
+
+    /* ── ADD TO CART BUTTON ── */
+    .btn-add-cart {
+      display: inline-block;
+      background: transparent;
+      border: 1px solid var(--vdc-blue);
+      color: var(--vdc-blue);
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      letter-spacing: 0.1em;
+      padding: 8px 20px 6px;
+      cursor: pointer;
+      clip-path: polygon(5px 0%, 100% 0%, calc(100% - 5px) 100%, 0% 100%);
+      transition: background 0.18s, color 0.18s, border-color 0.18s;
+      white-space: nowrap;
+    }
+    .btn-add-cart:hover { background: var(--vdc-blue); color: #fff; }
+    .btn-add-cart.added { background: var(--vdc-blue-dk); color: #fff; border-color: var(--vdc-blue-dk); }
+
+    /* ── CART OVERLAY ── */
+    .cart-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      z-index: 199;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s;
+    }
+    .cart-overlay.open { opacity: 1; pointer-events: auto; }
+
+    /* ── CART DRAWER ── */
+    .cart-drawer {
+      position: fixed;
+      top: 0; right: 0;
+      width: 380px;
+      max-width: 100vw;
+      height: 100vh;
+      background: var(--bg-mid);
+      border-left: 1px solid var(--border);
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(100%);
+      transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+    }
+    .cart-drawer.open { transform: translateX(0); }
+
+    .cart-drawer-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.2rem 1.4rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .cart-drawer-title {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      letter-spacing: 0.1em;
+    }
+    .cart-close-btn {
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      font-size: 1.2rem;
+      cursor: pointer;
+      padding: 4px;
+      line-height: 1;
+      transition: color 0.2s;
+    }
+    .cart-close-btn:hover { color: var(--text); }
+
+    .cart-items {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1rem 1.4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .cart-empty {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      gap: 0.6rem;
+      color: var(--muted);
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .cart-empty-icon { font-size: 2rem; opacity: 0.2; }
+
+    .cart-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 0.9rem 1rem;
+      display: flex;
+      gap: 0.8rem;
+      align-items: flex-start;
+    }
+    .cart-item-info { flex: 1; min-width: 0; }
+    .cart-item-name {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      letter-spacing: 0.04em;
+      margin-bottom: 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .cart-item-variant {
+      font-size: 0.65rem;
+      color: var(--vdc-blue);
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 0.55rem;
+    }
+    .cart-item-controls { display: flex; align-items: center; gap: 0.5rem; }
+    .qty-btn {
+      background: var(--bg);
+      border: 1px solid var(--border-bright);
+      color: var(--text);
+      width: 24px; height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1rem;
+      line-height: 1;
+      transition: border-color 0.15s;
+      padding: 0;
+    }
+    .qty-btn:hover { border-color: var(--vdc-blue); color: var(--vdc-blue); }
+    .cart-item-qty {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      min-width: 1.2rem;
+      text-align: center;
+    }
+    .cart-item-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.5rem;
+      flex-shrink: 0;
+    }
+    .cart-item-price { font-family: var(--font-display); font-size: 1.1rem; }
+    .cart-item-remove {
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      padding: 0;
+      transition: color 0.15s;
+    }
+    .cart-item-remove:hover { color: var(--val-red); }
+
+    .cart-footer {
+      border-top: 1px solid var(--border);
+      padding: 1.2rem 1.4rem;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .cart-subtotal {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+    .cart-subtotal-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .cart-subtotal-amount { font-family: var(--font-display); font-size: 1.6rem; }
+    .btn-checkout {
+      width: 100%;
+      background: var(--vdc-blue);
+      color: #fff;
+      border: none;
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      letter-spacing: 0.12em;
+      padding: 13px 20px 11px;
+      cursor: pointer;
+      clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
+      transition: background 0.2s;
+    }
+    .btn-checkout:hover { background: var(--vdc-blue-dk); }
+    .btn-checkout:disabled { opacity: 0.35; cursor: not-allowed; }
+    .cart-shopify-note {
+      font-size: 0.65rem;
+      color: var(--muted);
+      text-align: center;
+      line-height: 1.55;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 0 1rem; }
+      .nav-links { display: none; }
+      .hero { padding: 60px 1.2rem 80px; }
+      #shop, #about, #order { padding: 40px 1.2rem; }
+      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .order-layout { grid-template-columns: 1fr; gap: 2rem; }
+      .drop-meta { gap: 1.2rem; }
+      .section-header { flex-direction: column; align-items: flex-start; }
+      .section-meta { text-align: left; }
+      footer { padding: 1.5rem 1.2rem; }
+      .footer-links { text-align: left; }
+      .order-callout { padding: 0 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-left">
+    <span class="vdc-pill">LG</span>
+    <span class="nav-subtitle">Bobert × LG Collab</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#shop">Shop</a></li>
+    <li><a href="#order">Order</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="./interest.html">Interest Form ↗</a></li>
+    <li><a href="https://vdc.gg" target="_blank" rel="noopener">vdc.gg ↗</a></li>
+    <li><a href="#order" class="nav-cta">Order Now</a></li>
+  </ul>
+  <button class="cart-btn" id="cart-toggle" aria-label="Open cart">
+    CART <span class="cart-count" id="cart-count">0</span>
+  </button>
+</nav>
+
+
+<!-- TICKER -->
+<div class="ticker-wrap" aria-hidden="true">
+  <div class="ticker-inner">
+    <span>BOBERT × LG — NOW LIVE</span><span class="sep">◆</span>
+    <span>LG-THEMED VDC MERCH DESIGNED BY BOBERT</span><span class="sep">◆</span>
+    <span>LIMITED RUN — ONE DROP PER SEASON</span><span class="sep">◆</span>
+    <span>VDC MATCH DAYS: WED &amp; FRI</span><span class="sep">◆</span>
+    <span>PLACE YOUR ORDER BELOW</span><span class="sep">◆</span>
+    <span>BOBERT × LG — NOW LIVE</span><span class="sep">◆</span>
+    <span>LG-THEMED VDC MERCH DESIGNED BY BOBERT</span><span class="sep">◆</span>
+    <span>LIMITED RUN — ONE DROP PER SEASON</span><span class="sep">◆</span>
+    <span>VDC MATCH DAYS: WED &amp; FRI</span><span class="sep">◆</span>
+    <span>PLACE YOUR ORDER BELOW</span><span class="sep">◆</span>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <img src="./assets/LG_LOGO.png" class="hero-logo-bg" alt="" aria-hidden="true">
+  <div class="hero-eyebrow">
+    <span class="dot"></span>
+    Bobert × Light Garden · Season Drop
+    <span class="dot"></span>
+  </div>
+  <h1>
+    <span class="line-blue">LIGHT</span><br>
+   <span class="line-blue"> GARDEN </span><br>
+    MERCH
+  </h1>
+  <p class="hero-sub">
+    <strong>Bobert × Light Garden</strong> — LG-branded merch designed by a VDC community member, for the community. Calling all past and present LG players!
+  </p>
+  <div class="hero-actions">
+    <a href="#shop" class="btn-primary">Browse the Drop</a>
+    <a href="#order" class="btn-ghost">Place an Order</a>
+  </div>
+  <div class="drop-meta">
+    <div class="meta-item">
+      <div class="meta-label">Drop Closes In</div>
+      <div class="meta-value" id="countdown">—</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-label">Match Days</div>
+      <div class="meta-value">WED · FRI</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-label">Items This Drop</div>
+      <div class="meta-value">2</div>
+    </div>
+  </div>
+</section>
+
+<!-- SHOP -->
+<div class="divider"><div class="divider-line"></div><div class="divider-diamond"></div><div class="divider-line"></div></div>
+
+<section id="shop">
+  <div class="section-header">
+    <h2>THE <span>DROP</span></h2>
+    <div class="section-meta">
+      Valorant Draft Circuit · Season Merch<br>
+      Add to cart and check out via Shopify
+    </div>
+  </div>
+
+  <div class="product-grid">
+
+    <!-- STICKER PACK -->
+    <div class="product-card" data-product-id="sticker-pack">
+      <div class="product-img">
+        <div class="product-slides">
+          <div class="product-slide active">
+            <div class="placeholder-img">
+              <div class="ph-icon">🖼</div>
+              <span class="ph-label">Design A</span>
+              <span class="ph-variant">5-pack · Holographic</span>
+            </div>
+          </div>
+          <div class="product-slide">
+            <div class="placeholder-img">
+              <div class="ph-icon">🖼</div>
+              <span class="ph-label">Design B</span>
+              <span class="ph-variant">5-pack · Holographic</span>
+            </div>
+          </div>
+          <div class="product-slide">
+            <div class="placeholder-img">
+              <div class="ph-icon">🖼</div>
+              <span class="ph-label">Bundle</span>
+              <span class="ph-variant">Both sheets · 10-pack</span>
+            </div>
+          </div>
+        </div>
+        <button class="slide-btn slide-prev" aria-label="Previous">&#8249;</button>
+        <button class="slide-btn slide-next" aria-label="Next">&#8250;</button>
+        <div class="slide-dots">
+          <button class="slide-dot active"></button>
+          <button class="slide-dot"></button>
+          <button class="slide-dot"></button>
+        </div>
+      </div>
+      <div class="product-info">
+        <span class="product-tag">Accessories</span>
+        <div class="product-name">LG Sticker Pack</div>
+        <p class="product-desc">5 holographic die-cut stickers — LG crest, Valorant X mark, tier star, Light Garden banner, and GG design. UV coated and waterproof.</p>
+        <div class="product-footer">
+          <div class="product-price"><span class="currency">$</span>10</div>
+          <button class="btn-add-cart">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- KEY CHAIN -->
+    <div class="product-card" data-product-id="key-chain">
+      <div class="product-img">
+        <div class="product-slides">
+          <div class="product-slide active">
+            <div class="placeholder-img">
+              <div class="ph-icon">🖼</div>
+              <span class="ph-label">Clear Acrylic</span>
+              <span class="ph-variant">Double-sided · ~2" charm</span>
+            </div>
+          </div>
+          <div class="product-slide">
+            <div class="placeholder-img">
+              <div class="ph-icon">🖼</div>
+              <span class="ph-label">Frosted Acrylic</span>
+              <span class="ph-variant">Double-sided · ~2" charm</span>
+            </div>
+          </div>
+        </div>
+        <button class="slide-btn slide-prev" aria-label="Previous">&#8249;</button>
+        <button class="slide-btn slide-next" aria-label="Next">&#8250;</button>
+        <div class="slide-dots">
+          <button class="slide-dot active"></button>
+          <button class="slide-dot"></button>
+        </div>
+      </div>
+      <div class="product-info">
+        <span class="product-tag">Accessories</span>
+        <div class="product-name">LG Key Chain</div>
+        <p class="product-desc">Double-sided acrylic key chain with LG crest on front, "Light Garden" on the back. ~2" charm with stainless steel split ring.</p>
+        <div class="product-footer">
+          <div class="product-price"><span class="currency">$</span>12</div>
+          <button class="btn-add-cart">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- HOW TO ORDER CALLOUT -->
+<div class="order-callout">
+  <div class="order-callout-inner">
+    <div class="callout-icon">🛒</div>
+    <div class="callout-text">
+      <strong>How ordering works</strong>
+      <span>Browse the drop → add items to your cart → check out securely through Shopify. Payment is handled at checkout — all major cards accepted.</span>
+    </div>
+  </div>
+</div>
+
+<!-- ORDER FORM -->
+<div class="divider" style="margin-top:2.5rem;"><div class="divider-line"></div><div class="divider-diamond"></div><div class="divider-line"></div></div>
+
+<section id="order">
+  <div class="order-layout">
+
+    <div class="order-info">
+      <h2>PLACE YOUR <span>ORDER</span></h2>
+      <p style="color:var(--muted);font-size:0.85rem;line-height:1.7;margin-top:0.8rem;">
+        Browse the drop, add your items to the cart, and check out securely through Shopify. Payment is processed at checkout — all major cards accepted.
+      </p>
+
+      <div class="order-steps">
+        <div class="order-step">
+          <div class="order-step-num">1</div>
+          <div class="order-step-body">
+            <strong>Pick your items</strong>
+            <span>Browse the drop and select what you want, including size or variant.</span>
+          </div>
+        </div>
+        <div class="order-step">
+          <div class="order-step-num">2</div>
+          <div class="order-step-body">
+            <strong>Add to cart &amp; check out</strong>
+            <span>Shopify handles payment securely — all major cards accepted.</span>
+          </div>
+        </div>
+        <div class="order-step">
+          <div class="order-step-num">3</div>
+          <div class="order-step-body">
+            <strong>We make &amp; ship it</strong>
+            <span>Orders ship within 7 business days of the drop closing.</span>
+          </div>
+        </div>
+        <div class="order-step">
+          <div class="order-step-num">4</div>
+          <div class="order-step-body">
+            <strong>Track your order</strong>
+            <span>You'll get a confirmation email with tracking once your order ships.</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:1.5rem;padding:1rem;background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--gold);">
+        <div style="font-size:0.62rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-bottom:0.3rem;">Drop deadline</div>
+        <div style="font-family:var(--font-display);font-size:1.1rem;letter-spacing:0.06em;" id="countdown2">—</div>
+        <div style="font-size:0.72rem;color:var(--muted);margin-top:0.2rem;">Orders submitted after the drop closes won't be fulfilled until next season.</div>
+      </div>
+    </div>
+
+    <!-- SHOPIFY BUY BUTTON
+         Once your Shopify store is live:
+           1. Shopify Admin → Sales Channels → Buy Button
+           2. Create a Buy Button for each product (or a collection)
+           3. Copy the generated <script> + <div> snippet for each product
+           4. Paste those snippets inside .shopify-embed below, replacing the placeholder div
+         The Buy Button JS handles cart, variants, and checkout automatically.
+    -->
+    <div class="form-wrapper">
+      <div class="form-header">
+        <span class="form-header-title">LG MERCH — SHOP</span>
+        <span class="form-header-badge">Bobert × LG Drop</span>
+      </div>
+
+      <div class="shopify-embed">
+        <!-- Paste your Shopify Buy Button embed snippets here -->
+        <div class="shopify-placeholder">
+          <div style="font-size:2.5rem;opacity:0.2;line-height:1;margin-bottom:0.8rem;">🛍</div>
+          <p style="font-family:var(--font-display);font-size:1.1rem;letter-spacing:0.08em;color:var(--muted);margin-bottom:0.6rem;">SHOPIFY CHECKOUT</p>
+          <p style="font-size:0.76rem;color:var(--muted);max-width:260px;line-height:1.6;">
+            Add your Shopify Buy Button embed code here once your store is set up.
+          </p>
+        </div>
+      </div>
+
+      <div class="form-note">
+        🔒 Checkout is handled securely by Shopify. Your payment info is never stored by us.
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ABOUT -->
+<div class="divider"><div class="divider-line"></div><div class="divider-diamond"></div><div class="divider-line"></div></div>
+
+<section id="about">
+  <div class="about-grid">
+    <div class="about-text">
+      <h2 style="font-family:var(--font-display);font-size:2rem;letter-spacing:0.06em;margin-bottom:0.2rem;">ABOUT <span style="color:var(--vdc-blue);">BOBERT × LG</span></h2>
+      <p><strong>Bobert</strong> is a VDC player and digital artist who designed this drop as a love letter to <strong>Light Garden</strong> — their franchise in the Valorant Draft Circuit, a free community-run NA VALORANT league. This is a community pop-up, not an official LG store.</p>
+      <p>Small batches, one drop per season. When it's gone, it's done.</p>
+      <div class="vdc-callout">
+        <div class="callout-label">Not in VDC yet?</div>
+        <p>Sign up free at <a href="https://vdc.gg" target="_blank">vdc.gg</a> · Join Discord at <a href="https://discord.gg/valorantdraftcircuit" target="_blank">discord.gg/valorantdraftcircuit</a> · All ranks welcome.</p>
+      </div>
+      <p style="margin-top:1rem;">Questions? Email <a href="mailto:evangelinagrimes@gmail.com">evangelinagrimes@gmail.com</a> or DM us on Discord.</p>
+    </div>
+
+    <div>
+      <h2 style="font-family:var(--font-display);font-size:2rem;letter-spacing:0.06em;margin-bottom:1.2rem;">PRICING <span style="color:var(--vdc-blue);">SUMMARY</span></h2>
+      <div class="how-steps">
+        <div class="step">
+          <div class="step-num" style="font-size:1.2rem;opacity:1;color:var(--text);">$10</div>
+          <div class="step-body">
+            <strong>LG Sticker Pack</strong>
+            <span>5 holographic die-cuts · UV coated · Waterproof</span>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num" style="font-size:1.2rem;opacity:1;color:var(--text);">$12</div>
+          <div class="step-body">
+            <strong>LG Key Chain</strong>
+            <span>Double-sided acrylic · ~2" charm · Steel split ring</span>
+          </div>
+        </div>
+        <div class="step" style="border-left-color:var(--gold);">
+          <div class="step-num" style="font-size:1rem;opacity:1;color:var(--gold);">📦</div>
+          <div class="step-body">
+            <strong>Shipping</strong>
+            <span>Calculated at checkout based on your location.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CART OVERLAY + DRAWER -->
+<div class="cart-overlay" id="cart-overlay"></div>
+<aside class="cart-drawer" id="cart-drawer" aria-label="Shopping cart">
+  <div class="cart-drawer-header">
+    <span class="cart-drawer-title">YOUR CART</span>
+    <button class="cart-close-btn" id="cart-close" aria-label="Close cart">✕</button>
+  </div>
+  <div class="cart-items" id="cart-items">
+    <div class="cart-empty">
+      <div class="cart-empty-icon">🛒</div>
+      <span>Your cart is empty</span>
+    </div>
+  </div>
+  <div class="cart-footer">
+    <div class="cart-subtotal">
+      <span class="cart-subtotal-label">Subtotal</span>
+      <span class="cart-subtotal-amount" id="cart-subtotal-amount">$0</span>
+    </div>
+    <button class="btn-checkout" id="btn-checkout" disabled>Checkout via Shopify</button>
+    <p class="cart-shopify-note">Shopify checkout coming soon — your cart is saved while you browse.</p>
+  </div>
+</aside>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-vdc-row">
+        <span class="footer-vdc-pill">LG</span>
+        <span class="footer-wordmark">DRIP<span>.</span></span>
+      </div>
+      <div class="footer-tagline">
+        Bobert × Light Garden · Season Drop<br>
+        Designed by a VDC community member
+      </div>
+    </div>
+    <div class="footer-links">
+      <a href="https://vdc.gg" target="_blank">vdc.gg ↗</a>
+      <a href="https://discord.gg/valorantdraftcircuit" target="_blank">VDC Discord ↗</a>
+      <a href="#order">Place an Order</a>
+      <a href="mailto:evangelinagrimes@gmail.com">Contact</a>
+    </div>
+  </div>
+  <div class="footer-inner">
+    <div class="footer-legal">
+      <span>Not affiliated with or sponsored by the Valorant Draft Circuit, Riot Games, Inc., or VALORANT™ Esports.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ── COUNTDOWN ──
+  const DROP_END = new Date('2025-08-01T23:59:59');
+
+  function fmt(diff) {
+    if (diff <= 0) return 'DROP CLOSED';
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000)  / 60000);
+    const s = Math.floor((diff % 60000)    / 1000);
+    return `${d}D ${String(h).padStart(2,'0')}H ${String(m).padStart(2,'0')}M ${String(s).padStart(2,'0')}S`;
+  }
+
+  function updateCountdowns() {
+    const val = fmt(DROP_END - new Date());
+    document.getElementById('countdown').textContent  = val;
+    document.getElementById('countdown2').textContent = val;
+  }
+
+  updateCountdowns();
+  setInterval(updateCountdowns, 1000);
+
+  // ── PRODUCT CAROUSELS ──
+  document.querySelectorAll('.product-card').forEach(card => {
+    const slides = card.querySelectorAll('.product-slide');
+    const dots   = card.querySelectorAll('.slide-dot');
+    if (slides.length < 2) return;
+    let cur = 0;
+    card.dataset.activeSlide = '0';
+
+    function goTo(n) {
+      slides[cur].classList.remove('active');
+      dots[cur].classList.remove('active');
+      cur = (n + slides.length) % slides.length;
+      slides[cur].classList.add('active');
+      dots[cur].classList.add('active');
+      card.dataset.activeSlide = String(cur);
+    }
+
+    card.querySelector('.slide-prev').addEventListener('click', e => { e.stopPropagation(); goTo(cur - 1); });
+    card.querySelector('.slide-next').addEventListener('click', e => { e.stopPropagation(); goTo(cur + 1); });
+    dots.forEach((d, i) => d.addEventListener('click', e => { e.stopPropagation(); goTo(i); }));
+  });
+
+  // ── CART ──
+  const PRODUCTS = {
+    'sticker-pack': { name: 'LG Sticker Pack', price: 10, variants: ['Design A — 5-pack', 'Design B — 5-pack', 'Bundle — 10-pack'] },
+    'key-chain':    { name: 'LG Key Chain',    price: 12, variants: ['Clear Acrylic', 'Frosted Acrylic'] },
+  };
+
+  let cart = JSON.parse(localStorage.getItem('lg-cart') || '[]');
+
+  function cartKey(pid, vi) { return pid + '::' + vi; }
+
+  function addToCart(productId, variantIdx) {
+    const key = cartKey(productId, variantIdx);
+    const existing = cart.find(i => i.key === key);
+    if (existing) {
+      existing.qty++;
+    } else {
+      const p = PRODUCTS[productId];
+      cart.push({ key, productId, variantIdx, name: p.name, variant: p.variants[variantIdx], price: p.price, qty: 1 });
+    }
+    saveCart();
+  }
+
+  function removeFromCart(key) {
+    cart = cart.filter(i => i.key !== key);
+    saveCart();
+  }
+
+  function updateQty(key, delta) {
+    const item = cart.find(i => i.key === key);
+    if (!item) return;
+    item.qty = Math.max(0, item.qty + delta);
+    if (item.qty === 0) cart = cart.filter(i => i.key !== key);
+    saveCart();
+  }
+
+  function saveCart() {
+    localStorage.setItem('lg-cart', JSON.stringify(cart));
+    renderCart();
+    updateCartCount();
+  }
+
+  function updateCartCount() {
+    const total = cart.reduce((s, i) => s + i.qty, 0);
+    const el = document.getElementById('cart-count');
+    el.textContent = total;
+    el.classList.toggle('visible', total > 0);
+  }
+
+  function renderCart() {
+    const container   = document.getElementById('cart-items');
+    const checkoutBtn = document.getElementById('btn-checkout');
+    const subtotalEl  = document.getElementById('cart-subtotal-amount');
+
+    if (cart.length === 0) {
+      container.innerHTML = '<div class="cart-empty"><div class="cart-empty-icon">🛒</div><span>Your cart is empty</span></div>';
+      subtotalEl.textContent = '$0';
+      checkoutBtn.disabled = true;
+      return;
+    }
+
+    checkoutBtn.disabled = false;
+    container.innerHTML = cart.map(item => `
+      <div class="cart-item">
+        <div class="cart-item-info">
+          <div class="cart-item-name">${item.name}</div>
+          <div class="cart-item-variant">${item.variant}</div>
+          <div class="cart-item-controls">
+            <button class="qty-btn" onclick="updateQty('${item.key}',-1)">−</button>
+            <span class="cart-item-qty">${item.qty}</span>
+            <button class="qty-btn" onclick="updateQty('${item.key}',1)">+</button>
+          </div>
+        </div>
+        <div class="cart-item-right">
+          <div class="cart-item-price">$${item.price * item.qty}</div>
+          <button class="cart-item-remove" onclick="removeFromCart('${item.key}')">Remove</button>
+        </div>
+      </div>
+    `).join('');
+
+    subtotalEl.textContent = '$' + cart.reduce((s, i) => s + i.price * i.qty, 0);
+  }
+
+  function openCart() {
+    document.getElementById('cart-drawer').classList.add('open');
+    document.getElementById('cart-overlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeCart() {
+    document.getElementById('cart-drawer').classList.remove('open');
+    document.getElementById('cart-overlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.getElementById('cart-toggle').addEventListener('click', openCart);
+  document.getElementById('cart-close').addEventListener('click', closeCart);
+  document.getElementById('cart-overlay').addEventListener('click', closeCart);
+  document.getElementById('btn-checkout').addEventListener('click', () => {
+    closeCart();
+    document.getElementById('order').scrollIntoView({ behavior: 'smooth' });
+  });
+
+  document.querySelectorAll('.btn-add-cart').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      const card = btn.closest('.product-card');
+      addToCart(card.dataset.productId, parseInt(card.dataset.activeSlide || '0', 10));
+      btn.textContent = 'Added!';
+      btn.classList.add('added');
+      setTimeout(() => { btn.textContent = 'Add to Cart'; btn.classList.remove('added'); }, 1200);
+      openCart();
+    });
+  });
+
+  updateCartCount();
+  renderCart();
+</script>
+
+</body>
+</html>
