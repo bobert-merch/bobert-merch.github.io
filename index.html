@@ -4,94 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>THE DRIP — Bobert × LG Merch Drop</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles.css">
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --bg:          #060D06;
-      --bg-mid:      #0A130A;
-      --surface:     #0E1A0E;
-      --border:      #183018;
-      --border-bright: #225022;
-      --vdc-blue:    #5CB83A;
-      --vdc-blue-dk: #3F8A26;
-      --val-red:     #FF4655;
-      --gold:        #C8A84B;
-      --text:        #EEF5EE;
-      --muted:       #587858;
-      --font-display: 'Bebas Neue', sans-serif;
-      --font-body:    'Inter', sans-serif;
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: var(--font-body);
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-
-    /* ── NAV ── */
-    nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 2rem;
-      height: 58px;
-      background: rgba(6,13,6,0.95);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .nav-left { display: flex; align-items: center; gap: 1rem; }
-
-    .vdc-pill {
-      background: var(--vdc-blue);
-      color: #fff;
-      font-family: var(--font-display);
-      font-size: 1rem;
-      letter-spacing: 0.12em;
-      padding: 3px 10px 1px;
-      clip-path: polygon(5px 0%, 100% 0%, calc(100% - 5px) 100%, 0% 100%);
-    }
-
-    .nav-subtitle {
-      font-size: 0.68rem;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-
-    .nav-links { display: flex; gap: 1.5rem; list-style: none; }
-
-    .nav-links a {
-      color: var(--muted);
-      text-decoration: none;
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      transition: color 0.2s;
-    }
-
-    .nav-links a:hover { color: var(--text); }
-
-    .nav-cta {
-      background: var(--vdc-blue) !important;
-      color: #fff !important;
-      padding: 5px 14px;
-      clip-path: polygon(4px 0%, 100% 0%, calc(100% - 4px) 100%, 0% 100%);
-    }
-
-    .nav-cta:hover { background: var(--vdc-blue-dk) !important; }
-
     /* ── TICKER ── */
     .ticker-wrap {
       background: var(--vdc-blue);
@@ -128,7 +45,7 @@
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 90px 2rem 110px;
+      padding: 120px 2rem 140px;
       overflow: hidden;
     }
 
@@ -183,11 +100,6 @@
       border-radius: 50%;
       background: var(--val-red);
       animation: pulse 1.8s ease-in-out infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50%       { opacity: 0.4; transform: scale(0.7); }
     }
 
     .hero h1 {
@@ -281,25 +193,10 @@
       color: var(--text);
     }
 
-    #countdown { color: var(--gold); }
-
-    /* ── DIVIDER ── */
-    .divider {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      padding: 0 2rem;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    .divider-line { flex: 1; height: 1px; background: var(--border); }
-    .divider-diamond { width: 8px; height: 8px; background: var(--vdc-blue); transform: rotate(45deg); opacity: 0.6; }
-
     /* ── SHOP SECTION ── */
     #shop {
-      padding: 60px 2rem;
-      max-width: 1100px;
+      padding: 80px 2rem;
+      max-width: 1280px;
       margin: 0 auto;
     }
 
@@ -334,8 +231,8 @@
     /* ── PRODUCT GRID ── */
     .product-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
-      gap: 1.5rem;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 2rem;
     }
 
     .product-card {
@@ -345,7 +242,6 @@
       flex-direction: column;
       position: relative;
       transition: border-color 0.25s, transform 0.2s, box-shadow 0.25s;
-      cursor: pointer;
     }
 
     .product-card:hover {
@@ -464,7 +360,7 @@
     .slide-dot.active { background: var(--vdc-blue); transform: scale(1.35); }
 
     .product-info {
-      padding: 1.2rem 1.3rem 1.5rem;
+      padding: 1.5rem 1.6rem 1.8rem;
       flex: 1;
       display: flex;
       flex-direction: column;
@@ -535,7 +431,7 @@
     /* ── HOW TO ORDER CALLOUT ── */
     .order-callout {
       margin: 0 auto 0;
-      max-width: 1100px;
+      max-width: 1280px;
       padding: 0 2rem;
     }
 
@@ -570,15 +466,15 @@
 
     /* ── ORDER FORM SECTION ── */
     #order {
-      padding: 60px 2rem;
-      max-width: 1100px;
+      padding: 80px 2rem;
+      max-width: 1280px;
       margin: 0 auto;
     }
 
     .order-layout {
       display: grid;
       grid-template-columns: 1fr 1.6fr;
-      gap: 3rem;
+      gap: 4.5rem;
       align-items: start;
     }
 
@@ -720,15 +616,15 @@
 
     /* ── ABOUT ── */
     #about {
-      padding: 60px 2rem;
-      max-width: 1100px;
+      padding: 80px 2rem;
+      max-width: 1280px;
       margin: 0 auto;
     }
 
     .about-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 4rem;
+      gap: 5rem;
       align-items: start;
     }
 
@@ -798,7 +694,7 @@
     }
 
     .footer-inner {
-      max-width: 1100px;
+      max-width: 1280px;
       margin: 0 auto;
       display: flex;
       align-items: flex-start;
@@ -1112,12 +1008,38 @@
       line-height: 1.55;
     }
 
+    /* ── VARIANT LABEL ── */
+    .product-variant-sel {
+      font-size: 0.63rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--vdc-blue);
+      margin-top: 0.6rem;
+      display: block;
+      min-height: 1em;
+    }
+
+    .product-variant-sel::before {
+      content: 'Selected: ';
+      color: var(--muted);
+      font-weight: 600;
+      text-transform: none;
+    }
+
+    /* ── CART PULSE ── */
+    @keyframes cart-pulse {
+      0%   { border-color: var(--border-bright); color: var(--muted); box-shadow: none; }
+      35%  { border-color: var(--vdc-blue); color: var(--vdc-blue); box-shadow: 0 0 10px rgba(92,184,58,0.35); }
+      100% { border-color: var(--border-bright); color: var(--muted); box-shadow: none; }
+    }
+
+    .cart-btn.pulse { animation: cart-pulse 0.85s ease-out forwards; }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
-      nav { padding: 0 1rem; }
-      .nav-links { display: none; }
-      .hero { padding: 60px 1.2rem 80px; }
-      #shop, #about, #order { padding: 40px 1.2rem; }
+      .hero { padding: 70px 1.2rem 90px; }
+      #shop, #about, #order { padding: 50px 1.2rem; }
       .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
       .order-layout { grid-template-columns: 1fr; gap: 2rem; }
       .drop-meta { gap: 1.2rem; }
@@ -1145,11 +1067,26 @@
     <li><a href="https://vdc.gg" target="_blank" rel="noopener">vdc.gg ↗</a></li>
     <li><a href="#order" class="nav-cta">Order Now</a></li>
   </ul>
-  <button class="cart-btn" id="cart-toggle" aria-label="Open cart">
-    CART <span class="cart-count" id="cart-count">0</span>
-  </button>
+  <div class="nav-right">
+    <button class="cart-btn" id="cart-toggle" aria-label="Open cart">
+      CART <span class="cart-count" id="cart-count">0</span>
+    </button>
+    <button class="hamburger" id="hamburger-btn" aria-label="Open navigation" aria-expanded="false">MENU</button>
+  </div>
 </nav>
 
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation">
+  <a href="#shop">Shop</a>
+  <a href="#order">Order</a>
+  <a href="#about">About</a>
+  <a href="./interest.html">Interest Form ↗</a>
+  <a href="https://vdc.gg" target="_blank" rel="noopener">vdc.gg ↗</a>
+  <a href="#order" class="mobile-nav-cta">Order Now</a>
+</div>
+
+<main>
 
 <!-- TICKER -->
 <div class="ticker-wrap" aria-hidden="true">
@@ -1189,10 +1126,6 @@
   </div>
   <div class="drop-meta">
     <div class="meta-item">
-      <div class="meta-label">Drop Closes In</div>
-      <div class="meta-value" id="countdown">—</div>
-    </div>
-    <div class="meta-item">
       <div class="meta-label">Match Days</div>
       <div class="meta-value">WED · FRI</div>
     </div>
@@ -1223,21 +1156,21 @@
         <div class="product-slides">
           <div class="product-slide active">
             <div class="placeholder-img">
-              <div class="ph-icon">🖼</div>
+              <div class="ph-icon" aria-hidden="true">🖼</div>
               <span class="ph-label">Design A</span>
               <span class="ph-variant">5-pack · Holographic</span>
             </div>
           </div>
           <div class="product-slide">
             <div class="placeholder-img">
-              <div class="ph-icon">🖼</div>
+              <div class="ph-icon" aria-hidden="true">🖼</div>
               <span class="ph-label">Design B</span>
               <span class="ph-variant">5-pack · Holographic</span>
             </div>
           </div>
           <div class="product-slide">
             <div class="placeholder-img">
-              <div class="ph-icon">🖼</div>
+              <div class="ph-icon" aria-hidden="true">🖼</div>
               <span class="ph-label">Bundle</span>
               <span class="ph-variant">Both sheets · 10-pack</span>
             </div>
@@ -1255,6 +1188,7 @@
         <span class="product-tag">Accessories</span>
         <div class="product-name">LG Sticker Pack</div>
         <p class="product-desc">5 holographic die-cut stickers — LG crest, Valorant X mark, tier star, Light Garden banner, and GG design. UV coated and waterproof.</p>
+        <div class="product-variant-sel"></div>
         <div class="product-footer">
           <div class="product-price"><span class="currency">$</span>10</div>
           <button class="btn-add-cart">Add to Cart</button>
@@ -1268,14 +1202,14 @@
         <div class="product-slides">
           <div class="product-slide active">
             <div class="placeholder-img">
-              <div class="ph-icon">🖼</div>
+              <div class="ph-icon" aria-hidden="true">🖼</div>
               <span class="ph-label">Clear Acrylic</span>
               <span class="ph-variant">Double-sided · ~2" charm</span>
             </div>
           </div>
           <div class="product-slide">
             <div class="placeholder-img">
-              <div class="ph-icon">🖼</div>
+              <div class="ph-icon" aria-hidden="true">🖼</div>
               <span class="ph-label">Frosted Acrylic</span>
               <span class="ph-variant">Double-sided · ~2" charm</span>
             </div>
@@ -1292,6 +1226,7 @@
         <span class="product-tag">Accessories</span>
         <div class="product-name">LG Key Chain</div>
         <p class="product-desc">Double-sided acrylic key chain with LG crest on front, "Light Garden" on the back. ~2" charm with stainless steel split ring.</p>
+        <div class="product-variant-sel"></div>
         <div class="product-footer">
           <div class="product-price"><span class="currency">$</span>12</div>
           <button class="btn-add-cart">Add to Cart</button>
@@ -1305,7 +1240,7 @@
 <!-- HOW TO ORDER CALLOUT -->
 <div class="order-callout">
   <div class="order-callout-inner">
-    <div class="callout-icon">🛒</div>
+    <div class="callout-icon" aria-hidden="true">🛒</div>
     <div class="callout-text">
       <strong>How ordering works</strong>
       <span>Browse the drop → add items to your cart → check out securely through Shopify. Payment is handled at checkout — all major cards accepted.</span>
@@ -1356,11 +1291,6 @@
         </div>
       </div>
 
-      <div style="margin-top:1.5rem;padding:1rem;background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--gold);">
-        <div style="font-size:0.62rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-bottom:0.3rem;">Drop deadline</div>
-        <div style="font-family:var(--font-display);font-size:1.1rem;letter-spacing:0.06em;" id="countdown2">—</div>
-        <div style="font-size:0.72rem;color:var(--muted);margin-top:0.2rem;">Orders submitted after the drop closes won't be fulfilled until next season.</div>
-      </div>
     </div>
 
     <!-- SHOPIFY BUY BUTTON
@@ -1380,7 +1310,7 @@
       <div class="shopify-embed">
         <!-- Paste your Shopify Buy Button embed snippets here -->
         <div class="shopify-placeholder">
-          <div style="font-size:2.5rem;opacity:0.2;line-height:1;margin-bottom:0.8rem;">🛍</div>
+          <div style="font-size:2.5rem;opacity:0.2;line-height:1;margin-bottom:0.8rem;" aria-hidden="true">🛍</div>
           <p style="font-family:var(--font-display);font-size:1.1rem;letter-spacing:0.08em;color:var(--muted);margin-bottom:0.6rem;">SHOPIFY CHECKOUT</p>
           <p style="font-size:0.76rem;color:var(--muted);max-width:260px;line-height:1.6;">
             Add your Shopify Buy Button embed code here once your store is set up.
@@ -1389,7 +1319,7 @@
       </div>
 
       <div class="form-note">
-        🔒 Checkout is handled securely by Shopify. Your payment info is never stored by us.
+        🔒 Once the Shopify store is connected above, checkout will be handled securely by Shopify. Payment info is never stored by us.
       </div>
     </div>
 
@@ -1409,7 +1339,7 @@
         <div class="callout-label">Not in VDC yet?</div>
         <p>Sign up free at <a href="https://vdc.gg" target="_blank">vdc.gg</a> · Join Discord at <a href="https://discord.gg/valorantdraftcircuit" target="_blank">discord.gg/valorantdraftcircuit</a> · All ranks welcome.</p>
       </div>
-      <p style="margin-top:1rem;">Questions? Email <a href="mailto:evangelinagrimes@gmail.com">evangelinagrimes@gmail.com</a> or DM us on Discord.</p>
+      <p style="margin-top:1rem;">Questions? Email <a class="obf-email" data-u="evangelinagrimes" data-d="gmail.com"></a> or DM us on Discord.</p>
     </div>
 
     <div>
@@ -1430,7 +1360,7 @@
           </div>
         </div>
         <div class="step" style="border-left-color:var(--gold);">
-          <div class="step-num" style="font-size:1rem;opacity:1;color:var(--gold);">📦</div>
+          <div class="step-num" style="font-size:1rem;opacity:1;color:var(--gold);" aria-hidden="true">📦</div>
           <div class="step-body">
             <strong>Shipping</strong>
             <span>Calculated at checkout based on your location.</span>
@@ -1441,6 +1371,8 @@
   </div>
 </section>
 
+</main>
+
 <!-- CART OVERLAY + DRAWER -->
 <div class="cart-overlay" id="cart-overlay"></div>
 <aside class="cart-drawer" id="cart-drawer" aria-label="Shopping cart">
@@ -1450,7 +1382,7 @@
   </div>
   <div class="cart-items" id="cart-items">
     <div class="cart-empty">
-      <div class="cart-empty-icon">🛒</div>
+      <div class="cart-empty-icon" aria-hidden="true">🛒</div>
       <span>Your cart is empty</span>
     </div>
   </div>
@@ -1481,7 +1413,7 @@
       <a href="https://vdc.gg" target="_blank">vdc.gg ↗</a>
       <a href="https://discord.gg/valorantdraftcircuit" target="_blank">VDC Discord ↗</a>
       <a href="#order">Place an Order</a>
-      <a href="mailto:evangelinagrimes@gmail.com">Contact</a>
+      <a class="obf-email" data-u="evangelinagrimes" data-d="gmail.com">Contact</a>
     </div>
   </div>
   <div class="footer-inner">
@@ -1492,27 +1424,6 @@
 </footer>
 
 <script>
-  // ── COUNTDOWN ──
-  const DROP_END = new Date('2025-08-01T23:59:59');
-
-  function fmt(diff) {
-    if (diff <= 0) return 'DROP CLOSED';
-    const d = Math.floor(diff / 86400000);
-    const h = Math.floor((diff % 86400000) / 3600000);
-    const m = Math.floor((diff % 3600000)  / 60000);
-    const s = Math.floor((diff % 60000)    / 1000);
-    return `${d}D ${String(h).padStart(2,'0')}H ${String(m).padStart(2,'0')}M ${String(s).padStart(2,'0')}S`;
-  }
-
-  function updateCountdowns() {
-    const val = fmt(DROP_END - new Date());
-    document.getElementById('countdown').textContent  = val;
-    document.getElementById('countdown2').textContent = val;
-  }
-
-  updateCountdowns();
-  setInterval(updateCountdowns, 1000);
-
   // ── PRODUCT CAROUSELS ──
   document.querySelectorAll('.product-card').forEach(card => {
     const slides = card.querySelectorAll('.product-slide');
@@ -1528,6 +1439,10 @@
       slides[cur].classList.add('active');
       dots[cur].classList.add('active');
       card.dataset.activeSlide = String(cur);
+      const lbl = card.querySelector('.product-variant-sel');
+      if (lbl && PRODUCTS[card.dataset.productId]) {
+        lbl.textContent = PRODUCTS[card.dataset.productId].variants[cur];
+      }
     }
 
     card.querySelector('.slide-prev').addEventListener('click', e => { e.stopPropagation(); goTo(cur - 1); });
@@ -1540,6 +1455,25 @@
     'sticker-pack': { name: 'LG Sticker Pack', price: 10, variants: ['Design A — 5-pack', 'Design B — 5-pack', 'Bundle — 10-pack'] },
     'key-chain':    { name: 'LG Key Chain',    price: 12, variants: ['Clear Acrylic', 'Frosted Acrylic'] },
   };
+
+  // Initialize variant labels
+  document.querySelectorAll('.product-card').forEach(card => {
+    const lbl = card.querySelector('.product-variant-sel');
+    const p   = PRODUCTS[card.dataset.productId];
+    if (!lbl || !p) return;
+    if (p.variants.length > 1) {
+      lbl.textContent = p.variants[0];
+    } else {
+      lbl.style.display = 'none';
+    }
+  });
+
+  // Email obfuscation
+  document.querySelectorAll('.obf-email').forEach(el => {
+    const addr = el.dataset.u + '@' + el.dataset.d;
+    el.href = 'mailto:' + addr;
+    if (!el.textContent.trim()) el.textContent = addr;
+  });
 
   let cart = JSON.parse(localStorage.getItem('lg-cart') || '[]');
 
@@ -1589,7 +1523,7 @@
     const subtotalEl  = document.getElementById('cart-subtotal-amount');
 
     if (cart.length === 0) {
-      container.innerHTML = '<div class="cart-empty"><div class="cart-empty-icon">🛒</div><span>Your cart is empty</span></div>';
+      container.innerHTML = '<div class="cart-empty"><div class="cart-empty-icon" aria-hidden="true">🛒</div><span>Your cart is empty</span></div>';
       subtotalEl.textContent = '$0';
       checkoutBtn.disabled = true;
       return;
@@ -1602,14 +1536,14 @@
           <div class="cart-item-name">${item.name}</div>
           <div class="cart-item-variant">${item.variant}</div>
           <div class="cart-item-controls">
-            <button class="qty-btn" onclick="updateQty('${item.key}',-1)">−</button>
+            <button class="qty-btn" data-key="${item.key}" data-delta="-1">−</button>
             <span class="cart-item-qty">${item.qty}</span>
-            <button class="qty-btn" onclick="updateQty('${item.key}',1)">+</button>
+            <button class="qty-btn" data-key="${item.key}" data-delta="1">+</button>
           </div>
         </div>
         <div class="cart-item-right">
           <div class="cart-item-price">$${item.price * item.qty}</div>
-          <button class="cart-item-remove" onclick="removeFromCart('${item.key}')">Remove</button>
+          <button class="cart-item-remove" data-key="${item.key}">Remove</button>
         </div>
       </div>
     `).join('');
@@ -1637,6 +1571,8 @@
     document.getElementById('order').scrollIntoView({ behavior: 'smooth' });
   });
 
+  const cartToggleBtn = document.getElementById('cart-toggle');
+
   document.querySelectorAll('.btn-add-cart').forEach(btn => {
     btn.addEventListener('click', e => {
       e.stopPropagation();
@@ -1644,13 +1580,52 @@
       addToCart(card.dataset.productId, parseInt(card.dataset.activeSlide || '0', 10));
       btn.textContent = 'Added!';
       btn.classList.add('added');
-      setTimeout(() => { btn.textContent = 'Add to Cart'; btn.classList.remove('added'); }, 1200);
-      openCart();
+      setTimeout(() => { btn.textContent = 'Add to Cart'; btn.classList.remove('added'); }, 1400);
+      cartToggleBtn.classList.remove('pulse');
+      void cartToggleBtn.offsetWidth; // force reflow so re-adding the class re-triggers the animation
+      cartToggleBtn.classList.add('pulse');
     });
   });
 
   updateCartCount();
   renderCart();
+
+  document.getElementById('cart-items').addEventListener('click', e => {
+    const t = e.target;
+    if (t.classList.contains('qty-btn')) {
+      updateQty(t.dataset.key, parseInt(t.dataset.delta, 10));
+    } else if (t.classList.contains('cart-item-remove')) {
+      removeFromCart(t.dataset.key);
+    }
+  });
+
+  // ── MOBILE NAV ──
+  const hamburgerBtn = document.getElementById('hamburger-btn');
+  const mobileNavEl  = document.getElementById('mobile-nav');
+
+  function openMobileNav() {
+    mobileNavEl.classList.add('open');
+    hamburgerBtn.textContent = 'CLOSE';
+    hamburgerBtn.setAttribute('aria-expanded', 'true');
+  }
+
+  function closeMobileNav() {
+    mobileNavEl.classList.remove('open');
+    hamburgerBtn.textContent = 'MENU';
+    hamburgerBtn.setAttribute('aria-expanded', 'false');
+  }
+
+  hamburgerBtn.addEventListener('click', () => {
+    mobileNavEl.classList.contains('open') ? closeMobileNav() : openMobileNav();
+  });
+
+  mobileNavEl.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMobileNav));
+
+  document.addEventListener('keydown', e => {
+    if (e.key !== 'Escape') return;
+    closeCart();
+    closeMobileNav();
+  });
 </script>
 
 </body>

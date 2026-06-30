@@ -4,94 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Bobert × LG — Merch Concepts</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles.css">
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --bg:            #060D06;
-      --bg-mid:        #0A130A;
-      --surface:       #0E1A0E;
-      --border:        #183018;
-      --border-bright: #225022;
-      --lg-green:      #5CB83A;
-      --lg-green-dk:   #3F8A26;
-      --val-red:       #FF4655;
-      --gold:          #C8A84B;
-      --text:          #EEF5EE;
-      --muted:         #587858;
-      --font-display:  'Bebas Neue', sans-serif;
-      --font-body:     'Inter', sans-serif;
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: var(--font-body);
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-
-    /* ── NAV ── */
-    nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 2rem;
-      height: 58px;
-      background: rgba(6,13,6,0.95);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .nav-left { display: flex; align-items: center; gap: 1rem; }
-
-    .lg-pill {
-      background: var(--lg-green);
-      color: #fff;
-      font-family: var(--font-display);
-      font-size: 1rem;
-      letter-spacing: 0.12em;
-      padding: 3px 10px 1px;
-      clip-path: polygon(5px 0%, 100% 0%, calc(100% - 5px) 100%, 0% 100%);
-    }
-
-    .nav-subtitle {
-      font-size: 0.68rem;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-
-    .nav-links { display: flex; gap: 1.5rem; list-style: none; }
-
-    .nav-links a {
-      color: var(--muted);
-      text-decoration: none;
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      transition: color 0.2s;
-    }
-
-    .nav-links a:hover { color: var(--text); }
-
-    .nav-cta {
-      background: var(--lg-green) !important;
-      color: #fff !important;
-      padding: 5px 14px;
-      clip-path: polygon(4px 0%, 100% 0%, calc(100% - 4px) 100%, 0% 100%);
-    }
-
-    .nav-cta:hover { background: var(--lg-green-dk) !important; color: #fff !important; }
-
     /* ── HERO ── */
     .hero {
       position: relative;
@@ -100,7 +17,7 @@
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 80px 2rem 90px;
+      padding: 110px 2rem 120px;
       overflow: hidden;
     }
 
@@ -148,11 +65,6 @@
       border-radius: 50%;
       background: var(--val-red);
       animation: pulse 1.8s ease-in-out infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50%       { opacity: 0.4; transform: scale(0.7); }
     }
 
     .hero h1 {
@@ -215,23 +127,10 @@
 
     .btn-ghost:hover { border-color: var(--lg-green); color: var(--lg-green); }
 
-    /* ── DIVIDER ── */
-    .divider {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      padding: 0 2rem;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    .divider-line { flex: 1; height: 1px; background: var(--border); }
-    .divider-diamond { width: 8px; height: 8px; background: var(--lg-green); transform: rotate(45deg); opacity: 0.6; }
-
     /* ── CONCEPTS SECTIONS ── */
     .concepts-section {
-      padding: 60px 2rem 20px;
-      max-width: 1100px;
+      padding: 80px 2rem 30px;
+      max-width: 1280px;
       margin: 0 auto;
     }
 
@@ -274,8 +173,8 @@
     /* ── CONCEPT CARDS ── */
     .concept-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 1.2rem;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.75rem;
       margin-bottom: 3rem;
     }
 
@@ -348,7 +247,7 @@
     }
 
     .concept-info {
-      padding: 1rem 1.1rem 1.2rem;
+      padding: 1.3rem 1.4rem 1.5rem;
     }
 
     .concept-tag {
@@ -375,15 +274,15 @@
 
     /* ── ABOUT THE ARTIST ── */
     #about {
-      padding: 60px 2rem 20px;
-      max-width: 1100px;
+      padding: 80px 2rem 30px;
+      max-width: 1280px;
       margin: 0 auto;
     }
 
     .about-layout {
       display: grid;
       grid-template-columns: 1fr 1.6fr;
-      gap: 3rem;
+      gap: 4.5rem;
       align-items: start;
       margin-top: 2rem;
     }
@@ -398,8 +297,8 @@
     .about-photo {
       background: var(--surface);
       border: 2px solid var(--border-bright);
-      width: 260px;
-      height: 260px;
+      width: 300px;
+      height: 300px;
       border-radius: 50%;
       display: flex;
       flex-direction: column;
@@ -478,8 +377,8 @@
 
     /* ── ABOUT THE FRANCHISE ── */
     #franchise {
-      padding: 60px 2rem 20px;
-      max-width: 1100px;
+      padding: 80px 2rem 30px;
+      max-width: 1280px;
       margin: 0 auto;
     }
 
@@ -489,22 +388,22 @@
     }
 
     @media (max-width: 768px) {
-      #about, #franchise { padding: 40px 1.2rem 10px; }
+      #about, #franchise { padding: 50px 1.2rem 15px; }
       .about-layout { grid-template-columns: 1fr; gap: 1.5rem; }
       .about-photo { width: 200px; height: 200px; }
     }
 
     /* ── INTEREST FORM ── */
     #form {
-      padding: 60px 2rem 80px;
-      max-width: 1100px;
+      padding: 80px 2rem 100px;
+      max-width: 1280px;
       margin: 0 auto;
     }
 
     .form-layout {
       display: grid;
       grid-template-columns: 1fr 1.8fr;
-      gap: 3rem;
+      gap: 4.5rem;
       align-items: start;
     }
 
@@ -615,7 +514,7 @@
     }
 
     .footer-inner {
-      max-width: 1100px;
+      max-width: 1280px;
       margin: 0 auto;
       display: flex;
       align-items: center;
@@ -671,11 +570,9 @@
 
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
-      nav { padding: 0 1rem; }
-      .nav-links { display: none; }
-      .hero { padding: 55px 1.2rem 70px; }
-      .concepts-section { padding: 40px 1.2rem 10px; }
-      #form { padding: 40px 1.2rem 60px; }
+      .hero { padding: 70px 1.2rem 85px; }
+      .concepts-section { padding: 50px 1.2rem 15px; }
+      #form { padding: 50px 1.2rem 70px; }
       .form-layout { grid-template-columns: 1fr; gap: 2rem; }
       .concept-grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
       footer { padding: 1.5rem 1.2rem; }
@@ -698,7 +595,20 @@
     <li><a href="#form">Interest Form</a></li>
     <li><a href="#form" class="nav-cta">Feedback</a></li>
   </ul>
+  <button class="hamburger" id="hamburger-btn" aria-label="Open navigation" aria-expanded="false">MENU</button>
 </nav>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation">
+  <a href="./index.html">← Back to Shop</a>
+  <a href="#concepts">Concepts</a>
+  <a href="#about">About Artist</a>
+  <a href="#franchise">Franchise</a>
+  <a href="#form">Interest Form</a>
+  <a href="#form" class="mobile-nav-cta">Feedback</a>
+</div>
+
+<main>
 
 <!-- HERO -->
 <section class="hero">
@@ -737,7 +647,7 @@
       <div class="concept-card">
         <div class="concept-img">
           <div class="placeholder-img">
-            <div class="ph-icon">🖼</div>
+            <div class="ph-icon" aria-hidden="true">🖼</div>
             <span class="ph-label">Concept A</span>
             <span class="ph-sub">LG Crest · Clean</span>
           </div>
@@ -752,7 +662,7 @@
       <div class="concept-card">
         <div class="concept-img">
           <div class="placeholder-img">
-            <div class="ph-icon">🖼</div>
+            <div class="ph-icon" aria-hidden="true">🖼</div>
             <span class="ph-label">Concept B</span>
             <span class="ph-sub">Botanical Theme</span>
           </div>
@@ -767,7 +677,7 @@
       <div class="concept-card">
         <div class="concept-img">
           <div class="placeholder-img">
-            <div class="ph-icon">🖼</div>
+            <div class="ph-icon" aria-hidden="true">🖼</div>
             <span class="ph-label">Concept C</span>
             <span class="ph-sub">Valorant-Themed</span>
           </div>
@@ -776,62 +686,6 @@
           <div class="concept-tag">Direction 3</div>
           <div class="concept-name">VDC Edition</div>
           <p class="concept-desc">VDC-style design language — angular shapes, spike icon, tier star, and the LG crest in game-accurate style.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="divider"><div class="divider-line"></div><div class="divider-diamond"></div><div class="divider-line"></div></div>
-
-  <!-- ENAMEL PIN -->
-  <div class="concepts-section">
-    <div class="section-label"><span class="dot"></span> Enamel Pin</div>
-    <h2 class="section-title">PIN <span>CONCEPTS</span></h2>
-    <p class="section-desc">Hard enamel, ~1.25" tall, rubber clutch backing. I'm deciding on shape and colorway — which do you prefer?</p>
-
-    <div class="concept-grid">
-      <div class="concept-card">
-        <div class="concept-img">
-          <div class="placeholder-img">
-            <div class="ph-icon">🖼</div>
-            <span class="ph-label">Shield Shape</span>
-            <span class="ph-sub">Gold plating</span>
-          </div>
-        </div>
-        <div class="concept-info">
-          <div class="concept-tag">Shape A · Gold</div>
-          <div class="concept-name">Shield — Gold</div>
-          <p class="concept-desc">Classic shield silhouette with LG crest. Gold metal plating with green enamel fill.</p>
-        </div>
-      </div>
-
-      <div class="concept-card">
-        <div class="concept-img">
-          <div class="placeholder-img">
-            <div class="ph-icon">🖼</div>
-            <span class="ph-label">Shield Shape</span>
-            <span class="ph-sub">Silver plating</span>
-          </div>
-        </div>
-        <div class="concept-info">
-          <div class="concept-tag">Shape A · Silver</div>
-          <div class="concept-name">Shield — Silver</div>
-          <p class="concept-desc">Same shield silhouette, silver metal plating. Cleaner look with high contrast against the green enamel.</p>
-        </div>
-      </div>
-
-      <div class="concept-card">
-        <div class="concept-img">
-          <div class="placeholder-img">
-            <div class="ph-icon">🖼</div>
-            <span class="ph-label">Diamond Shape</span>
-            <span class="ph-sub">Black / Gold</span>
-          </div>
-        </div>
-        <div class="concept-info">
-          <div class="concept-tag">Shape B · Black</div>
-          <div class="concept-name">Diamond — Black</div>
-          <p class="concept-desc">Diamond-shaped pin echoing the LG logo silhouette. Black enamel background with gold plating.</p>
         </div>
       </div>
     </div>
@@ -849,7 +703,7 @@
       <div class="concept-card">
         <div class="concept-img">
           <div class="placeholder-img">
-            <div class="ph-icon">🖼</div>
+            <div class="ph-icon" aria-hidden="true">🖼</div>
             <span class="ph-label">Clear Acrylic</span>
             <span class="ph-sub">LG Crest Print</span>
           </div>
@@ -864,7 +718,7 @@
       <div class="concept-card">
         <div class="concept-img">
           <div class="placeholder-img">
-            <div class="ph-icon">🖼</div>
+            <div class="ph-icon" aria-hidden="true">🖼</div>
             <span class="ph-label">Frosted Acrylic</span>
             <span class="ph-sub">LG Crest Print</span>
           </div>
@@ -878,61 +732,6 @@
     </div>
   </div>
 
-  <div class="divider"><div class="divider-line"></div><div class="divider-diamond"></div><div class="divider-line"></div></div>
-
-  <!-- MOUSEPAD -->
-  <div class="concepts-section">
-    <div class="section-label"><span class="dot"></span> Mousepad</div>
-    <h2 class="section-title">MOUSEPAD <span>DESIGNS</span></h2>
-    <p class="section-desc">Extended desk mat, 3mm thick, non-slip rubber base, micro-weave surface. Sizing and layout options below.</p>
-
-    <div class="concept-grid">
-      <div class="concept-card">
-        <div class="concept-img">
-          <div class="placeholder-img">
-            <div class="ph-icon">🖼</div>
-            <span class="ph-label">Centered Logo</span>
-            <span class="ph-sub">Standard · 900×400</span>
-          </div>
-        </div>
-        <div class="concept-info">
-          <div class="concept-tag">Layout A · Standard</div>
-          <div class="concept-name">Centered — 900×400</div>
-          <p class="concept-desc">Large LG crest centered on a dark field. Minimal and clean. Standard desk mat size.</p>
-        </div>
-      </div>
-
-      <div class="concept-card">
-        <div class="concept-img">
-          <div class="placeholder-img">
-            <div class="ph-icon">🖼</div>
-            <span class="ph-label">Full Illustration</span>
-            <span class="ph-sub">Standard · 900×400</span>
-          </div>
-        </div>
-        <div class="concept-info">
-          <div class="concept-tag">Layout B · Standard</div>
-          <div class="concept-name">Full Print — 900×400</div>
-          <p class="concept-desc">Edge-to-edge botanical or abstract design with the LG crest as the focal point. More visual impact.</p>
-        </div>
-      </div>
-
-      <div class="concept-card">
-        <div class="concept-img">
-          <div class="placeholder-img">
-            <div class="ph-icon">🖼</div>
-            <span class="ph-label">Centered Logo</span>
-            <span class="ph-sub">XL · 1200×600</span>
-          </div>
-        </div>
-        <div class="concept-info">
-          <div class="concept-tag">Layout A · XL</div>
-          <div class="concept-name">Centered — 1200×600</div>
-          <p class="concept-desc">Same centered logo layout in the larger XL size — covers keyboard and mouse area of most desk setups.</p>
-        </div>
-      </div>
-    </div>
-  </div>
 
 </div><!-- /concepts -->
 
@@ -947,7 +746,7 @@
 
     <div class="about-photo-wrap">
       <div class="about-photo">
-        <img src="./assets/disc_pfp.webp" alt="Bobert" />
+        <img src="./assets/disc_pfp.webp" alt="Bobert" loading="lazy" />
       </div>
     </div>
 
@@ -998,7 +797,7 @@
 
     <div class="about-photo-wrap">
       <div class="about-photo">
-        <img src="./assets/LG_LOGO.png" alt="Light Garden" />
+        <img src="./assets/LG_LOGO.png" alt="Light Garden" loading="lazy" />
       </div>
     </div>
 
@@ -1084,6 +883,8 @@
   </div>
 </section>
 
+</main>
+
 <!-- FOOTER -->
 <footer>
   <div class="footer-inner">
@@ -1105,5 +906,32 @@
   </div>
 </footer>
 
+<script>
+  // ── MOBILE NAV ──
+  const hamburgerBtn = document.getElementById('hamburger-btn');
+  const mobileNavEl  = document.getElementById('mobile-nav');
+
+  function openMobileNav() {
+    mobileNavEl.classList.add('open');
+    hamburgerBtn.textContent = 'CLOSE';
+    hamburgerBtn.setAttribute('aria-expanded', 'true');
+  }
+
+  function closeMobileNav() {
+    mobileNavEl.classList.remove('open');
+    hamburgerBtn.textContent = 'MENU';
+    hamburgerBtn.setAttribute('aria-expanded', 'false');
+  }
+
+  hamburgerBtn.addEventListener('click', () => {
+    mobileNavEl.classList.contains('open') ? closeMobileNav() : openMobileNav();
+  });
+
+  mobileNavEl.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMobileNav));
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeMobileNav();
+  });
+</script>
 </body>
 </html>
