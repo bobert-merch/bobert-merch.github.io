@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bobert × LG — Merch Concepts</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:            #060D06;
+      --bg-mid:        #0A130A;
+      --surface:       #0E1A0E;
+      --border:        #183018;
+      --border-bright: #225022;
+      --lg-green:      #5CB83A;
+      --lg-green-dk:   #3F8A26;
+      --val-red:       #FF4655;
+      --gold:          #C8A84B;
+      --text:          #EEF5EE;
+      --muted:         #587858;
+      --font-display:  'Bebas Neue', sans-serif;
+      --font-body:     'Inter', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      height: 58px;
+      background: rgba(6,13,6,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-left { display: flex; align-items: center; gap: 1rem; }
+
+    .lg-pill {
+      background: var(--lg-green);
+      color: #fff;
+      font-family: var(--font-display);
+      font-size: 1rem;
+      letter-spacing: 0.12em;
+      padding: 3px 10px 1px;
+      clip-path: polygon(5px 0%, 100% 0%, calc(100% - 5px) 100%, 0% 100%);
+    }
+
+    .nav-subtitle {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    .nav-cta {
+      background: var(--lg-green) !important;
+      color: #fff !important;
+      padding: 5px 14px;
+      clip-path: polygon(4px 0%, 100% 0%, calc(100% - 4px) 100%, 0% 100%);
+    }
+
+    .nav-cta:hover { background: var(--lg-green-dk) !important; color: #fff !important; }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 80px 2rem 90px;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 55% at 50% 0%, rgba(92,184,58,0.12) 0%, transparent 65%),
+        repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(92,184,58,0.025) 39px, rgba(92,184,58,0.025) 40px),
+        repeating-linear-gradient(90deg, transparent, transparent 79px, rgba(92,184,58,0.015) 79px, rgba(92,184,58,0.015) 80px);
+      pointer-events: none;
+    }
+
+    .hero-logo-bg {
+      position: absolute;
+      width: 52%;
+      max-width: 520px;
+      top: 44%;
+      left: 50%;
+      transform: translate(-50%, -44%);
+      opacity: 0.06;
+      pointer-events: none;
+      user-select: none;
+      -webkit-mask-image: linear-gradient(to bottom, black 20%, rgba(0,0,0,0.5) 60%, transparent 85%);
+      mask-image: linear-gradient(to bottom, black 20%, rgba(0,0,0,0.5) 60%, transparent 85%);
+    }
+
+    .hero > *:not(.hero-logo-bg) { position: relative; }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--lg-green);
+      margin-bottom: 1.2rem;
+    }
+
+    .hero-eyebrow .dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--val-red);
+      animation: pulse 1.8s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.4; transform: scale(0.7); }
+    }
+
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(3.2rem, 9vw, 7rem);
+      line-height: 0.9;
+      letter-spacing: 0.02em;
+      margin-bottom: 1.2rem;
+    }
+
+    .line-green { color: var(--lg-green); }
+    .line-red   { color: var(--val-red); }
+
+    .hero-sub {
+      font-size: 0.9rem;
+      color: var(--muted);
+      max-width: 460px;
+      line-height: 1.65;
+      margin-bottom: 2rem;
+    }
+
+    .hero-sub strong { color: var(--text); }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      background: var(--lg-green);
+      color: #fff;
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      letter-spacing: 0.12em;
+      padding: 12px 34px 10px;
+      text-decoration: none;
+      clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .btn-primary:hover { background: var(--lg-green-dk); transform: translateY(-2px); }
+
+    .btn-ghost {
+      display: inline-block;
+      background: transparent;
+      border: 1px solid var(--border-bright);
+      color: var(--muted);
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      letter-spacing: 0.12em;
+      padding: 12px 26px 10px;
+      text-decoration: none;
+      clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .btn-ghost:hover { border-color: var(--lg-green); color: var(--lg-green); }
+
+    /* ── DIVIDER ── */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .divider-line { flex: 1; height: 1px; background: var(--border); }
+    .divider-diamond { width: 8px; height: 8px; background: var(--lg-green); transform: rotate(45deg); opacity: 0.6; }
+
+    /* ── CONCEPTS SECTIONS ── */
+    .concepts-section {
+      padding: 60px 2rem 20px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--lg-green);
+      margin-bottom: 0.5rem;
+    }
+
+    .section-label .dot {
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: var(--val-red);
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      letter-spacing: 0.06em;
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .section-title span { color: var(--lg-green); }
+
+    .section-desc {
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.6;
+      max-width: 540px;
+      margin-bottom: 2rem;
+    }
+
+    /* ── CONCEPT CARDS ── */
+    .concept-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.2rem;
+      margin-bottom: 3rem;
+    }
+
+    .concept-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      transition: border-color 0.25s, transform 0.2s;
+    }
+
+    .concept-card:hover {
+      border-color: var(--lg-green);
+      transform: translateY(-3px);
+    }
+
+    .concept-img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      background: var(--bg-mid);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .concept-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .concept-img::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 40px; height: 3px;
+      background: var(--lg-green);
+    }
+
+    .placeholder-img {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .ph-icon { font-size: 1.6rem; opacity: 0.18; }
+
+    .ph-label {
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+    }
+
+    .ph-sub {
+      font-size: 0.58rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--lg-green);
+      opacity: 0.6;
+    }
+
+    .concept-info {
+      padding: 1rem 1.1rem 1.2rem;
+    }
+
+    .concept-tag {
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--lg-green);
+      margin-bottom: 0.3rem;
+    }
+
+    .concept-name {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.4rem;
+    }
+
+    .concept-desc {
+      font-size: 0.75rem;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    /* ── ABOUT THE ARTIST ── */
+    #about {
+      padding: 60px 2rem 20px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .about-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 3rem;
+      align-items: start;
+      margin-top: 2rem;
+    }
+
+    .about-photo-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding-top: 0.5rem;
+    }
+
+    .about-photo {
+      background: var(--surface);
+      border: 2px solid var(--border-bright);
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 0 0 4px var(--bg), 0 0 0 6px var(--lg-green);
+    }
+
+    .about-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .about-photo-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      width: 100%;
+      height: 100%;
+    }
+
+    .about-body {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .about-body h3 {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      letter-spacing: 0.06em;
+      line-height: 1;
+    }
+
+    .about-body h3 span { color: var(--lg-green); }
+
+    .about-body p {
+      font-size: 0.84rem;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    .about-body p strong { color: var(--text); }
+
+    .about-stats {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+      padding-top: 0.5rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .about-stat-value {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      color: var(--lg-green);
+      letter-spacing: 0.04em;
+      line-height: 1;
+    }
+
+    .about-stat-label {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 0.2rem;
+    }
+
+    /* ── ABOUT THE FRANCHISE ── */
+    #franchise {
+      padding: 60px 2rem 20px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    #franchise .about-photo img {
+      object-fit: contain;
+      padding: 2rem;
+    }
+
+    @media (max-width: 768px) {
+      #about, #franchise { padding: 40px 1.2rem 10px; }
+      .about-layout { grid-template-columns: 1fr; gap: 1.5rem; }
+      .about-photo { width: 200px; height: 200px; }
+    }
+
+    /* ── INTEREST FORM ── */
+    #form {
+      padding: 60px 2rem 80px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .form-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.8fr;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    .form-info h2 {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      letter-spacing: 0.06em;
+      line-height: 1;
+      margin-bottom: 0.8rem;
+    }
+
+    .form-info h2 span { color: var(--lg-green); }
+
+    .form-info p {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 1.2rem;
+    }
+
+    .form-info p strong { color: var(--text); }
+
+    .callout {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--lg-green);
+      padding: 1rem 1.2rem;
+      margin-top: 1.5rem;
+    }
+
+    .callout-label {
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--lg-green);
+      margin-bottom: 0.3rem;
+    }
+
+    .callout p {
+      font-size: 0.76rem;
+      color: var(--muted);
+      line-height: 1.55;
+      margin-bottom: 0;
+    }
+
+    .form-wrapper {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .form-wrapper::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--lg-green);
+    }
+
+    .form-header {
+      padding: 1rem 1.3rem 0.8rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .form-header-title {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      letter-spacing: 0.1em;
+    }
+
+    .form-header-badge {
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--lg-green);
+      background: rgba(92,184,58,0.1);
+      border: 1px solid rgba(92,184,58,0.25);
+      padding: 3px 8px;
+      border-radius: 2px;
+    }
+
+    .form-wrapper iframe {
+      width: 100%;
+      min-height: 680px;
+      border: none;
+      display: block;
+      filter: invert(1) hue-rotate(180deg);
+    }
+
+    .form-note {
+      padding: 0.75rem 1.3rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.68rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 1.8rem 2rem;
+    }
+
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-brand { display: flex; align-items: center; gap: 0.6rem; }
+
+    .footer-pill {
+      background: var(--lg-green);
+      color: #fff;
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      padding: 2px 8px 0;
+      clip-path: polygon(4px 0%, 100% 0%, calc(100% - 4px) 100%, 0% 100%);
+    }
+
+    .footer-wordmark {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      letter-spacing: 0.08em;
+    }
+
+    .footer-wordmark span { color: var(--val-red); }
+
+    .footer-links { display: flex; gap: 1.5rem; }
+
+    .footer-links a {
+      font-size: 0.72rem;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.06em;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--lg-green); }
+
+    .footer-legal {
+      width: 100%;
+      border-top: 1px solid var(--border);
+      margin-top: 1rem;
+      padding-top: 0.8rem;
+      font-size: 0.66rem;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 0 1rem; }
+      .nav-links { display: none; }
+      .hero { padding: 55px 1.2rem 70px; }
+      .concepts-section { padding: 40px 1.2rem 10px; }
+      #form { padding: 40px 1.2rem 60px; }
+      .form-layout { grid-template-columns: 1fr; gap: 2rem; }
+      .concept-grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+      footer { padding: 1.5rem 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-left">
+    <span class="lg-pill">LG</span>
+    <span class="nav-subtitle">Bobert × LG Collab</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="./index.html">← Back to Shop</a></li>
+    <li><a href="#concepts">Concepts</a></li>
+    <li><a href="#about">About Artist</a></li>
+    <li><a href="#franchise">Franchise</a></li>
+    <li><a href="#form">Interest Form</a></li>
+    <li><a href="#form" class="nav-cta">Feedback</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <img src="./assets/LG_LOGO.png" class="hero-logo-bg" alt="" aria-hidden="true">
+  <div class="hero-eyebrow">
+    <span class="dot"></span>
+    Bobert × Light Garden · Community Input
+    <span class="dot"></span>
+  </div>
+  <h1>
+    <span class="line-green">HELP 
+    DESIGN<br></span>
+    THE DROP.
+  </h1>
+  <p class="hero-sub">
+    These are my working concepts for an LG collab merch drop. <strong>Your input shapes the final designs</strong> — vote on what you want to see, and drop your info so I can keep you posted.
+  </p>
+  <div class="hero-actions">
+    <a href="#concepts" class="btn-primary">See the Concepts</a>
+    <a href="#form" class="btn-ghost">Submit Interest</a>
+  </div>
+</section>
+
+<div class="divider"><div class="divider-line"></div><div class="divider-diamond"></div><div class="divider-line"></div></div>
+
+<!-- CONCEPTS -->
+<div id="concepts">
+
+  <!-- STICKER PACK -->
+  <div class="concepts-section">
+    <div class="section-label"><span class="dot"></span> Sticker Pack</div>
+    <h2 class="section-title">STICKER <span>DESIGNS</span></h2>
+    <p class="section-desc">Holographic die-cut vinyl stickers, UV coated and waterproof. I'm considering a few design directions — which set speaks to you?</p>
+
+    <div class="concept-grid">
+      <div class="concept-card">
+        <div class="concept-img">
+          <div class="placeholder-img">
+            <div class="ph-icon">🖼</div>
+            <span class="ph-label">Concept A</span>
+            <span class="ph-sub">LG Crest · Clean</span>
+          </div>
+        </div>
+        <div class="concept-info">
+          <div class="concept-tag">Direction 1</div>
+          <div class="concept-name">Clean Crest Set</div>
+          <p class="concept-desc">Minimal LG logo, team name wordmark, and a solid color accent sticker. Clean and versatile.</p>
+        </div>
+      </div>
+
+      <div class="concept-card">
+        <div class="concept-img">
+          <div class="placeholder-img">
+            <div class="ph-icon">🖼</div>
+            <span class="ph-label">Concept B</span>
+            <span class="ph-sub">Botanical Theme</span>
+          </div>
+        </div>
+        <div class="concept-info">
+          <div class="concept-tag">Direction 2</div>
+          <div class="concept-name">Botanical Set</div>
+          <p class="concept-desc">LG crest surrounded by garden/leaf motifs. Plays on the "Light Garden" name with illustrated botanicals.</p>
+        </div>
+      </div>
+
+      <div class="concept-card">
+        <div class="concept-img">
+          <div class="placeholder-img">
+            <div class="ph-icon">🖼</div>
+            <span class="ph-label">Concept C</span>
+            <span class="ph-sub">Valorant-Themed</span>
+          </div>
+        </div>
+        <div class="concept-info">
+          <div class="concept-tag">Direction 3</div>
+          <div class="concept-name">VDC Edition</div>
+          <p class="concept-desc">VDC-style design language — angular shapes, spike icon, tier star, and the LG crest in game-accurate style.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"><div class="divider-line"></div><div class="divider-diamond"></div><div class="divider-line"></div></div>
+
+  <!-- ENAMEL PIN -->
+  <div class="concepts-section">
+    <div class="section-label"><span class="dot"></span> Enamel Pin</div>
+    <h2 class="section-title">PIN <span>CONCEPTS</span></h2>
+    <p class="section-desc">Hard enamel, ~1.25" tall, rubber clutch backing. I'm deciding on shape and colorway — which do you prefer?</p>
+
+    <div class="concept-grid">
+      <div class="concept-card">
+        <div class="concept-img">
+          <div class="placeholder-img">
+            <div class="ph-icon">🖼</div>
+            <span class="ph-label">Shield Shape</span>
+            <span class="ph-sub">Gold plating</span>
+          </div>
+        </div>
+        <div class="concept-info">
+          <div class="concept-tag">Shape A · Gold</div>
+          <div class="concept-name">Shield — Gold</div>
+          <p class="concept-desc">Classic shield silhouette with LG crest. Gold metal plating with green enamel fill.</p>
+        </div>
+      </div>
+
+      <div class="concept-card">
+        <div class="concept-img">
+          <div class="placeholder-img">
+            <div class="ph-icon">🖼</div>
+            <span class="ph-label">Shield Shape</span>
+            <span class="ph-sub">Silver plating</span>
+          </div>
+        </div>
+        <div class="concept-info">
+          <div class="concept-tag">Shape A · Silver</div>
+          <div class="concept-name">Shield — Silver</div>
+          <p class="concept-desc">Same shield silhouette, silver metal plating. Cleaner look with high contrast against the green enamel.</p>
+        </div>
+      </div>
+
+      <div class="concept-card">
+        <div class="concept-img">
+          <div class="placeholder-img">
+            <div class="ph-icon">🖼</div>
+            <span class="ph-label">Diamond Shape</span>
+            <span class="ph-sub">Black / Gold</span>
+          </div>
+        </div>
+        <div class="concept-info">
+          <div class="concept-tag">Shape B · Black</div>
+          <div class="concept-name">Diamond — Black</div>
+          <p class="concept-desc">Diamond-shaped pin echoing the LG logo silhouette. Black enamel background with gold plating.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"><div class="divider-line"></div><div class="divider-diamond"></div><div class="divider-line"></div></div>
+
+  <!-- KEY CHAIN -->
+  <div class="concepts-section">
+    <div class="section-label"><span class="dot"></span> Key Chain</div>
+    <h2 class="section-title">KEY CHAIN <span>OPTIONS</span></h2>
+    <p class="section-desc">Double-sided acrylic charm, ~2", stainless steel split ring. Which material and design works best?</p>
+
+    <div class="concept-grid">
+      <div class="concept-card">
+        <div class="concept-img">
+          <div class="placeholder-img">
+            <div class="ph-icon">🖼</div>
+            <span class="ph-label">Clear Acrylic</span>
+            <span class="ph-sub">LG Crest Print</span>
+          </div>
+        </div>
+        <div class="concept-info">
+          <div class="concept-tag">Material A</div>
+          <div class="concept-name">Clear Acrylic</div>
+          <p class="concept-desc">Transparent base with full-color LG crest printed on the front. Clean and modern.</p>
+        </div>
+      </div>
+
+      <div class="concept-card">
+        <div class="concept-img">
+          <div class="placeholder-img">
+            <div class="ph-icon">🖼</div>
+            <span class="ph-label">Frosted Acrylic</span>
+            <span class="ph-sub">LG Crest Print</span>
+          </div>
+        </div>
+        <div class="concept-info">
+          <div class="concept-tag">Material B</div>
+          <div class="concept-name">Frosted Acrylic</div>
+          <p class="concept-desc">Matte frosted finish that softens the background. Gives the print a premium, diffused look.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"><div class="divider-line"></div><div class="divider-diamond"></div><div class="divider-line"></div></div>
+
+  <!-- MOUSEPAD -->
+  <div class="concepts-section">
+    <div class="section-label"><span class="dot"></span> Mousepad</div>
+    <h2 class="section-title">MOUSEPAD <span>DESIGNS</span></h2>
+    <p class="section-desc">Extended desk mat, 3mm thick, non-slip rubber base, micro-weave surface. Sizing and layout options below.</p>
+
+    <div class="concept-grid">
+      <div class="concept-card">
+        <div class="concept-img">
+          <div class="placeholder-img">
+            <div class="ph-icon">🖼</div>
+            <span class="ph-label">Centered Logo</span>
+            <span class="ph-sub">Standard · 900×400</span>
+          </div>
+        </div>
+        <div class="concept-info">
+          <div class="concept-tag">Layout A · Standard</div>
+          <div class="concept-name">Centered — 900×400</div>
+          <p class="concept-desc">Large LG crest centered on a dark field. Minimal and clean. Standard desk mat size.</p>
+        </div>
+      </div>
+
+      <div class="concept-card">
+        <div class="concept-img">
+          <div class="placeholder-img">
+            <div class="ph-icon">🖼</div>
+            <span class="ph-label">Full Illustration</span>
+            <span class="ph-sub">Standard · 900×400</span>
+          </div>
+        </div>
+        <div class="concept-info">
+          <div class="concept-tag">Layout B · Standard</div>
+          <div class="concept-name">Full Print — 900×400</div>
+          <p class="concept-desc">Edge-to-edge botanical or abstract design with the LG crest as the focal point. More visual impact.</p>
+        </div>
+      </div>
+
+      <div class="concept-card">
+        <div class="concept-img">
+          <div class="placeholder-img">
+            <div class="ph-icon">🖼</div>
+            <span class="ph-label">Centered Logo</span>
+            <span class="ph-sub">XL · 1200×600</span>
+          </div>
+        </div>
+        <div class="concept-info">
+          <div class="concept-tag">Layout A · XL</div>
+          <div class="concept-name">Centered — 1200×600</div>
+          <p class="concept-desc">Same centered logo layout in the larger XL size — covers keyboard and mouse area of most desk setups.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /concepts -->
+
+<div class="divider"><div class="divider-line"></div><div class="divider-diamond"></div><div class="divider-line"></div></div>
+
+<!-- ABOUT THE ARTIST -->
+<section id="about">
+  <div class="section-label"><span class="dot"></span> The Artist</div>
+  <h2 class="section-title">ABOUT <span>THE ARTIST</span></h2>
+
+  <div class="about-layout">
+
+    <div class="about-photo-wrap">
+      <div class="about-photo">
+        <img src="./assets/disc_pfp.webp" alt="Bobert" />
+      </div>
+    </div>
+
+    <div class="about-body">
+      <h3><span>Bobert</span></h3>
+      <p>
+        
+        Hello fellow VDC members! My name is Bobert, I've been apart of VDC since season 5. You may
+        know me as a past/current teammate, AGM of Party Animals, or GM of The Symphony. This season, 
+        I am playing with LG in <b>Apprentice</b> on team <b>Red Rose</b>.
+     </p>
+      <p>
+        Over the years, I've seen scattered interest of Franchise related merchandise, and I wanted 
+        to see if I could make that a reality for the one and only, Light Garden. 
+      </p>
+      <p>
+        I've dabbled in the digital art realm for roughly 5 years now, but this is my first attempt
+        at marketing it. Any and all feedback is welcome.
+      </p>
+
+      <div class="about-stats">
+        <div class="about-stat">
+          <div class="about-stat-value"> 5 </div>
+          <div class="about-stat-label">Seasons in VDC</div>
+        </div>
+        <div class="about-stat">
+          <div class="about-stat-value">Light Garden</div>
+          <div class="about-stat-label">Franchise</div>
+        </div>
+        <div class="about-stat">
+          <div class="about-stat-value">Red Rose</div>
+          <div class="about-stat-label">Team</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"><div class="divider-line"></div><div class="divider-diamond"></div><div class="divider-line"></div></div>
+
+<!-- ABOUT THE FRANCHISE -->
+<section id="franchise">
+  <div class="section-label"><span class="dot"></span> The Franchise</div>
+  <h2 class="section-title">ABOUT <span>LIGHT GARDEN</span></h2>
+
+  <div class="about-layout">
+
+    <div class="about-photo-wrap">
+      <div class="about-photo">
+        <img src="./assets/LG_LOGO.png" alt="Light Garden" />
+      </div>
+    </div>
+
+    <div class="about-body">
+      <h3><span>Light Garden</span></h3>
+      <p>
+        <strong>Light Garden</strong> is a VDC franchise team competing in the Valorant Draft Circuit —
+        a free, community-run NA VALORANT league open to all ranks.
+      </p>
+      <p>
+        Founded on a love of the game and a commitment to growing competitive players at every level,
+        Light Garden has built a roster of dedicated teammates across multiple tiers and seasons.
+      </p>
+      <p>
+        This merch drop is our way of giving the community something to rep — gear that means something
+        to everyone who's ever worn the LG tag.
+      </p>
+
+      <div class="about-stats">
+        <div class="about-stat">
+          <div class="about-stat-value">LG</div>
+          <div class="about-stat-label">Franchise Tag</div>
+        </div>
+        <div class="about-stat">
+          <div class="about-stat-value">VDC</div>
+          <div class="about-stat-label">League</div>
+        </div>
+        <div class="about-stat">
+          <div class="about-stat-value">NA</div>
+          <div class="about-stat-label">Region</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider" style="margin-bottom:0;"><div class="divider-line"></div><div class="divider-diamond"></div><div class="divider-line"></div></div>
+
+<!-- INTEREST FORM -->
+<section id="form">
+  <div class="form-layout">
+
+    <div class="form-info">
+      <h2>TELL ME WHAT <span>YOU WANT</span></h2>
+      <p>
+        Fill out the interest form to let me know which products and designs you're most excited about. <strong>No commitment required</strong> — this just helps me decide what to actually make.
+      </p>
+      <p>
+        I'll use the responses to finalize the product lineup and design direction before opening the real order window.
+      </p>
+      <div class="callout">
+        <div class="callout-label">What happens next?</div>
+        <p>Once I have enough interest, I'll finalize designs, share previews, and open the actual merch drop on the shop page. Drop responders get first look.</p>
+      </div>
+    </div>
+
+    <div class="form-wrapper">
+      <div class="form-header">
+        <span class="form-header-title">BOBERT × LG — INTEREST FORM</span>
+        <span class="form-header-badge">Design Input</span>
+      </div>
+
+      <!--
+        REPLACE src BELOW with your Google Form embed URL.
+        In Google Forms: Send → Embed (< >) → copy the URL inside src="..."
+        It will look like:
+
+        https://docs.google.com/forms/d/e/XXXXXXXXXXXXX/viewform?embedded=true
+      -->
+      <iframe
+        src="https://docs.google.com/forms/d/e/1FAIpQLSegdoxNO8LeBpTzMb1CQyIf8BLtPWtMP-Wy2yBaS44pMzh8vw/viewform?embedded=true"
+        title="Light Garden Interest Form"
+        loading="lazy">
+        Loading form…
+      </iframe>
+
+      <div class="form-note">
+        🔒 Your info is only used to plan the drop. I won't spam you or share your details.
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <span class="footer-pill">LG</span>
+      <span class="footer-wordmark">BOBERT × LG<span>.</span></span>
+    </div>
+    <div class="footer-links">
+      <a href="./index.html">← Main Shop</a>
+      <a href="https://vdc.gg" target="_blank" rel="noopener">vdc.gg ↗</a>
+      <a href="https://discord.gg/valorantdraftcircuit" target="_blank" rel="noopener">VDC Discord ↗</a>
+    </div>
+  </div>
+  <div class="footer-inner">
+    <div class="footer-legal">
+      <span>Not affiliated with or sponsored by the Valorant Draft Circuit, Riot Games, Inc., or VALORANT™ Esports.</span>
+      <span>© Bobert Merch· All rights reserved</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
