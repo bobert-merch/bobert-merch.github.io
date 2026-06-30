@@ -1047,13 +1047,14 @@
 
     <!--
     ══════════════════════════════════════════════════════════════
-    PRODUCT CARD: LG Standard Pack  |  $10  |  5-pack
+    PRODUCT CARD: LG Standard Pack  |  $3  |  5-pack
+    Stickers folder: assets/stickers/swirly/
     ──────────────────────────────────────────────────────────────
     HOW TO ADD A DESIGN:
       1. Copy any .swatch-btn block below and paste it in the grid
       2. Set data-src          → image path  (./assets/stickers/...)
              data-label        → design name (shown in cart)
-             data-variant-index → next number in sequence (e.g. 4)
+             data-variant-index → next number in sequence (e.g. 5)
              aria-label        → same as data-label
       3. Append the name to data-variants on the card div (pipe-separated, same order as swatches)
 
@@ -1067,42 +1068,47 @@
     <div class="product-card"
          data-product-id="sticker-pack"
          data-name="LG Sticker Pack"
-         data-price="10"
-         data-variants="Green Topographic|Dark Green|Bright Topographic|Classic">
+         data-price="3"
+         data-variants="Green Topographic|Dark Green|Bright Topographic|Dark Edition|Black &amp; White">
       <div class="product-img">
-        <img class="swatch-preview" src="./assets/stickers/standard/swirly_green_logo.png" alt="Green Topographic LG sticker">
+        <img class="swatch-preview" src="./assets/stickers/swirly/swirly_green_logo.png" alt="Green Topographic LG sticker">
       </div>
       <div class="product-info">
-        <div class="product-tag">5-PACK</div>
+
         <div class="product-name">LG Standard Pack</div>
         <p class="product-desc">5 holographic die-cut stickers of your chosen design. UV coated and waterproof.</p>
         <!-- ── SWATCHES: add / remove .swatch-btn blocks here ── -->
         <div class="swatch-grid">
           <button class="swatch-btn active" aria-current="true" aria-label="Green Topographic"
-                  data-src="./assets/stickers/standard/swirly_green_logo.png"
+                  data-src="./assets/stickers/swirly/swirly_green_logo.png"
                   data-label="Green Topographic" data-variant-index="0">
-            <img src="./assets/stickers/standard/swirly_green_logo.png" alt="">
+            <img src="./assets/stickers/swirly/swirly_green_logo.png" alt="">
           </button>
           <button class="swatch-btn" aria-label="Dark Green"
-                  data-src="./assets/stickers/standard/swirly_simple_green_logo.png"
+                  data-src="./assets/stickers/swirly/swirly_simple_green_logo.png"
                   data-label="Dark Green" data-variant-index="1">
-            <img src="./assets/stickers/standard/swirly_simple_green_logo.png" alt="">
+            <img src="./assets/stickers/swirly/swirly_simple_green_logo.png" alt="">
           </button>
           <button class="swatch-btn" aria-label="Bright Topographic"
-                  data-src="./assets/stickers/standard/swirly_logo.png"
+                  data-src="./assets/stickers/swirly/swirly_logo.png"
                   data-label="Bright Topographic" data-variant-index="2">
-            <img src="./assets/stickers/standard/swirly_logo.png" alt="">
+            <img src="./assets/stickers/swirly/swirly_logo.png" alt="">
           </button>
-          <button class="swatch-btn" aria-label="Classic"
-                  data-src="./assets/stickers/standard/logo_classic.png"
-                  data-label="Classic" data-variant-index="3">
-            <img src="./assets/stickers/standard/logo_classic.png" alt="">
+          <button class="swatch-btn" aria-label="Dark Edition"
+                  data-src="./assets/stickers/swirly/swirly_dark_logo.png"
+                  data-label="Dark Edition" data-variant-index="3">
+            <img src="./assets/stickers/swirly/swirly_dark_logo.png" alt="">
+          </button>
+          <button class="swatch-btn" aria-label="Black &amp; White"
+                  data-src="./assets/stickers/swirly/swirly_white.png"
+                  data-label="Black &amp; White" data-variant-index="4">
+            <img src="./assets/stickers/swirly/swirly_white.png" alt="">
           </button>
         </div>
         <!-- ── END SWATCHES ── -->
         <div class="product-variant-sel"></div>
         <div class="product-footer">
-          <div class="product-price"><span class="currency">$</span>10</div>
+          <div class="product-price"><span class="currency">$</span>3</div>
           <button class="btn-add-cart">Add to Cart</button>
         </div>
       </div>
@@ -1111,12 +1117,13 @@
     <!--
     ══════════════════════════════════════════════════════════════
     PRODUCT CARD: LG Holo Bundle  |  $18  |  Special-edition set
+    Stickers folder: assets/stickers/special/
     ──────────────────────────────────────────────────────────────
     HOW TO ADD A DESIGN:
       1. Copy any .swatch-btn block below and paste it in the grid
       2. Set data-src          → image path  (./assets/stickers/...)
              data-label        → design name (shown in cart)
-             data-variant-index → next number in sequence (e.g. 3)
+             data-variant-index → next number in sequence (e.g. 2)
              aria-label        → same as data-label
       3. Append the name to data-variants on the card div (pipe-separated, same order as swatches)
 
@@ -1130,15 +1137,15 @@
     <div class="product-card"
          data-product-id="holo-bundle"
          data-name="LG Holo Bundle"
-         data-price="18"
-         data-variants="Botanical|Dark Edition|Black &amp; White">
+         data-price="3"
+         data-variants="Botanical|Classic">
       <div class="product-img">
         <img class="swatch-preview" src="./assets/stickers/special/clover_logo.png" alt="Botanical LG sticker">
       </div>
       <div class="product-info">
-        <div class="product-tag">SPECIAL EDITION</div>
+
         <div class="product-name">LG Holo Bundle</div>
-        <p class="product-desc">All 3 special-edition holographic stickers in one order. Preview each design with the swatches — you get the full set.</p>
+        <p class="product-desc">All special-edition holographic stickers in one order. Preview each design with the swatches — you get the full set.</p>
         <!-- ── SWATCHES: add / remove .swatch-btn blocks here ── -->
         <div class="swatch-grid">
           <button class="swatch-btn active" aria-current="true" aria-label="Botanical"
@@ -1146,21 +1153,16 @@
                   data-label="Botanical" data-variant-index="0">
             <img src="./assets/stickers/special/clover_logo.png" alt="">
           </button>
-          <button class="swatch-btn" aria-label="Dark Edition"
-                  data-src="./assets/stickers/colored/swirly_dark_logo.png"
-                  data-label="Dark Edition" data-variant-index="1">
-            <img src="./assets/stickers/colored/swirly_dark_logo.png" alt="">
-          </button>
-          <button class="swatch-btn" aria-label="Black &amp; White"
-                  data-src="./assets/stickers/colored/swirly_white.png"
-                  data-label="Black &amp; White" data-variant-index="2">
-            <img src="./assets/stickers/colored/swirly_white.png" alt="">
+          <button class="swatch-btn" aria-label="Classic"
+                  data-src="./assets/stickers/special/logo_classic.png"
+                  data-label="Classic" data-variant-index="1">
+            <img src="./assets/stickers/special/logo_classic.png" alt="">
           </button>
         </div>
         <!-- ── END SWATCHES ── -->
         <div class="product-variant-sel"></div>
         <div class="product-footer">
-          <div class="product-price"><span class="currency">$</span>18</div>
+          <div class="product-price"><span class="currency">$</span>3</div>
           <button class="btn-add-cart">Add to Cart</button>
         </div>
       </div>
@@ -1169,12 +1171,13 @@
     <!--
     ══════════════════════════════════════════════════════════════
     PRODUCT CARD: LG Individual Sticker  |  $3  |  Single sticker
+    Stickers folder: assets/stickers/teams/
     ──────────────────────────────────────────────────────────────
     HOW TO ADD A DESIGN:
       1. Copy any .swatch-btn block below and paste it in the grid
       2. Set data-src          → image path  (./assets/stickers/...)
              data-label        → design name (shown in cart)
-             data-variant-index → next number in sequence (e.g. 4)
+             data-variant-index → next number in sequence (e.g. 1)
              aria-label        → same as data-label
       3. Append the name to data-variants on the card div (pipe-separated, same order as swatches)
 
@@ -1189,35 +1192,20 @@
          data-product-id="individual-sticker"
          data-name="LG Individual Sticker"
          data-price="3"
-         data-variants="Green Topographic|Dark Green|Bright Topographic|Classic">
+         data-variants="Red Rose">
       <div class="product-img">
-        <img class="swatch-preview" src="./assets/stickers/standard/swirly_green_logo.png" alt="Green Topographic LG sticker">
+        <img class="swatch-preview" src="./assets/stickers/teams/red_rose.png" alt="Red Rose LG sticker">
       </div>
       <div class="product-info">
-        <div class="product-tag">INDIVIDUAL</div>
+
         <div class="product-name">LG Individual Sticker</div>
         <p class="product-desc">Pick your favorite design — one holographic die-cut sticker. UV coated and waterproof.</p>
         <!-- ── SWATCHES: add / remove .swatch-btn blocks here ── -->
         <div class="swatch-grid">
-          <button class="swatch-btn active" aria-current="true" aria-label="Green Topographic"
-                  data-src="./assets/stickers/standard/swirly_green_logo.png"
-                  data-label="Green Topographic" data-variant-index="0">
-            <img src="./assets/stickers/standard/swirly_green_logo.png" alt="">
-          </button>
-          <button class="swatch-btn" aria-label="Dark Green"
-                  data-src="./assets/stickers/standard/swirly_simple_green_logo.png"
-                  data-label="Dark Green" data-variant-index="1">
-            <img src="./assets/stickers/standard/swirly_simple_green_logo.png" alt="">
-          </button>
-          <button class="swatch-btn" aria-label="Bright Topographic"
-                  data-src="./assets/stickers/standard/swirly_logo.png"
-                  data-label="Bright Topographic" data-variant-index="2">
-            <img src="./assets/stickers/standard/swirly_logo.png" alt="">
-          </button>
-          <button class="swatch-btn" aria-label="Classic"
-                  data-src="./assets/stickers/standard/logo_classic.png"
-                  data-label="Classic" data-variant-index="3">
-            <img src="./assets/stickers/standard/logo_classic.png" alt="">
+          <button class="swatch-btn active" aria-current="true" aria-label="Red Rose"
+                  data-src="./assets/stickers/teams/red_rose.png"
+                  data-label="Red Rose" data-variant-index="0">
+            <img src="./assets/stickers/teams/red_rose.png" alt="">
           </button>
         </div>
         <!-- ── END SWATCHES ── -->
