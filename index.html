@@ -273,7 +273,7 @@
     .product-img {
       width: 100%;
       aspect-ratio: 4/3;
-      background: var(--bg-mid);
+      background: #f2f2f2;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -306,7 +306,7 @@
 
     .product-slide.active { opacity: 1; pointer-events: auto; }
 
-    .product-slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .product-slide img { width: 100%; height: 100%; object-fit: contain; padding: 1.5rem; display: block; }
 
     .placeholder-img {
       width: 100%;
@@ -905,6 +905,31 @@
       text-transform: none;
     }
 
+    /* ── SWATCH SELECTOR ── */
+    .swatch-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin: 0.75rem 0 0.5rem;
+    }
+
+    .swatch-btn {
+      width: 46px;
+      height: 46px;
+      padding: 3px;
+      background: #f2f2f2;
+      border: 2px solid var(--border-bright);
+      cursor: pointer;
+      transition: border-color 0.15s;
+      flex-shrink: 0;
+    }
+
+    .swatch-btn img { width: 100%; height: 100%; object-fit: contain; display: block; }
+    .swatch-btn:hover { border-color: var(--vdc-blue); }
+    .swatch-btn.active { border-color: var(--vdc-blue); outline: 1px solid var(--vdc-blue); }
+
+    .swatch-preview { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; padding: 1.5rem; display: block; }
+
     /* ── CART PULSE ── */
     @keyframes cart-pulse {
       0%   { border-color: var(--border-bright); color: var(--muted); box-shadow: none; }
@@ -1020,43 +1045,61 @@
 
   <div class="product-grid">
 
-    <!-- STICKER PACK -->
-    <div class="product-card" data-product-id="sticker-pack" data-name="LG Sticker Pack" data-price="10" data-variants="Design A — 5-pack|Design B — 5-pack|Bundle — 10-pack">
+    <!--
+    ══════════════════════════════════════════════════════════════
+    PRODUCT CARD: LG Standard Pack  |  $10  |  5-pack
+    ──────────────────────────────────────────────────────────────
+    HOW TO ADD A DESIGN:
+      1. Copy any .swatch-btn block below and paste it in the grid
+      2. Set data-src          → image path  (./assets/stickers/...)
+             data-label        → design name (shown in cart)
+             data-variant-index → next number in sequence (e.g. 4)
+             aria-label        → same as data-label
+      3. Append the name to data-variants on the card div (pipe-separated, same order as swatches)
+
+    HOW TO REMOVE A DESIGN:
+      1. Delete the .swatch-btn block
+      2. Remove its name from data-variants
+      3. Re-number remaining data-variant-index values (0, 1, 2 …)
+         and make sure the first swatch has class="swatch-btn active" + aria-current="true"
+    ══════════════════════════════════════════════════════════════
+    -->
+    <div class="product-card"
+         data-product-id="sticker-pack"
+         data-name="LG Sticker Pack"
+         data-price="10"
+         data-variants="Green Topographic|Dark Green|Bright Topographic|Classic">
       <div class="product-img">
-        <div class="product-slides">
-          <div class="product-slide active">
-            <div class="placeholder-img">
-              <div class="ph-icon" aria-hidden="true">🖼</div>
-              <span class="ph-label">Design A</span>
-              <span class="ph-variant">5-pack · Holographic</span>
-            </div>
-          </div>
-          <div class="product-slide">
-            <div class="placeholder-img">
-              <div class="ph-icon" aria-hidden="true">🖼</div>
-              <span class="ph-label">Design B</span>
-              <span class="ph-variant">5-pack · Holographic</span>
-            </div>
-          </div>
-          <div class="product-slide">
-            <div class="placeholder-img">
-              <div class="ph-icon" aria-hidden="true">🖼</div>
-              <span class="ph-label">Bundle</span>
-              <span class="ph-variant">Both sheets · 10-pack</span>
-            </div>
-          </div>
-        </div>
-        <button class="slide-btn slide-prev" aria-label="Previous">&#8249;</button>
-        <button class="slide-btn slide-next" aria-label="Next">&#8250;</button>
-        <div class="slide-dots">
-          <button class="slide-dot active" aria-label="Slide 1" aria-current="true"></button>
-          <button class="slide-dot" aria-label="Slide 2"></button>
-          <button class="slide-dot" aria-label="Slide 3"></button>
-        </div>
+        <img class="swatch-preview" src="./assets/stickers/standard/swirly_green_logo.png" alt="Green Topographic LG sticker">
       </div>
       <div class="product-info">
-        <div class="product-name">LG Sticker Pack</div>
-        <p class="product-desc">5 holographic die-cut stickers — LG crest, Valorant X mark, tier star, Light Garden banner, and GG design. UV coated and waterproof.</p>
+        <div class="product-tag">5-PACK</div>
+        <div class="product-name">LG Standard Pack</div>
+        <p class="product-desc">5 holographic die-cut stickers of your chosen design. UV coated and waterproof.</p>
+        <!-- ── SWATCHES: add / remove .swatch-btn blocks here ── -->
+        <div class="swatch-grid">
+          <button class="swatch-btn active" aria-current="true" aria-label="Green Topographic"
+                  data-src="./assets/stickers/standard/swirly_green_logo.png"
+                  data-label="Green Topographic" data-variant-index="0">
+            <img src="./assets/stickers/standard/swirly_green_logo.png" alt="">
+          </button>
+          <button class="swatch-btn" aria-label="Dark Green"
+                  data-src="./assets/stickers/standard/swirly_simple_green_logo.png"
+                  data-label="Dark Green" data-variant-index="1">
+            <img src="./assets/stickers/standard/swirly_simple_green_logo.png" alt="">
+          </button>
+          <button class="swatch-btn" aria-label="Bright Topographic"
+                  data-src="./assets/stickers/standard/swirly_logo.png"
+                  data-label="Bright Topographic" data-variant-index="2">
+            <img src="./assets/stickers/standard/swirly_logo.png" alt="">
+          </button>
+          <button class="swatch-btn" aria-label="Classic"
+                  data-src="./assets/stickers/standard/logo_classic.png"
+                  data-label="Classic" data-variant-index="3">
+            <img src="./assets/stickers/standard/logo_classic.png" alt="">
+          </button>
+        </div>
+        <!-- ── END SWATCHES ── -->
         <div class="product-variant-sel"></div>
         <div class="product-footer">
           <div class="product-price"><span class="currency">$</span>10</div>
@@ -1065,25 +1108,56 @@
       </div>
     </div>
 
-    <!-- HOLOGRAPHIC BUNDLE -->
-    <div class="product-card limited" data-product-id="holo-bundle" data-name="LG Holo Bundle" data-price="18" data-variants="Both Sheets — 10-pack">
+    <!--
+    ══════════════════════════════════════════════════════════════
+    PRODUCT CARD: LG Holo Bundle  |  $18  |  Special-edition set
+    ──────────────────────────────────────────────────────────────
+    HOW TO ADD A DESIGN:
+      1. Copy any .swatch-btn block below and paste it in the grid
+      2. Set data-src          → image path  (./assets/stickers/...)
+             data-label        → design name (shown in cart)
+             data-variant-index → next number in sequence (e.g. 3)
+             aria-label        → same as data-label
+      3. Append the name to data-variants on the card div (pipe-separated, same order as swatches)
+
+    HOW TO REMOVE A DESIGN:
+      1. Delete the .swatch-btn block
+      2. Remove its name from data-variants
+      3. Re-number remaining data-variant-index values (0, 1, 2 …)
+         and make sure the first swatch has class="swatch-btn active" + aria-current="true"
+    ══════════════════════════════════════════════════════════════
+    -->
+    <div class="product-card"
+         data-product-id="holo-bundle"
+         data-name="LG Holo Bundle"
+         data-price="18"
+         data-variants="Botanical|Dark Edition|Black &amp; White">
       <div class="product-img">
-        <div class="product-slides">
-          <div class="product-slide active">
-            <div class="placeholder-img">
-              <div class="ph-icon" aria-hidden="true">🖼</div>
-              <span class="ph-label">Holo Bundle</span>
-              <span class="ph-variant">Both sheets · 10-pack</span>
-            </div>
-          </div>
-        </div>
-        <div class="slide-dots">
-          <button class="slide-dot active" aria-label="Slide 1" aria-current="true"></button>
-        </div>
+        <img class="swatch-preview" src="./assets/stickers/special/clover_logo.png" alt="Botanical LG sticker">
       </div>
       <div class="product-info">
+        <div class="product-tag">SPECIAL EDITION</div>
         <div class="product-name">LG Holo Bundle</div>
-        <p class="product-desc">Both Design A and Design B sheets in one order — 10 holographic die-cut stickers total. Best value for the full set.</p>
+        <p class="product-desc">All 3 special-edition holographic stickers in one order. Preview each design with the swatches — you get the full set.</p>
+        <!-- ── SWATCHES: add / remove .swatch-btn blocks here ── -->
+        <div class="swatch-grid">
+          <button class="swatch-btn active" aria-current="true" aria-label="Botanical"
+                  data-src="./assets/stickers/special/clover_logo.png"
+                  data-label="Botanical" data-variant-index="0">
+            <img src="./assets/stickers/special/clover_logo.png" alt="">
+          </button>
+          <button class="swatch-btn" aria-label="Dark Edition"
+                  data-src="./assets/stickers/colored/swirly_dark_logo.png"
+                  data-label="Dark Edition" data-variant-index="1">
+            <img src="./assets/stickers/colored/swirly_dark_logo.png" alt="">
+          </button>
+          <button class="swatch-btn" aria-label="Black &amp; White"
+                  data-src="./assets/stickers/colored/swirly_white.png"
+                  data-label="Black &amp; White" data-variant-index="2">
+            <img src="./assets/stickers/colored/swirly_white.png" alt="">
+          </button>
+        </div>
+        <!-- ── END SWATCHES ── -->
         <div class="product-variant-sel"></div>
         <div class="product-footer">
           <div class="product-price"><span class="currency">$</span>18</div>
@@ -1092,38 +1166,64 @@
       </div>
     </div>
 
-    <!-- KEY CHAIN -->
-    <div class="product-card" data-product-id="key-chain" data-name="LG Key Chain" data-price="12" data-variants="Clear Acrylic|Frosted Acrylic">
+    <!--
+    ══════════════════════════════════════════════════════════════
+    PRODUCT CARD: LG Individual Sticker  |  $3  |  Single sticker
+    ──────────────────────────────────────────────────────────────
+    HOW TO ADD A DESIGN:
+      1. Copy any .swatch-btn block below and paste it in the grid
+      2. Set data-src          → image path  (./assets/stickers/...)
+             data-label        → design name (shown in cart)
+             data-variant-index → next number in sequence (e.g. 4)
+             aria-label        → same as data-label
+      3. Append the name to data-variants on the card div (pipe-separated, same order as swatches)
+
+    HOW TO REMOVE A DESIGN:
+      1. Delete the .swatch-btn block
+      2. Remove its name from data-variants
+      3. Re-number remaining data-variant-index values (0, 1, 2 …)
+         and make sure the first swatch has class="swatch-btn active" + aria-current="true"
+    ══════════════════════════════════════════════════════════════
+    -->
+    <div class="product-card"
+         data-product-id="individual-sticker"
+         data-name="LG Individual Sticker"
+         data-price="3"
+         data-variants="Green Topographic|Dark Green|Bright Topographic|Classic">
       <div class="product-img">
-        <div class="product-slides">
-          <div class="product-slide active">
-            <div class="placeholder-img">
-              <div class="ph-icon" aria-hidden="true">🖼</div>
-              <span class="ph-label">Clear Acrylic</span>
-              <span class="ph-variant">Double-sided · ~2" charm</span>
-            </div>
-          </div>
-          <div class="product-slide">
-            <div class="placeholder-img">
-              <div class="ph-icon" aria-hidden="true">🖼</div>
-              <span class="ph-label">Frosted Acrylic</span>
-              <span class="ph-variant">Double-sided · ~2" charm</span>
-            </div>
-          </div>
-        </div>
-        <button class="slide-btn slide-prev" aria-label="Previous">&#8249;</button>
-        <button class="slide-btn slide-next" aria-label="Next">&#8250;</button>
-        <div class="slide-dots">
-          <button class="slide-dot active" aria-label="Slide 1" aria-current="true"></button>
-          <button class="slide-dot" aria-label="Slide 2"></button>
-        </div>
+        <img class="swatch-preview" src="./assets/stickers/standard/swirly_green_logo.png" alt="Green Topographic LG sticker">
       </div>
       <div class="product-info">
-        <div class="product-name">LG Key Chain</div>
-        <p class="product-desc">Double-sided acrylic key chain with LG crest on front, "Light Garden" on the back. ~2" charm with stainless steel split ring.</p>
+        <div class="product-tag">INDIVIDUAL</div>
+        <div class="product-name">LG Individual Sticker</div>
+        <p class="product-desc">Pick your favorite design — one holographic die-cut sticker. UV coated and waterproof.</p>
+        <!-- ── SWATCHES: add / remove .swatch-btn blocks here ── -->
+        <div class="swatch-grid">
+          <button class="swatch-btn active" aria-current="true" aria-label="Green Topographic"
+                  data-src="./assets/stickers/standard/swirly_green_logo.png"
+                  data-label="Green Topographic" data-variant-index="0">
+            <img src="./assets/stickers/standard/swirly_green_logo.png" alt="">
+          </button>
+          <button class="swatch-btn" aria-label="Dark Green"
+                  data-src="./assets/stickers/standard/swirly_simple_green_logo.png"
+                  data-label="Dark Green" data-variant-index="1">
+            <img src="./assets/stickers/standard/swirly_simple_green_logo.png" alt="">
+          </button>
+          <button class="swatch-btn" aria-label="Bright Topographic"
+                  data-src="./assets/stickers/standard/swirly_logo.png"
+                  data-label="Bright Topographic" data-variant-index="2">
+            <img src="./assets/stickers/standard/swirly_logo.png" alt="">
+          </button>
+          <button class="swatch-btn" aria-label="Classic"
+                  data-src="./assets/stickers/standard/logo_classic.png"
+                  data-label="Classic" data-variant-index="3">
+            <img src="./assets/stickers/standard/logo_classic.png" alt="">
+          </button>
+        </div>
+        <!-- ── END SWATCHES ── -->
         <div class="product-variant-sel"></div>
         <div class="product-footer">
-          <div class="product-price"><span class="currency">$</span>12</div>
+          <div class="product-price"><span class="currency">$</span>3</div>
           <button class="btn-add-cart">Add to Cart</button>
         </div>
       </div>
@@ -1262,34 +1362,6 @@
 </footer>
 
 <script>
-  // ── PRODUCT CAROUSELS ──
-  document.querySelectorAll('.product-card').forEach(card => {
-    const slides = card.querySelectorAll('.product-slide');
-    const dots   = card.querySelectorAll('.slide-dot');
-    if (slides.length < 2) return;
-    let cur = 0;
-    card.dataset.activeSlide = '0';
-
-    function goTo(n) {
-      slides[cur].classList.remove('active');
-      dots[cur].classList.remove('active');
-      dots[cur].removeAttribute('aria-current');
-      cur = (n + slides.length) % slides.length;
-      slides[cur].classList.add('active');
-      dots[cur].classList.add('active');
-      dots[cur].setAttribute('aria-current', 'true');
-      card.dataset.activeSlide = String(cur);
-      const lbl = card.querySelector('.product-variant-sel');
-      if (lbl && PRODUCTS[card.dataset.productId]) {
-        lbl.textContent = PRODUCTS[card.dataset.productId].variants[cur];
-      }
-    }
-
-    card.querySelector('.slide-prev').addEventListener('click', e => { e.stopPropagation(); goTo(cur - 1); });
-    card.querySelector('.slide-next').addEventListener('click', e => { e.stopPropagation(); goTo(cur + 1); });
-    dots.forEach((d, i) => d.addEventListener('click', e => { e.stopPropagation(); goTo(i); }));
-  });
-
   // ── CART ──
   const PRODUCTS = {};
   document.querySelectorAll('.product-card[data-name]').forEach(card => {
@@ -1469,6 +1541,27 @@
     if (e.key !== 'Escape') return;
     closeCart();
     closeMobileNav();
+  });
+
+  // ── SWATCH SELECTOR ──
+  document.querySelectorAll('.swatch-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const card = btn.closest('.product-card');
+      card.querySelectorAll('.swatch-btn').forEach(b => {
+        b.classList.remove('active');
+        b.removeAttribute('aria-current');
+      });
+      btn.classList.add('active');
+      btn.setAttribute('aria-current', 'true');
+      const preview = card.querySelector('.swatch-preview');
+      if (preview) {
+        preview.src = btn.dataset.src;
+        preview.alt = btn.dataset.label + ' LG sticker';
+      }
+      const sel = card.querySelector('.product-variant-sel');
+      if (sel) sel.textContent = btn.dataset.label;
+      card.dataset.activeSlide = btn.dataset.variantIndex;
+    });
   });
 </script>
 
