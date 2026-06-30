@@ -174,7 +174,7 @@
       color: var(--muted);
       line-height: 1.6;
       max-width: 540px;
-      margin-bottom: 2rem;
+      margin-bottom: 0;
     }
 
     /* ── CONCEPTS + FORM LAYOUT ── */
@@ -332,7 +332,7 @@
 
     /* ── ABOUT ── */
     #about {
-      padding: 80px 2rem 50px;
+      padding: 50px 2rem 80px;
       max-width: 1280px;
       margin: 0 auto;
     }
@@ -400,13 +400,6 @@
     }
 
     .about-body p strong { color: var(--text); }
-
-    @media (max-width: 768px) {
-      #about { padding: 50px 1.2rem 15px; }
-      .about-grid { grid-template-columns: 1fr; }
-      .about-col { flex-direction: column; align-items: flex-start; }
-      .about-photo { width: 160px; height: 160px; }
-    }
 
     .form-wrapper iframe {
       width: 100%;
@@ -480,7 +473,11 @@
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
       .hero { padding: 70px 1.2rem 85px; }
-      .concepts-section { padding: 50px 1.2rem 60px; }
+      #about { padding: 40px 1.2rem 60px; }
+      .about-grid { grid-template-columns: 1fr; }
+      .about-col { flex-direction: column; align-items: flex-start; }
+      .about-photo { width: 160px; height: 160px; }
+      .concepts-section { padding: 40px 1.2rem 60px; }
       .concepts-form-grid { grid-template-columns: 1fr; }
       footer { padding: 1.5rem 1.2rem; }
     }
@@ -496,10 +493,9 @@
   </div>
   <ul class="nav-links">
     <li><a href="./index.html">← Back to Shop</a></li>
-    <li><a href="#concepts">Concepts</a></li>
     <li><a href="#about">About</a></li>
-    <li><a href="#form">Interest Form</a></li>
-    <li><a href="#form" class="nav-cta">Feedback</a></li>
+    <li><a href="#concepts">Concepts</a></li>
+    <li><a href="#form" class="nav-cta">Interest Form</a></li>
   </ul>
   <button class="hamburger" id="hamburger-btn" aria-label="Open navigation" aria-expanded="false">MENU</button>
 </nav>
@@ -507,10 +503,9 @@
 <!-- MOBILE NAV -->
 <div class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation">
   <a href="./index.html">← Back to Shop</a>
-  <a href="#concepts">Concepts</a>
   <a href="#about">About</a>
-  <a href="#form">Interest Form</a>
-  <a href="#form" class="mobile-nav-cta">Feedback</a>
+  <a href="#concepts">Concepts</a>
+  <a href="#form" class="mobile-nav-cta">Interest Form</a>
 </div>
 
 <main>
@@ -534,62 +529,6 @@
   <div class="hero-actions">
     <a href="#concepts" class="btn-primary">See the Concepts</a>
     <a href="#form" class="btn-ghost">Submit Interest</a>
-  </div>
-</section>
-
-<div class="divider"><div class="divider-line"></div><div class="divider-diamond"></div><div class="divider-line"></div></div>
-
-<!-- ABOUT -->
-<section id="about">
-  <div class="section-label"><span class="dot"></span> The Collab</div>
-  <h2 class="section-title">BEHIND <span>THE DROP</span></h2>
-
-  <div class="about-grid">
-
-    <div class="about-col">
-      <div class="about-photo">
-        <img src="./assets/disc_pfp.webp" alt="Bobert" loading="lazy" />
-      </div>
-      <div class="about-body">
-        <h3><span>Bobert</span></h3>
-        <p>
-          Hello fellow VDC members! My name is Bobert, I’ve been a part of VDC since season 5. You may
-          know me as a past/current teammate, AGM of Party Animals, or GM of The Symphony. This season,
-          I am playing with LG in <strong>Apprentice</strong> on team <strong>Red Rose</strong>.
-        </p>
-        <p>
-          Over the years, I’ve seen scattered interest of Franchise related merchandise, and I wanted
-          to see if I could make that a reality for the one and only, Light Garden.
-        </p>
-        <p>
-          I’ve dabbled in the digital art realm for roughly 5 years now, but this is my first attempt
-          at marketing it. Any and all feedback is welcome.
-        </p>
-      </div>
-    </div>
-
-    <div class="about-col about-col--lg">
-      <div class="about-photo">
-        <img src="./assets/LG_LOGO.png" alt="Light Garden" loading="lazy" />
-      </div>
-      <div class="about-body">
-        <h3><span>Light Garden</span></h3>
-        <p>
-          Hello everyone! Light Garden is one of the last standing franchises from the start of VDC.
-          We have won four championships and hold the record for highest win percentage as a franchise in season 2.
-        </p>
-        <p>
-         We’re looking for anyone who wants to be an active, engaged member of the community and has a desire to grow.
-          We absolutely do not tolerate any toxicity. In the end, while we’re all trying to win, this league is for fun.
-           Our goal is to foster a friendly competitive environment where we can all learn and compete together.
-          </p>
-           <p>
-           Regardless of whether you end up on one our teams feel free to join our discord! We love to game together and
-           just plain hang out, and would love to see you there with us 🙂
-        </p>
-      </div>
-    </div>
-
   </div>
 </section>
 
@@ -695,6 +634,62 @@
     </div>
   </div>
 </section><!-- /concepts -->
+
+<div class="divider"><div class="divider-line"></div><div class="divider-diamond"></div><div class="divider-line"></div></div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-label"><span class="dot"></span> The Collab</div>
+  <h2 class="section-title">BEHIND <span>THE DROP</span></h2>
+
+  <div class="about-grid">
+
+    <div class="about-col">
+      <div class="about-photo">
+        <img src="./assets/disc_pfp.webp" alt="Bobert" loading="lazy" />
+      </div>
+      <div class="about-body">
+        <h3><span>Bobert</span></h3>
+        <p>
+          Hello fellow VDC members! My name is Bobert, I’ve been a part of VDC since season 5. You may
+          know me as a past/current teammate, AGM of Party Animals, or GM of The Symphony. This season,
+          I am playing with LG in <strong>Apprentice</strong> on team <strong>Red Rose</strong>.
+        </p>
+        <p>
+          Over the years, I’ve seen scattered interest of Franchise related merchandise, and I wanted
+          to see if I could make that a reality for the one and only, Light Garden.
+        </p>
+        <p>
+          I’ve dabbled in the digital art realm for roughly 5 years now, but this is my first attempt
+          at marketing it. Any and all feedback is welcome.
+        </p>
+      </div>
+    </div>
+
+    <div class="about-col about-col--lg">
+      <div class="about-photo">
+        <img src="./assets/LG_LOGO.png" alt="Light Garden" loading="lazy" />
+      </div>
+      <div class="about-body">
+        <h3><span>Light Garden</span></h3>
+        <p>
+          Hello everyone! Light Garden is one of the last standing franchises from the start of VDC.
+          We have won four championships and hold the record for highest win percentage as a franchise in season 2.
+        </p>
+        <p>
+         We’re looking for anyone who wants to be an active, engaged member of the community and has a desire to grow.
+          We absolutely do not tolerate any toxicity. In the end, while we’re all trying to win, this league is for fun.
+           Our goal is to foster a friendly competitive environment where we can all learn and compete together.
+          </p>
+           <p>
+           Regardless of whether you end up on one our teams feel free to join our discord! We love to game together and
+           just plain hang out, and would love to see you there with us 🙂
+        </p>
+      </div>
+    </div>
+
+  </div>
+</section>
 
 </main>
 
