@@ -4,9 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>THE DRIP — Bobert × LG Merch Drop</title>
-  <meta name="description" content="LG-branded merch designed by Bobert — holographic sticker packs and acrylic key chains for the Light Garden VDC franchise. Limited run, one drop per season.">
+  <meta name="description" content="LG-branded merch designed by Bobert — holographic sticker packs for the Light Garden VDC franchise. Limited run, one drop per season.">
   <meta property="og:title" content="THE DRIP — Bobert × LG Merch Drop">
-  <meta property="og:description" content="LG-branded merch designed by a VDC community member. Sticker packs and key chains — limited run, one drop per season.">
+  <meta property="og:description" content="LG-branded merch designed by a VDC community member. Holographic sticker packs — limited run, one drop per season.">
   <meta property="og:image" content="https://bobert-merch.github.io/assets/LG_LOGO.png">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://bobert-merch.github.io/">
@@ -257,19 +257,6 @@
       box-shadow: 0 12px 40px rgba(92,184,58,0.12);
     }
 
-    .product-card.limited::after {
-      content: 'LIMITED';
-      position: absolute;
-      top: 14px; right: 0;
-      background: var(--gold);
-      color: #0B0D14;
-      font-size: 0.58rem;
-      font-weight: 800;
-      letter-spacing: 0.18em;
-      padding: 4px 10px;
-      clip-path: polygon(7px 0%, 100% 0%, 100% 100%, 0% 100%);
-    }
-
     .product-img {
       width: 100%;
       aspect-ratio: 4/3;
@@ -290,96 +277,11 @@
       background: var(--vdc-blue);
     }
 
-    /* ── PRODUCT CAROUSEL ── */
-    .product-slides { width: 100%; align-self: stretch; position: relative; }
-
-    .product-slide {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      transition: opacity 0.25s ease;
-      pointer-events: none;
-    }
-
-    .product-slide.active { opacity: 1; pointer-events: auto; }
-
-    .product-slide img { width: 100%; height: 100%; object-fit: contain; padding: 1.5rem; display: block; }
-
-    .placeholder-img {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      background: var(--bg-mid);
-    }
-
-    .ph-icon { font-size: 1.8rem; opacity: 0.2; line-height: 1; }
-    .ph-label { font-family: var(--font-display); font-size: 1.05rem; letter-spacing: 0.1em; color: var(--muted); }
-    .ph-variant { font-size: 0.6rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--vdc-blue); opacity: 0.7; }
-
-    .slide-btn {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(0,0,0,0.5);
-      border: 1px solid rgba(255,255,255,0.08);
-      color: rgba(255,255,255,0.75);
-      font-size: 1.4rem;
-      line-height: 1;
-      width: 26px;
-      height: 38px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      z-index: 3;
-      transition: background 0.15s, color 0.15s;
-      padding: 0;
-    }
-
-    .slide-btn:hover { background: rgba(0,0,0,0.8); color: #fff; }
-    .slide-prev { left: 0; }
-    .slide-next { right: 0; }
-
-    .slide-dots {
-      position: absolute;
-      bottom: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 6px;
-      z-index: 3;
-    }
-
-    .slide-dot {
-      width: 6px; height: 6px; border-radius: 50%;
-      background: rgba(255,255,255,0.2);
-      border: none; cursor: pointer; padding: 0;
-      transition: background 0.2s, transform 0.2s;
-    }
-
-    .slide-dot.active { background: var(--vdc-blue); transform: scale(1.35); }
-
     .product-info {
       padding: 1.5rem 1.6rem 1.8rem;
       flex: 1;
       display: flex;
       flex-direction: column;
-    }
-
-    .product-tag {
-      font-size: 0.62rem;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--vdc-blue);
-      margin-bottom: 0.35rem;
     }
 
     .product-name {
@@ -1043,28 +945,28 @@
     </div>
   </div>
 
+  <!--
+  ══════════════════════════════════════════════════════════════
+  PRODUCT GRID — HOW TO EDIT SWATCHES (applies to all cards)
+  ──────────────────────────────────────────────────────────────
+  ADD A DESIGN:
+    1. Copy any .swatch-btn block and paste it inside .swatch-grid
+    2. Set  data-src          → image path  (./assets/stickers/...)
+            data-label        → design name (shown in cart)
+            data-variant-index → next integer in sequence
+            aria-label        → same as data-label
+    3. Append the name to data-variants on the card div (pipe-separated, same order as swatches)
+
+  REMOVE A DESIGN:
+    1. Delete the .swatch-btn block
+    2. Remove its name from data-variants
+    3. Re-number remaining data-variant-index values (0, 1, 2 …)
+       Make sure the first swatch has class="swatch-btn active" + aria-current="true"
+  ══════════════════════════════════════════════════════════════
+  -->
   <div class="product-grid">
 
-    <!--
-    ══════════════════════════════════════════════════════════════
-    PRODUCT CARD: LG Standard Pack  |  $3  |  5-pack
-    Stickers folder: assets/stickers/swirly/
-    ──────────────────────────────────────────────────────────────
-    HOW TO ADD A DESIGN:
-      1. Copy any .swatch-btn block below and paste it in the grid
-      2. Set data-src          → image path  (./assets/stickers/...)
-             data-label        → design name (shown in cart)
-             data-variant-index → next number in sequence (e.g. 5)
-             aria-label        → same as data-label
-      3. Append the name to data-variants on the card div (pipe-separated, same order as swatches)
-
-    HOW TO REMOVE A DESIGN:
-      1. Delete the .swatch-btn block
-      2. Remove its name from data-variants
-      3. Re-number remaining data-variant-index values (0, 1, 2 …)
-         and make sure the first swatch has class="swatch-btn active" + aria-current="true"
-    ══════════════════════════════════════════════════════════════
-    -->
+    <!-- CARD: LG Standard Pack | $3 | assets/stickers/swirly/ -->
     <div class="product-card"
          data-product-id="sticker-pack"
          data-name="LG Sticker Pack"
@@ -1075,7 +977,7 @@
       </div>
       <div class="product-info">
 
-        <div class="product-name">LG Standard Pack</div>
+        <div class="product-name">LG Swirl Stickers</div>
         <p class="product-desc">5 holographic die-cut stickers of your chosen design. UV coated and waterproof.</p>
         <!-- ── SWATCHES: add / remove .swatch-btn blocks here ── -->
         <div class="swatch-grid">
@@ -1114,26 +1016,7 @@
       </div>
     </div>
 
-    <!--
-    ══════════════════════════════════════════════════════════════
-    PRODUCT CARD: LG Holo Bundle  |  $18  |  Special-edition set
-    Stickers folder: assets/stickers/special/
-    ──────────────────────────────────────────────────────────────
-    HOW TO ADD A DESIGN:
-      1. Copy any .swatch-btn block below and paste it in the grid
-      2. Set data-src          → image path  (./assets/stickers/...)
-             data-label        → design name (shown in cart)
-             data-variant-index → next number in sequence (e.g. 2)
-             aria-label        → same as data-label
-      3. Append the name to data-variants on the card div (pipe-separated, same order as swatches)
-
-    HOW TO REMOVE A DESIGN:
-      1. Delete the .swatch-btn block
-      2. Remove its name from data-variants
-      3. Re-number remaining data-variant-index values (0, 1, 2 …)
-         and make sure the first swatch has class="swatch-btn active" + aria-current="true"
-    ══════════════════════════════════════════════════════════════
-    -->
+    <!-- CARD: LG Holo Bundle | $3 | assets/stickers/special/ -->
     <div class="product-card"
          data-product-id="holo-bundle"
          data-name="LG Holo Bundle"
@@ -1145,7 +1028,7 @@
       <div class="product-info">
 
         <div class="product-name">LG Holo Bundle</div>
-        <p class="product-desc">All special-edition holographic stickers in one order. Preview each design with the swatches — you get the full set.</p>
+        <p class="product-desc">Special-edition holographic die-cut stickers. Select a design with the swatches — each order is for one chosen design.</p>
         <!-- ── SWATCHES: add / remove .swatch-btn blocks here ── -->
         <div class="swatch-grid">
           <button class="swatch-btn active" aria-current="true" aria-label="Botanical"
@@ -1168,26 +1051,7 @@
       </div>
     </div>
 
-    <!--
-    ══════════════════════════════════════════════════════════════
-    PRODUCT CARD: LG Individual Sticker  |  $3  |  Single sticker
-    Stickers folder: assets/stickers/teams/
-    ──────────────────────────────────────────────────────────────
-    HOW TO ADD A DESIGN:
-      1. Copy any .swatch-btn block below and paste it in the grid
-      2. Set data-src          → image path  (./assets/stickers/...)
-             data-label        → design name (shown in cart)
-             data-variant-index → next number in sequence (e.g. 1)
-             aria-label        → same as data-label
-      3. Append the name to data-variants on the card div (pipe-separated, same order as swatches)
-
-    HOW TO REMOVE A DESIGN:
-      1. Delete the .swatch-btn block
-      2. Remove its name from data-variants
-      3. Re-number remaining data-variant-index values (0, 1, 2 …)
-         and make sure the first swatch has class="swatch-btn active" + aria-current="true"
-    ══════════════════════════════════════════════════════════════
-    -->
+    <!-- CARD: LG Individual Sticker | $3 | assets/stickers/teams/ -->
     <div class="product-card"
          data-product-id="individual-sticker"
          data-name="LG Individual Sticker"
@@ -1360,8 +1224,11 @@
     };
   });
 
-  // Initialize variant labels
+  // Initialize active swatch state + variant labels
   document.querySelectorAll('.product-card').forEach(card => {
+    const activeBtn = card.querySelector('.swatch-btn.active');
+    if (activeBtn) card.dataset.activeSlide = activeBtn.dataset.variantIndex ?? '0';
+
     const lbl = card.querySelector('.product-variant-sel');
     const p   = PRODUCTS[card.dataset.productId];
     if (!lbl || !p) return;
@@ -1379,7 +1246,17 @@
     if (!el.textContent.trim()) el.textContent = addr;
   });
 
-  let cart = JSON.parse(localStorage.getItem('lg-cart') || '[]');
+  function esc(str) {
+    return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  let cart;
+  try {
+    const stored = JSON.parse(localStorage.getItem('lg-cart') || '[]');
+    cart = Array.isArray(stored) ? stored : [];
+  } catch (_) {
+    cart = [];
+  }
 
   function cartKey(pid, vi) { return pid + '::' + vi; }
 
@@ -1437,17 +1314,17 @@
     container.innerHTML = cart.map(item => `
       <div class="cart-item">
         <div class="cart-item-info">
-          <div class="cart-item-name">${item.name}</div>
-          <div class="cart-item-variant">${item.variant}</div>
+          <div class="cart-item-name">${esc(item.name)}</div>
+          <div class="cart-item-variant">${esc(item.variant)}</div>
           <div class="cart-item-controls">
-            <button class="qty-btn" data-key="${item.key}" data-delta="-1">−</button>
-            <span class="cart-item-qty">${item.qty}</span>
-            <button class="qty-btn" data-key="${item.key}" data-delta="1">+</button>
+            <button class="qty-btn" data-key="${esc(item.key)}" data-delta="-1">−</button>
+            <span class="cart-item-qty">${Number(item.qty)}</span>
+            <button class="qty-btn" data-key="${esc(item.key)}" data-delta="1">+</button>
           </div>
         </div>
         <div class="cart-item-right">
-          <div class="cart-item-price">$${item.price * item.qty}</div>
-          <button class="cart-item-remove" data-key="${item.key}">Remove</button>
+          <div class="cart-item-price">$${Number(item.price) * Number(item.qty)}</div>
+          <button class="cart-item-remove" data-key="${esc(item.key)}">Remove</button>
         </div>
       </div>
     `).join('');
