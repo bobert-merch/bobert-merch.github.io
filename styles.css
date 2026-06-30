@@ -181,8 +181,7 @@ nav {
 /* ── REDUCED MOTION ── */
 @media (prefers-reduced-motion: reduce) {
   .ticker-inner                  { animation: none; }
-  .hero-eyebrow .dot,
-  .section-label .dot            { animation: none; }
+  .hero-eyebrow .dot             { animation: none; }
   .cart-btn.pulse                { animation: none; }
   .mobile-nav                    { transition: none; }
   .cart-drawer, .cart-overlay    { transition: none; }
