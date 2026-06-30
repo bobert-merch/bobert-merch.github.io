@@ -423,22 +423,24 @@
     }
 
     /* ── MATCH DAY BANNER ── */
-    .matchday-bar {
+    .trial-notice {
       background: var(--surface);
       border-top: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
-      padding: 16px 2rem;
+      padding: 20px 2rem;
       text-align: center;
     }
 
-    .matchday-bar p {
-      font-size: 0.78rem;
+    .trial-notice p {
+      font-size: 0.8rem;
       color: var(--muted);
-      letter-spacing: 0.04em;
+      letter-spacing: 0.03em;
+      line-height: 1.7;
+      max-width: 660px;
+      margin: 0 auto;
     }
 
-    .matchday-bar strong { color: var(--vdc-blue); }
-    .matchday-bar .red  { color: var(--val-red); }
+    .trial-notice strong { color: var(--text); }
 
     /* ── FOOTER ── */
     footer {
@@ -895,6 +897,13 @@
     <a href="#order" class="btn-ghost">Place an Order</a>
   </div>
 </section>
+
+<!-- TRIAL NOTICE -->
+<div class="divider"><div class="divider-line"></div><div class="divider-diamond"></div><div class="divider-line"></div></div>
+
+<div class="trial-notice" role="note">
+  <p><strong>Trial Run.</strong> This is our first merch drop — starting small with stickers to test the waters. All proceeds go directly back into the project to fund future items like <strong>key chains</strong>, <strong>hats</strong>, and more. Your support makes the next drop possible.</p>
+</div>
 
 <!-- SHOP -->
 <div class="divider"><div class="divider-line"></div><div class="divider-diamond"></div><div class="divider-line"></div></div>
