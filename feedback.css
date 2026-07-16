@@ -1,0 +1,254 @@
+/* ── HERO ── */
+.hero {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 110px 2rem 120px;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 55% at 50% 0%, rgba(92,184,58,0.12) 0%, transparent 65%),
+    repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(92,184,58,0.025) 39px, rgba(92,184,58,0.025) 40px),
+    repeating-linear-gradient(90deg, transparent, transparent 79px, rgba(92,184,58,0.015) 79px, rgba(92,184,58,0.015) 80px);
+  pointer-events: none;
+}
+
+.hero-logo-bg {
+  position: absolute;
+  width: 52%;
+  max-width: 520px;
+  top: 44%;
+  left: 50%;
+  transform: translate(-50%, -44%);
+  opacity: 0.06;
+  pointer-events: none;
+  user-select: none;
+  -webkit-mask-image: linear-gradient(to bottom, black 20%, rgba(0,0,0,0.5) 60%, transparent 85%);
+  mask-image: linear-gradient(to bottom, black 20%, rgba(0,0,0,0.5) 60%, transparent 85%);
+}
+
+.hero > *:not(.hero-logo-bg) { position: relative; }
+
+.hero-eyebrow { margin-bottom: 1.2rem; }
+
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(3.2rem, 9vw, 7rem);
+  line-height: 0.9;
+  letter-spacing: 0.02em;
+  margin-bottom: 1.2rem;
+}
+
+.hero-sub {
+  font-size: 0.9rem;
+  color: var(--muted);
+  max-width: 460px;
+  line-height: 1.65;
+  margin-bottom: 2rem;
+}
+
+.hero-sub strong { color: var(--text); }
+
+/* ── CONCEPTS SECTIONS ── */
+.concepts-section {
+  padding: 80px 2rem 100px;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+/* .section-label / .section-title are shared in styles.css. */
+
+.section-desc {
+  font-size: 0.8rem;
+  color: var(--muted);
+  line-height: 1.6;
+  max-width: 540px;
+  margin-bottom: 0;
+}
+
+/* ── CONCEPTS + FORM LAYOUT ── */
+.concepts-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 3rem;
+  align-items: start;
+  margin-top: 2rem;
+}
+
+.concept-carousel { position: relative; }
+
+.concept-slide { display: none; }
+.concept-slide.active { display: block; }
+
+.concept-carousel-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.concept-nav-btn {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text);
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 2px;
+  cursor: pointer;
+  font-size: 1.4rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.concept-nav-btn:hover {
+  border-color: var(--lg-green);
+  color: var(--lg-green);
+}
+
+.concept-dots { display: flex; gap: 0.5rem; }
+
+.concept-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--border);
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.concept-dot.active { background: var(--lg-green); }
+
+/* ── CONCEPT CARDS ── */
+
+.concept-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  transition: border-color 0.25s, transform 0.2s;
+}
+
+.concept-card:hover {
+  border-color: var(--lg-green);
+  transform: translateY(-3px);
+}
+
+.concept-img {
+  width: 100%;
+  aspect-ratio: 4/3;
+  background: #f2f2f2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+
+.concept-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 1.5rem;
+  display: block;
+}
+
+.concept-img::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 40px; height: 3px;
+  background: var(--lg-green);
+}
+
+.placeholder-img {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.ph-icon { font-size: 1.6rem; opacity: 0.18; }
+
+.ph-label {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+}
+
+.ph-sub {
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--lg-green);
+  opacity: 0.6;
+}
+
+.concept-info {
+  padding: 1.3rem 1.4rem 1.5rem;
+}
+
+.concept-tag {
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--lg-green);
+  margin-bottom: 0.3rem;
+}
+
+.concept-name {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.4rem;
+}
+
+.concept-desc {
+  font-size: 0.75rem;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.form-wrapper iframe {
+  width: 100%;
+  min-height: 680px;
+  border: none;
+  display: block;
+  /* Known fragile hack: Google Forms only renders light-mode, and its embed
+     doesn't offer a dark theme or CSS hook we control (it's a cross-origin
+     iframe), so we invert the whole thing to roughly match the site's dark
+     palette. This is brittle — if Google changes their form styling, colors
+     (esp. the blue submit button and any images/logos in the form) could
+     shift or look wrong. Verify visually after any Google Forms changes;
+     a real fix would mean building a native form or a themed Forms
+     alternative, which is out of scope for this trial run. */
+  filter: invert(1) hue-rotate(180deg);
+}
+
+/* footer / .footer-* are shared in styles.css. */
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .hero { padding: 70px 1.2rem 85px; }
+  .concepts-section { padding: 40px 1.2rem 60px; }
+  .concepts-form-grid { grid-template-columns: 1fr; }
+}
