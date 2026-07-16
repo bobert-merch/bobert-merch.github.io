@@ -390,19 +390,21 @@
       line-height: 1.5;
     }
 
-    /* Order-placement container — named "shopify" for now since it originally targeted a
-       future Shopify Buy Button embed; currently holds the manual email-order block. */
-    .shopify-embed {
+    /* Order-placement container — holds the manual email-order block. (Previously
+       named "shopify-*" for a future Shopify Buy Button embed that never
+       happened; renamed so it describes what's actually here, and the
+       min-heights below are sized for this content instead of reserving
+       space for a component that doesn't exist.) */
+    .order-panel {
       padding: 1.5rem;
-      min-height: 400px;
     }
 
-    .shopify-placeholder {
+    .order-panel-inner {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      min-height: 360px;
+      min-height: 240px;
       border: 1px solid var(--border);
       text-align: center;
       padding: 2rem;
@@ -417,14 +419,14 @@
 
     .divider--spaced { margin-top: 2.5rem; }
 
-    .shopify-placeholder-icon {
+    .order-panel-icon {
       font-size: 2.5rem;
       opacity: 0.2;
       line-height: 1;
       margin-bottom: 0.8rem;
     }
 
-    .shopify-placeholder-title {
+    .order-panel-title {
       font-family: var(--font-display);
       font-size: 1.1rem;
       letter-spacing: 0.08em;
@@ -432,18 +434,18 @@
       margin-bottom: 0.6rem;
     }
 
-    .shopify-placeholder-body {
+    .order-panel-body {
       font-size: 0.76rem;
       color: var(--muted);
       max-width: 340px;
       line-height: 1.6;
     }
 
-    .shopify-placeholder-btn {
+    .order-panel-btn {
       margin: 1.2rem 0 0.9rem;
     }
 
-    .shopify-placeholder-hint {
+    .order-panel-hint {
       font-size: 0.68rem;
       color: var(--muted);
       opacity: 0.75;
@@ -463,7 +465,11 @@
 
     .email-order-ack.visible {
       opacity: 1;
-      max-height: 2em;
+      /* Generous enough to fit 2-3 wrapped lines on narrow phones without
+         clipping the message — max-height here is only ever an instant
+         show/hide (only opacity is actually transitioned), so there's no
+         animation reason to keep this tight. */
+      max-height: 4.5em;
       margin-bottom: 0.6rem;
     }
 
@@ -488,16 +494,11 @@
     .trial-notice strong { color: var(--text); }
 
     /* ── TRIAL NOTICE MODAL ── */
-    .trial-modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.55);
-      z-index: 299;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.25s;
-    }
-    .trial-modal-overlay.open { opacity: 1; pointer-events: auto; }
+    /* The overlay behind this modal reuses .cart-overlay's styling (position,
+       background, opacity, transition) — see the "cart-overlay" class also
+       present on the element in the markup below. Only the stacking order
+       needs to differ, since the trial modal should sit above the cart. */
+    .trial-modal-overlay { z-index: 299; }
 
     .trial-modal {
       position: fixed;
@@ -548,20 +549,9 @@
     }
     .trial-modal-body strong { color: var(--text); }
 
-    .trial-modal-ok {
-      width: 100%;
-      background: var(--vdc-blue);
-      color: #fff;
-      border: none;
-      font-family: var(--font-display);
-      font-size: 1rem;
-      letter-spacing: 0.12em;
-      padding: 12px 20px 10px;
-      cursor: pointer;
-      clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
-      transition: background 0.2s;
-    }
-    .trial-modal-ok:hover { background: var(--vdc-blue-dk); }
+    /* .trial-modal-ok reuses .btn-checkout's button styling (colors, clip-path,
+       hover) — see the "btn-checkout" class also present on the element in
+       the markup below. Nothing left to declare here. */
 
     /* ── FAQ ── */
     #faq {
@@ -956,6 +946,14 @@
       min-height: 1em;
     }
 
+    /* Wins over styles.css's generic .is-hidden (same specificity, but this
+       block loads after styles.css and .product-variant-sel above already
+       sets display:block) — the compound selector's higher specificity
+       (two classes vs. one) makes the hide state deterministic no matter
+       what order the rules end up in. Used for single-variant products,
+       where there's nothing to select so the label has no value to show. */
+    .product-variant-sel.is-hidden { display: none; }
+
     /* Real text instead of ::before-generated content — CSS pseudo-content
        isn't reliably exposed to screen readers, so "Selected: " lives in
        the actual markup now (see .product-variant-sel-prefix below). */
@@ -1010,6 +1008,24 @@
       .section-meta { text-align: left; }
       footer { padding: 1.5rem 1.2rem; }
       .footer-links { text-align: left; }
+    }
+
+    /* ── REDUCED MOTION (overrides for this page's inline-styled components) ──
+       styles.css is linked before this block, so any transition/animation
+       re-declared above at equal selector specificity always wins the
+       cascade — including against styles.css's own prefers-reduced-motion
+       rules. Duplicating the "turn it off" versions here, after the rules
+       they override, is what actually makes reduced motion take effect for
+       these components. Placed last on purpose — moving this earlier would
+       silently break it again. */
+    @media (prefers-reduced-motion: reduce) {
+      .ticker-inner               { animation: none; }
+      .hero-eyebrow .dot          { animation: none; }
+      .btn-primary:hover          { transform: none; }
+      .product-card               { transition: none; }
+      .cart-drawer, .cart-overlay { transition: none; }
+      .trial-modal                { transition: none; }
+      .cart-btn.pulse             { animation: none; }
     }
   </style>
 </head>
@@ -1297,17 +1313,17 @@
         <span class="form-header-badge">Bobert × LG Drop</span>
       </div>
 
-      <div class="shopify-embed">
-        <div class="shopify-placeholder">
-          <div class="shopify-placeholder-icon" aria-hidden="true">✉️</div>
-          <p class="shopify-placeholder-title">ORDER BY EMAIL — FOR NOW</p>
-          <p class="shopify-placeholder-body">
+      <div class="order-panel">
+        <div class="order-panel-inner">
+          <div class="order-panel-icon" aria-hidden="true">✉️</div>
+          <p class="order-panel-title">ORDER BY EMAIL — FOR NOW</p>
+          <p class="order-panel-body">
             Online checkout isn't set up yet, so orders go through email while we test the waters. Add your items to the cart above, then send me your order below — it'll already have everything in your cart filled in.
           </p>
-          <a href="#" id="btn-email-order" class="btn-primary shopify-placeholder-btn"
+          <a href="#" id="btn-email-order" class="btn-primary order-panel-btn"
              data-u="evangelinagrimes" data-d="gmail.com">Email Your Order</a>
           <p class="email-order-ack" id="email-order-ack" role="status" aria-live="polite"></p>
-          <p class="shopify-placeholder-hint">Cart empty? Add a sticker pack above, or just email me directly.</p>
+          <p class="order-panel-hint">Cart empty? Add a sticker pack above, or just email me directly.</p>
         </div>
       </div>
 
@@ -1350,12 +1366,12 @@
 </main>
 
 <!-- TRIAL NOTICE MODAL -->
-<div class="trial-modal-overlay" id="trial-modal-overlay" hidden></div>
+<div class="cart-overlay trial-modal-overlay" id="trial-modal-overlay" hidden></div>
 <div class="trial-modal" id="trial-modal" role="dialog" aria-modal="true" aria-labelledby="trial-modal-title" tabindex="-1" hidden>
   <button class="trial-modal-close" id="trial-modal-close" type="button" aria-label="Close">✕</button>
   <h2 id="trial-modal-title" class="trial-modal-title">Trial Run</h2>
   <p class="trial-modal-body">This is our first merch drop! The plan is to start small with stickers to test the waters. During this period, proceeds will go directly back into the project to fund future items like <strong>key chains</strong>, <strong>hats</strong>, and more. Your support makes the next drop possible : )</p>
-  <button class="trial-modal-ok" id="trial-modal-ok" type="button">Got it</button>
+  <button class="btn-checkout trial-modal-ok" id="trial-modal-ok" type="button">Got it</button>
 </div>
 
 <!-- CART OVERLAY + DRAWER -->
@@ -1408,6 +1424,21 @@
 </footer>
 
 <script>
+  // ── SHARED SCROLL LOCK ──
+  // The cart drawer and the trial modal can each be open independently of
+  // one another. A plain counter keeps body scroll locked as long as
+  // anything is open, and only restores scrolling once everything relying
+  // on the lock has closed — so closing one doesn't clobber the other.
+  let scrollLockCount = 0;
+  function lockScroll() {
+    scrollLockCount++;
+    document.body.style.overflow = 'hidden';
+  }
+  function unlockScroll() {
+    scrollLockCount = Math.max(0, scrollLockCount - 1);
+    if (scrollLockCount === 0) document.body.style.overflow = '';
+  }
+
   // ── CART ──
   const PRODUCTS = {};
   document.querySelectorAll('.product-card[data-name]').forEach(card => {
@@ -1434,9 +1465,16 @@
     }
   });
 
+  // Turns a data-u/data-d obfuscation pair into a real email address.
+  // Both the footer contact link and the pre-filled order mailto link
+  // (see updateEmailOrderLink below) need this same bit of assembly.
+  function emailFromDataset(el) {
+    return el.dataset.u + '@' + el.dataset.d;
+  }
+
   // Email obfuscation
   document.querySelectorAll('.obf-email').forEach(el => {
-    const addr = el.dataset.u + '@' + el.dataset.d;
+    const addr = emailFromDataset(el);
     el.href = 'mailto:' + addr;
     if (!el.textContent.trim()) el.textContent = addr;
   });
@@ -1494,11 +1532,13 @@
   }
 
   // Keeps the "Email Your Order" link's mailto body in sync with whatever's in the cart,
-  // so a shopper never has to retype what they picked.
-  function updateEmailOrderLink() {
+  // so a shopper never has to retype what they picked. Takes the cart total as a
+  // parameter rather than recomputing it — renderCart() below is the single source
+  // of truth for the total within a given render pass.
+  function updateEmailOrderLink(total) {
     const link = document.getElementById('btn-email-order');
     if (!link) return;
-    const addr    = link.dataset.u + '@' + link.dataset.d;
+    const addr    = emailFromDataset(link);
     const subject = 'LG Sticker Order';
     let body;
 
@@ -1507,7 +1547,6 @@
            + "(list your items here)\n\nMy name:\nShipping address:";
     } else {
       const lines = cart.map(i => `- ${i.qty} x ${i.name} (${i.variant}) — $${i.price * i.qty}`);
-      const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
       body = "Hi! I'd like to place this order:\n\n" + lines.join('\n')
            + `\n\nTotal: $${total}\n\nMy name:\nShipping address:`;
     }
@@ -1520,7 +1559,8 @@
     const checkoutBtn = document.getElementById('btn-checkout');
     const subtotalEl  = document.getElementById('cart-subtotal-amount');
 
-    updateEmailOrderLink();
+    const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+    updateEmailOrderLink(total);
 
     if (cart.length === 0) {
       container.innerHTML = '<div class="cart-empty"><div class="cart-empty-icon" aria-hidden="true">🛒</div><span>Your cart is empty</span></div>';
@@ -1548,19 +1588,21 @@
       </div>
     `).join('');
 
-    subtotalEl.textContent = '$' + cart.reduce((s, i) => s + i.price * i.qty, 0);
+    subtotalEl.textContent = '$' + total;
   }
 
   function openCart() {
     document.getElementById('cart-drawer').classList.add('open');
     document.getElementById('cart-overlay').classList.add('open');
-    document.body.style.overflow = 'hidden';
+    lockScroll();
   }
 
   function closeCart() {
-    document.getElementById('cart-drawer').classList.remove('open');
+    const drawer = document.getElementById('cart-drawer');
+    if (!drawer.classList.contains('open')) return;
+    drawer.classList.remove('open');
     document.getElementById('cart-overlay').classList.remove('open');
-    document.body.style.overflow = '';
+    unlockScroll();
   }
 
   document.getElementById('cart-toggle').addEventListener('click', openCart);
@@ -1666,16 +1708,16 @@
       trialModalOverlay.classList.add('open');
       trialModal.classList.add('open');
     });
-    document.body.style.overflow = 'hidden';
+    lockScroll();
     trialModal.addEventListener('keydown', trapTrialModalFocus);
-    trialModal.focus();
+    trialModalClose.focus();
   }
 
   function closeTrialModal() {
     if (!trialModal || !trialModal.classList.contains('open')) return;
     trialModalOverlay.classList.remove('open');
     trialModal.classList.remove('open');
-    document.body.style.overflow = '';
+    unlockScroll();
     trialModal.removeEventListener('keydown', trapTrialModalFocus);
     setTimeout(() => {
       trialModal.hidden = true;
@@ -1696,8 +1738,14 @@
     // (new tab/session) will still see it once.
     try {
       if (!sessionStorage.getItem('lg-trial-notice-seen')) {
-        sessionStorage.setItem('lg-trial-notice-seen', '1');
-        setTimeout(openTrialModal, 1200);
+        setTimeout(() => {
+          // Set right before the modal actually opens, not when the guard
+          // first passes — otherwise a visitor who navigates away and back
+          // within the delay would find the flag already set and never
+          // see the modal at all this session.
+          sessionStorage.setItem('lg-trial-notice-seen', '1');
+          openTrialModal();
+        }, 1200);
       }
     } catch (_) {
       // sessionStorage unavailable (e.g. private browsing) — skip the popup

@@ -179,15 +179,16 @@ nav {
 .mobile-nav .mobile-nav-cta:hover { background: var(--vdc-blue-dk) !important; }
 
 /* ── REDUCED MOTION ── */
+/* Only rules that aren't re-declared by a later inline <style> block on any
+   page belong here — anything a page re-declares in its own inline <style>
+   (which loads after this stylesheet) would win the cascade at equal
+   specificity and silently cancel these overrides. Those live in the
+   relevant page's own inline <style> instead, placed after the rules they
+   need to override. See index.html for its set (ticker, hero dot, cart,
+   trial modal, product cards, primary button hover). */
 @media (prefers-reduced-motion: reduce) {
-  .ticker-inner                  { animation: none; }
-  .hero-eyebrow .dot             { animation: none; }
-  .cart-btn.pulse                { animation: none; }
-  .mobile-nav                    { transition: none; }
-  .cart-drawer, .cart-overlay    { transition: none; }
-  .trial-modal, .trial-modal-overlay { transition: none; }
-  .product-card, .concept-card   { transition: none; }
-  .btn-primary:hover             { transform: none; }
+  .mobile-nav   { transition: none; }
+  .concept-card { transition: none; }
 }
 
 /* ── UTILITY ── */
