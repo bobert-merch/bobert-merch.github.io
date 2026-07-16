@@ -142,6 +142,22 @@
       position: relative;
     }
 
+    .hero-story-link {
+      margin-top: 1.6rem;
+      font-size: 0.72rem;
+      color: var(--muted);
+      letter-spacing: 0.02em;
+      position: relative;
+    }
+
+    .hero-story-link a {
+      color: var(--vdc-blue);
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .hero-story-link a:hover { color: var(--vdc-blue-dk); text-decoration: underline; }
+
     .btn-primary {
       display: inline-block;
       background: var(--vdc-blue);
@@ -452,6 +468,66 @@
     }
 
     .trial-notice strong { color: var(--text); }
+
+    /* ── FAQ ── */
+    #faq {
+      padding: 0 2rem 80px;
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      max-width: 720px;
+    }
+
+    .faq-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+    }
+
+    .faq-item summary {
+      cursor: pointer;
+      list-style: none;
+      padding: 1rem 1.3rem;
+      font-family: var(--font-display);
+      font-size: 1rem;
+      letter-spacing: 0.04em;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      transition: color 0.2s;
+    }
+
+    .faq-item summary::-webkit-details-marker { display: none; }
+
+    .faq-item summary::after {
+      content: '+';
+      color: var(--vdc-blue);
+      font-size: 1.3rem;
+      line-height: 1;
+      flex-shrink: 0;
+      transition: transform 0.2s;
+    }
+
+    .faq-item[open] summary::after { transform: rotate(45deg); }
+
+    .faq-item summary:hover { color: var(--vdc-blue); }
+
+    .faq-item summary:focus-visible {
+      outline: 1px solid var(--vdc-blue);
+      outline-offset: 2px;
+    }
+
+    .faq-item p {
+      padding: 0 1.3rem 1.1rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
 
     /* ── FOOTER ── */
     footer {
@@ -831,6 +907,7 @@
     @media (max-width: 768px) {
       .hero { padding: 70px 1.2rem 90px; }
       #shop, #order { padding: 50px 1.2rem; }
+      #faq { padding: 0 1.2rem 50px; }
       .order-layout { grid-template-columns: 1fr; gap: 2rem; }
       .drop-meta { gap: 1.2rem; }
       .section-header { flex-direction: column; align-items: flex-start; }
@@ -907,6 +984,7 @@
     <a href="#shop" class="btn-primary">Browse the Drop</a>
     <a href="#order" class="btn-ghost">Place an Order</a>
   </div>
+  <p class="hero-story-link">Made by Bobert, a VDC community member — <a href="./interest.html#about">read the story →</a></p>
 </section>
 
 <!-- TRIAL NOTICE -->
@@ -1104,8 +1182,8 @@
         <div class="order-step">
           <div class="order-step-num">4</div>
           <div class="order-step-body">
-            <strong>We make &amp; ship it</strong>
-            <span>Orders ship within 7 business days once payment's confirmed.</span>
+            <strong>I'll pack &amp; ship it</strong>
+            <span>Packed by hand, usually within 7 business days of payment — I'll message you the tracking number myself once it's on its way.</span>
           </div>
         </div>
       </div>
@@ -1141,6 +1219,34 @@
       </div>
     </div>
 
+  </div>
+</section>
+
+<!-- FAQ -->
+<div class="divider divider--spaced"><div class="divider-line"></div><div class="divider-diamond"></div><div class="divider-line"></div></div>
+
+<section id="faq">
+  <div class="section-header">
+    <h2>A FEW <span>QUESTIONS</span></h2>
+    <div class="section-meta">
+      Answered by Bobert<br>
+      Don't see yours? Just email me
+    </div>
+  </div>
+
+  <div class="faq-list">
+    <details class="faq-item">
+      <summary>Do you ship internationally?</summary>
+      <p>Yep! Just know it'll likely take a bit longer and cost a little more for postage outside the US. I'll factor that into the total when I write back to confirm your order.</p>
+    </details>
+    <details class="faq-item">
+      <summary>What if my order shows up damaged?</summary>
+      <p>Email me a photo and I'll make it right — replacement or refund, whichever works for you. This is a small trial run and I want to get it right.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Can I change or cancel my order after I email it in?</summary>
+      <p>Easily. It's all just email right now, so reply to your order thread anytime before I confirm your total and I'll update or cancel it — no forms, no fees.</p>
+    </details>
   </div>
 </section>
 
