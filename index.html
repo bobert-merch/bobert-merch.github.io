@@ -4,9 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Bobert × LG Merch Drop</title>
-  <meta name="description" content="LG-branded merch designed by Bobert — holographic sticker packs for the Light Garden VDC franchise. Limited run, one drop per season.">
+  <meta name="description" content="LG-branded merch designed by Bobert — holographic sticker + digital Discord graphic bundles for the Light Garden VDC franchise. Limited run, one drop per season.">
   <meta property="og:title" content="Bobert × LG Merch Drop">
-  <meta property="og:description" content="LG-branded merch designed by a VDC community member. Holographic sticker packs — limited run, one drop per season.">
+  <meta property="og:description" content="LG-branded merch designed by a VDC community member. Holographic sticker + digital Discord graphic bundles — limited run, one drop per season.">
   <meta property="og:image" content="https://bobert-merch.github.io/assets/LG_LOGO.png">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://bobert-merch.github.io/">
@@ -15,1038 +15,29 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="./styles.css">
-  <style>
-    /* ── TICKER ── */
-    .ticker-wrap {
-      background: var(--vdc-blue);
-      overflow: hidden;
-      white-space: nowrap;
-      padding: 5px 0;
-    }
-
-    .ticker-inner {
-      display: inline-block;
-      animation: ticker 28s linear infinite;
-    }
-
-    .ticker-inner span {
-      font-family: var(--font-display);
-      font-size: 0.85rem;
-      letter-spacing: 0.14em;
-      color: #fff;
-      padding: 0 2.5rem;
-    }
-
-    .ticker-inner span.sep { color: rgba(255,255,255,0.35); padding: 0; }
-
-    @keyframes ticker {
-      0%   { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
-
-    /* ── HERO ── */
-    .hero {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 120px 2rem 140px;
-      overflow: hidden;
-    }
-
-    .hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(ellipse 70% 55% at 50% 0%, rgba(92,184,58,0.12) 0%, transparent 65%),
-        radial-gradient(ellipse 40% 30% at 80% 80%, rgba(255,70,85,0.05) 0%, transparent 60%),
-        repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(92,184,58,0.03) 39px, rgba(92,184,58,0.03) 40px),
-        repeating-linear-gradient(90deg, transparent, transparent 79px, rgba(92,184,58,0.02) 79px, rgba(92,184,58,0.02) 80px);
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .hero-logo-bg {
-      position: absolute;
-      width: 100%;
-      max-width: 660px;
-      top: 42%;
-      left: 50%;
-      transform: translate(-50%, -40%);
-      opacity: 0.09;
-      pointer-events: none;
-      user-select: none;
-      z-index: 0;
-      -webkit-mask-image: linear-gradient(to bottom, black 25%, rgba(0,0,0,0.6) 60%, transparent 88%);
-      mask-image: linear-gradient(to bottom, black 25%, rgba(0,0,0,0.6) 60%, transparent 88%);
-    }
-
-    .hero > *:not(.hero-logo-bg) {
-      position: relative;
-      z-index: 1;
-    }
-
-    .hero-eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.6rem;
-      font-size: 0.68rem;
-      font-weight: 700;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--vdc-blue);
-      margin-bottom: 1.4rem;
-      position: relative;
-    }
-
-    .hero-eyebrow .dot {
-      width: 5px; height: 5px;
-      border-radius: 50%;
-      background: var(--val-red);
-      animation: pulse 1.8s ease-in-out infinite;
-    }
-
-    .hero h1 {
-      font-family: var(--font-display);
-      font-size: clamp(3.8rem, 11vw, 9rem);
-      line-height: 0.9;
-      letter-spacing: 0.02em;
-      margin-bottom: 1.4rem;
-      position: relative;
-    }
-
-    .hero h1 .line-blue { color: var(--vdc-blue); }
-    .hero h1 .line-red  { color: var(--val-red); }
-
-    .hero-sub {
-      font-size: 0.95rem;
-      color: var(--muted);
-      max-width: 440px;
-      line-height: 1.65;
-      margin-bottom: 2.4rem;
-      position: relative;
-    }
-
-    .hero-sub strong { color: var(--text); }
-    .hero-sub .vdc-tag { color: var(--vdc-blue); font-weight: 700; }
-
-    .hero-actions {
-      display: flex;
-      gap: 1rem;
-      align-items: center;
-      flex-wrap: wrap;
-      justify-content: center;
-      position: relative;
-    }
-
-    .hero-story-link {
-      margin-top: 1.6rem;
-      font-size: 0.72rem;
-      color: var(--muted);
-      letter-spacing: 0.02em;
-      position: relative;
-    }
-
-    .hero-story-link a {
-      color: var(--vdc-blue);
-      font-weight: 600;
-      text-decoration: none;
-    }
-
-    .hero-story-link a:hover { color: var(--vdc-blue-dk); text-decoration: underline; }
-
-    .btn-primary {
-      display: inline-block;
-      background: var(--vdc-blue);
-      color: #fff;
-      font-family: var(--font-display);
-      font-size: 1.1rem;
-      letter-spacing: 0.12em;
-      padding: 13px 36px 11px;
-      text-decoration: none;
-      clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
-      transition: background 0.2s, transform 0.15s;
-    }
-
-    .btn-primary:hover { background: var(--vdc-blue-dk); transform: translateY(-2px); }
-
-    .btn-ghost {
-      display: inline-block;
-      background: transparent;
-      border: 1px solid var(--border-bright);
-      color: var(--muted);
-      font-family: var(--font-display);
-      font-size: 1.1rem;
-      letter-spacing: 0.12em;
-      padding: 13px 28px 11px;
-      text-decoration: none;
-      clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
-      transition: border-color 0.2s, color 0.2s;
-    }
-
-    .btn-ghost:hover { border-color: var(--vdc-blue); color: var(--vdc-blue); }
-
-    /* ── SHOP SECTION ── */
-    #shop {
-      padding: 80px 2rem;
-      max-width: 1280px;
-      margin: 0 auto;
-    }
-
-    .section-header {
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      margin-bottom: 2rem;
-      flex-wrap: wrap;
-      gap: 0.8rem;
-    }
-
-    .section-header h2 {
-      font-family: var(--font-display);
-      font-size: 2.2rem;
-      letter-spacing: 0.06em;
-      line-height: 1;
-    }
-
-    .section-header h2 span { color: var(--vdc-blue); }
-
-    .section-meta {
-      font-size: 0.72rem;
-      color: var(--muted);
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      text-align: right;
-      line-height: 1.6;
-    }
-
-    /* ── PRODUCT GRID ── */
-    .product-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 2rem;
-    }
-
-    .product-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      display: flex;
-      flex-direction: column;
-      position: relative;
-      transition: border-color 0.25s, transform 0.2s, box-shadow 0.25s;
-    }
-
-    .product-card:hover {
-      border-color: var(--vdc-blue);
-      transform: translateY(-4px);
-      box-shadow: 0 12px 40px rgba(92,184,58,0.12);
-    }
-
-    .product-img {
-      width: 100%;
-      aspect-ratio: 4/3;
-      background: #f2f2f2;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      border-bottom: 1px solid var(--border);
-      position: relative;
-    }
-
-    .product-img::after {
-      content: '';
-      position: absolute;
-      bottom: 0; left: 0;
-      width: 40px; height: 3px;
-      background: var(--vdc-blue);
-    }
-
-    .product-info {
-      padding: 1.5rem 1.6rem 1.8rem;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .product-name {
-      font-family: var(--font-display);
-      font-size: 1.35rem;
-      letter-spacing: 0.04em;
-      line-height: 1.1;
-      margin-bottom: 0.5rem;
-    }
-
-    .product-desc {
-      font-size: 0.77rem;
-      color: var(--muted);
-      line-height: 1.55;
-      flex: 1;
-    }
-
-    .product-footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-top: 1.1rem;
-    }
-
-    .product-price {
-      font-family: var(--font-display);
-      font-size: 1.6rem;
-      color: var(--text);
-    }
-
-    .product-price .currency {
-      font-size: 0.85rem;
-      color: var(--muted);
-      vertical-align: super;
-      font-family: var(--font-body);
-      font-weight: 600;
-    }
-
-    .btn-order {
-      display: inline-block;
-      background: transparent;
-      border: 1px solid var(--vdc-blue);
-      color: var(--vdc-blue);
-      font-family: var(--font-display);
-      font-size: 0.95rem;
-      letter-spacing: 0.1em;
-      padding: 8px 20px 6px;
-      text-decoration: none;
-      cursor: pointer;
-      clip-path: polygon(5px 0%, 100% 0%, calc(100% - 5px) 100%, 0% 100%);
-      transition: background 0.18s, color 0.18s;
-    }
-
-    .btn-order:hover { background: var(--vdc-blue); color: #fff; }
-
-    /* ── ORDER FORM SECTION ── */
-    #order {
-      padding: 80px 2rem;
-      max-width: 1280px;
-      margin: 0 auto;
-    }
-
-    .order-layout {
-      display: grid;
-      grid-template-columns: 1fr 1.6fr;
-      gap: 4.5rem;
-      align-items: start;
-    }
-
-    .order-info h2 {
-      font-family: var(--font-display);
-      font-size: 2.2rem;
-      letter-spacing: 0.06em;
-      line-height: 1;
-      margin-bottom: 1rem;
-    }
-
-    .order-info h2 span { color: var(--vdc-blue); }
-
-    .order-steps {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      margin-top: 1.5rem;
-    }
-
-    .order-step {
-      display: flex;
-      gap: 0.9rem;
-      align-items: flex-start;
-    }
-
-    .order-step-num {
-      width: 26px;
-      height: 26px;
-      background: var(--vdc-blue);
-      color: #fff;
-      font-family: var(--font-display);
-      font-size: 0.9rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      clip-path: polygon(3px 0%, 100% 0%, calc(100% - 3px) 100%, 0% 100%);
-    }
-
-    .order-step-body strong {
-      display: block;
-      font-size: 0.82rem;
-      font-weight: 700;
-      margin-bottom: 2px;
-    }
-
-    .order-step-body span {
-      font-size: 0.74rem;
-      color: var(--muted);
-      line-height: 1.5;
-    }
-
-    /* Order-placement container — holds the manual email-order block. (Previously
-       named "shopify-*" for a future Shopify Buy Button embed that never
-       happened; renamed so it describes what's actually here, and the
-       min-heights below are sized for this content instead of reserving
-       space for a component that doesn't exist.) */
-    .order-panel {
-      padding: 1.5rem;
-    }
-
-    .order-panel-inner {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 240px;
-      border: 1px solid var(--border);
-      text-align: center;
-      padding: 2rem;
-    }
-
-    .order-intro {
-      color: var(--muted);
-      font-size: 0.85rem;
-      line-height: 1.7;
-      margin-top: 0.8rem;
-    }
-
-    .divider--spaced { margin-top: 2.5rem; }
-
-    .order-panel-icon {
-      font-size: 2.5rem;
-      opacity: 0.2;
-      line-height: 1;
-      margin-bottom: 0.8rem;
-    }
-
-    .order-panel-title {
-      font-family: var(--font-display);
-      font-size: 1.1rem;
-      letter-spacing: 0.08em;
-      color: var(--muted);
-      margin-bottom: 0.6rem;
-    }
-
-    .order-panel-body {
-      font-size: 0.76rem;
-      color: var(--muted);
-      max-width: 340px;
-      line-height: 1.6;
-    }
-
-    .order-panel-btn {
-      margin: 1.2rem 0 0.9rem;
-    }
-
-    .order-panel-hint {
-      font-size: 0.68rem;
-      color: var(--muted);
-      opacity: 0.75;
-    }
-
-    /* Small, warm acknowledgment shown after "Email Your Order" is clicked —
-       not an "order complete" state, just confirming the action happened. */
-    .email-order-ack {
-      font-size: 0.7rem;
-      font-weight: 600;
-      color: var(--vdc-blue);
-      opacity: 0;
-      max-height: 0;
-      overflow: hidden;
-      transition: opacity 0.25s ease;
-    }
-
-    .email-order-ack.visible {
-      opacity: 1;
-      /* Generous enough to fit 2-3 wrapped lines on narrow phones without
-         clipping the message — max-height here is only ever an instant
-         show/hide (only opacity is actually transitioned), so there's no
-         animation reason to keep this tight. */
-      max-height: 4.5em;
-      margin-bottom: 0.6rem;
-    }
-
-    /* ── MATCH DAY BANNER ── */
-    .trial-notice {
-      background: var(--surface);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      padding: 20px 2rem;
-      text-align: center;
-    }
-
-    .trial-notice p {
-      font-size: 0.8rem;
-      color: var(--muted);
-      letter-spacing: 0.03em;
-      line-height: 1.7;
-      max-width: 660px;
-      margin: 0 auto;
-    }
-
-    .trial-notice strong { color: var(--text); }
-
-    /* ── TRIAL NOTICE MODAL ── */
-    /* The overlay behind this modal reuses .cart-overlay's styling (position,
-       background, opacity, transition) — see the "cart-overlay" class also
-       present on the element in the markup below. Only the stacking order
-       needs to differ, since the trial modal should sit above the cart. */
-    .trial-modal-overlay { z-index: 299; }
-
-    .trial-modal {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      width: min(420px, calc(100vw - 2.4rem));
-      background: var(--surface);
-      border: 1px solid var(--border);
-      z-index: 300;
-      padding: 1.8rem 1.8rem 1.6rem;
-      opacity: 0;
-      pointer-events: none;
-      transform: translate(-50%, -50%) scale(0.97);
-      transition: opacity 0.25s, transform 0.25s;
-    }
-    .trial-modal.open { opacity: 1; pointer-events: auto; transform: translate(-50%, -50%) scale(1); }
-    .trial-modal:focus { outline: none; }
-
-    .trial-modal-close {
-      position: absolute;
-      top: 0.8rem;
-      right: 0.9rem;
-      background: transparent;
-      border: none;
-      color: var(--muted);
-      font-size: 1.1rem;
-      cursor: pointer;
-      padding: 4px;
-      line-height: 1;
-      transition: color 0.2s;
-    }
-    .trial-modal-close:hover { color: var(--text); }
-
-    .trial-modal-title {
-      font-family: var(--font-display);
-      font-size: 1.4rem;
-      letter-spacing: 0.08em;
-      margin-bottom: 0.6rem;
-      padding-right: 1.6rem;
-    }
-
-    .trial-modal-body {
-      font-size: 0.82rem;
-      color: var(--muted);
-      letter-spacing: 0.02em;
-      line-height: 1.7;
-      margin-bottom: 1.4rem;
-    }
-    .trial-modal-body strong { color: var(--text); }
-
-    /* .trial-modal-ok reuses .btn-checkout's button styling (colors, clip-path,
-       hover) — see the "btn-checkout" class also present on the element in
-       the markup below. Nothing left to declare here. */
-
-    /* ── FAQ ── */
-    #faq {
-      padding: 0 2rem 80px;
-      max-width: 1280px;
-      margin: 0 auto;
-    }
-
-    .faq-list {
-      display: flex;
-      flex-direction: column;
-      gap: 0.7rem;
-      max-width: 720px;
-    }
-
-    .faq-item {
-      background: var(--surface);
-      border: 1px solid var(--border);
-    }
-
-    .faq-item summary {
-      cursor: pointer;
-      list-style: none;
-      padding: 1rem 1.3rem;
-      font-family: var(--font-display);
-      font-size: 1rem;
-      letter-spacing: 0.04em;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      transition: color 0.2s;
-    }
-
-    .faq-item summary::-webkit-details-marker { display: none; }
-
-    .faq-item summary::after {
-      content: '+';
-      color: var(--vdc-blue);
-      font-size: 1.3rem;
-      line-height: 1;
-      flex-shrink: 0;
-      transition: transform 0.2s;
-    }
-
-    .faq-item[open] summary::after { transform: rotate(45deg); }
-
-    .faq-item summary:hover { color: var(--vdc-blue); }
-
-    .faq-item summary:focus-visible {
-      outline: 1px solid var(--vdc-blue);
-      outline-offset: 2px;
-    }
-
-    .faq-item p {
-      padding: 0 1.3rem 1.1rem;
-      font-size: 0.8rem;
-      color: var(--muted);
-      line-height: 1.65;
-    }
-
-    /* ── FOOTER ── */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 2rem;
-    }
-
-    .footer-inner {
-      max-width: 1280px;
-      margin: 0 auto;
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 1.5rem;
-    }
-
-    .footer-vdc-row {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .footer-vdc-pill {
-      background: var(--vdc-blue);
-      color: #fff;
-      font-family: var(--font-display);
-      font-size: 0.85rem;
-      letter-spacing: 0.1em;
-      padding: 2px 8px 0;
-      clip-path: polygon(4px 0%, 100% 0%, calc(100% - 4px) 100%, 0% 100%);
-    }
-
-    .footer-wordmark {
-      font-family: var(--font-display);
-      font-size: 1.2rem;
-      letter-spacing: 0.08em;
-    }
-
-    .footer-wordmark span { color: var(--val-red); }
-
-    .footer-tagline {
-      font-size: 0.7rem;
-      color: var(--muted);
-      letter-spacing: 0.04em;
-      line-height: 1.6;
-    }
-
-    .footer-links {
-      display: flex;
-      flex-direction: column;
-      gap: 0.4rem;
-      text-align: right;
-    }
-
-    .footer-links a {
-      font-size: 0.72rem;
-      color: var(--muted);
-      text-decoration: none;
-      letter-spacing: 0.06em;
-      transition: color 0.2s;
-    }
-
-    .footer-links a:hover { color: var(--vdc-blue); }
-
-    .footer-legal {
-      width: 100%;
-      border-top: 1px solid var(--border);
-      margin-top: 1.2rem;
-      padding-top: 1rem;
-      font-size: 0.68rem;
-      color: var(--muted);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-
-    /* ── CART BUTTON (NAV) ── */
-    .cart-btn {
-      background: transparent;
-      border: 1px solid var(--border-bright);
-      color: var(--muted);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 0.45rem;
-      padding: 5px 14px;
-      font-family: var(--font-display);
-      font-size: 0.9rem;
-      letter-spacing: 0.1em;
-      clip-path: polygon(4px 0%, 100% 0%, calc(100% - 4px) 100%, 0% 100%);
-      transition: border-color 0.2s, color 0.2s;
-    }
-    .cart-btn:hover { border-color: var(--vdc-blue); color: var(--vdc-blue); }
-
-    .cart-count {
-      background: var(--vdc-blue);
-      color: #fff;
-      font-family: var(--font-body);
-      font-size: 0.6rem;
-      font-weight: 700;
-      width: 16px;
-      height: 16px;
-      border-radius: 50%;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      line-height: 1;
-    }
-    .cart-count.visible { display: flex; }
-
-    /* ── ADD TO CART BUTTON ── */
-    .btn-add-cart {
-      display: inline-block;
-      background: transparent;
-      border: 1px solid var(--vdc-blue);
-      color: var(--vdc-blue);
-      font-family: var(--font-display);
-      font-size: 0.95rem;
-      letter-spacing: 0.1em;
-      padding: 8px 20px 6px;
-      cursor: pointer;
-      clip-path: polygon(5px 0%, 100% 0%, calc(100% - 5px) 100%, 0% 100%);
-      transition: background 0.18s, color 0.18s, border-color 0.18s;
-      white-space: nowrap;
-    }
-    .btn-add-cart:hover { background: var(--vdc-blue); color: #fff; }
-    .btn-add-cart.added { background: var(--vdc-blue-dk); color: #fff; border-color: var(--vdc-blue-dk); }
-
-    /* ── CART OVERLAY ── */
-    .cart-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.55);
-      z-index: 199;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.25s;
-    }
-    .cart-overlay.open { opacity: 1; pointer-events: auto; }
-
-    /* ── CART DRAWER ── */
-    .cart-drawer {
-      position: fixed;
-      top: 0; right: 0;
-      width: 380px;
-      max-width: 100vw;
-      height: 100vh;
-      background: var(--bg-mid);
-      border-left: 1px solid var(--border);
-      z-index: 200;
-      display: flex;
-      flex-direction: column;
-      transform: translateX(100%);
-      transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
-    }
-    .cart-drawer.open { transform: translateX(0); }
-
-    .cart-drawer-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1.2rem 1.4rem;
-      border-bottom: 1px solid var(--border);
-      flex-shrink: 0;
-    }
-    .cart-drawer-title {
-      font-family: var(--font-display);
-      font-size: 1.2rem;
-      letter-spacing: 0.1em;
-    }
-    .cart-close-btn {
-      background: transparent;
-      border: none;
-      color: var(--muted);
-      font-size: 1.2rem;
-      cursor: pointer;
-      padding: 4px;
-      line-height: 1;
-      transition: color 0.2s;
-    }
-    .cart-close-btn:hover { color: var(--text); }
-
-    .cart-items {
-      flex: 1;
-      overflow-y: auto;
-      padding: 1rem 1.4rem;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-
-    .cart-empty {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100%;
-      gap: 0.6rem;
-      color: var(--muted);
-      font-size: 0.78rem;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-    }
-    .cart-empty-icon { font-size: 2rem; opacity: 0.2; }
-
-    .cart-item {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      padding: 0.9rem 1rem;
-      display: flex;
-      gap: 0.8rem;
-      align-items: flex-start;
-    }
-    .cart-item-info { flex: 1; min-width: 0; }
-    .cart-item-name {
-      font-family: var(--font-display);
-      font-size: 1rem;
-      letter-spacing: 0.04em;
-      margin-bottom: 2px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .cart-item-variant {
-      font-size: 0.65rem;
-      color: var(--vdc-blue);
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      margin-bottom: 0.55rem;
-    }
-    .cart-item-controls { display: flex; align-items: center; gap: 0.5rem; }
-    .qty-btn {
-      background: var(--bg);
-      border: 1px solid var(--border-bright);
-      color: var(--text);
-      width: 24px; height: 24px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-size: 1rem;
-      line-height: 1;
-      transition: border-color 0.15s;
-      padding: 0;
-    }
-    .qty-btn:hover { border-color: var(--vdc-blue); color: var(--vdc-blue); }
-    .cart-item-qty {
-      font-family: var(--font-display);
-      font-size: 1rem;
-      min-width: 1.2rem;
-      text-align: center;
-    }
-    .cart-item-right {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 0.5rem;
-      flex-shrink: 0;
-    }
-    .cart-item-price { font-family: var(--font-display); font-size: 1.1rem; }
-    .cart-item-remove {
-      background: transparent;
-      border: none;
-      color: var(--muted);
-      font-size: 0.65rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      cursor: pointer;
-      padding: 0;
-      transition: color 0.15s;
-    }
-    .cart-item-remove:hover { color: var(--val-red); }
-
-    .cart-footer {
-      border-top: 1px solid var(--border);
-      padding: 1.2rem 1.4rem;
-      flex-shrink: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-    .cart-subtotal {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-    }
-    .cart-subtotal-label {
-      font-size: 0.68rem;
-      font-weight: 700;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-    .cart-subtotal-amount { font-family: var(--font-display); font-size: 1.6rem; }
-    .btn-checkout {
-      width: 100%;
-      background: var(--vdc-blue);
-      color: #fff;
-      border: none;
-      font-family: var(--font-display);
-      font-size: 1.05rem;
-      letter-spacing: 0.12em;
-      padding: 13px 20px 11px;
-      cursor: pointer;
-      clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
-      transition: background 0.2s;
-    }
-    .btn-checkout:hover { background: var(--vdc-blue-dk); }
-    .btn-checkout:disabled { opacity: 0.35; cursor: not-allowed; }
-    .cart-checkout-note {
-      font-size: 0.65rem;
-      color: var(--muted);
-      text-align: center;
-      line-height: 1.55;
-    }
-
-    /* ── VARIANT LABEL ── */
-    .product-variant-sel {
-      font-size: 0.63rem;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--vdc-blue);
-      margin-top: 0.6rem;
-      display: block;
-      min-height: 1em;
-    }
-
-    /* Wins over styles.css's generic .is-hidden (same specificity, but this
-       block loads after styles.css and .product-variant-sel above already
-       sets display:block) — the compound selector's higher specificity
-       (two classes vs. one) makes the hide state deterministic no matter
-       what order the rules end up in. Used for single-variant products,
-       where there's nothing to select so the label has no value to show. */
-    .product-variant-sel.is-hidden { display: none; }
-
-    /* Real text instead of ::before-generated content — CSS pseudo-content
-       isn't reliably exposed to screen readers, so "Selected: " lives in
-       the actual markup now (see .product-variant-sel-prefix below). */
-    .product-variant-sel-prefix {
-      color: var(--muted);
-      font-weight: 600;
-      text-transform: none;
-    }
-
-    /* ── SWATCH SELECTOR ── */
-    .swatch-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-      margin: 0.75rem 0 0.5rem;
-    }
-
-    .swatch-btn {
-      width: 46px;
-      height: 46px;
-      padding: 3px;
-      background: #f2f2f2;
-      border: 2px solid var(--border-bright);
-      cursor: pointer;
-      transition: border-color 0.15s;
-      flex-shrink: 0;
-    }
-
-    .swatch-btn img { width: 100%; height: 100%; object-fit: contain; display: block; }
-    .swatch-btn:hover { border-color: var(--vdc-blue); }
-    .swatch-btn.active { border-color: var(--vdc-blue); outline: 1px solid var(--vdc-blue); }
-
-    .swatch-preview { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; padding: 1.5rem; display: block; }
-
-    /* ── CART PULSE ── */
-    @keyframes cart-pulse {
-      0%   { border-color: var(--border-bright); color: var(--muted); box-shadow: none; }
-      35%  { border-color: var(--vdc-blue); color: var(--vdc-blue); box-shadow: 0 0 10px rgba(92,184,58,0.35); }
-      100% { border-color: var(--border-bright); color: var(--muted); box-shadow: none; }
-    }
-
-    .cart-btn.pulse { animation: cart-pulse 0.85s ease-out forwards; }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 768px) {
-      .hero { padding: 70px 1.2rem 90px; }
-      #shop, #order { padding: 50px 1.2rem; }
-      #faq { padding: 0 1.2rem 50px; }
-      .order-layout { grid-template-columns: 1fr; gap: 2rem; }
-      .drop-meta { gap: 1.2rem; }
-      .section-header { flex-direction: column; align-items: flex-start; }
-      .section-meta { text-align: left; }
-      footer { padding: 1.5rem 1.2rem; }
-      .footer-links { text-align: left; }
-    }
-
-    /* ── REDUCED MOTION (overrides for this page's inline-styled components) ──
-       styles.css is linked before this block, so any transition/animation
-       re-declared above at equal selector specificity always wins the
-       cascade — including against styles.css's own prefers-reduced-motion
-       rules. Duplicating the "turn it off" versions here, after the rules
-       they override, is what actually makes reduced motion take effect for
-       these components. Placed last on purpose — moving this earlier would
-       silently break it again. */
-    @media (prefers-reduced-motion: reduce) {
-      .ticker-inner               { animation: none; }
-      .hero-eyebrow .dot          { animation: none; }
-      .btn-primary:hover          { transform: none; }
-      .product-card               { transition: none; }
-      .cart-drawer, .cart-overlay { transition: none; }
-      .trial-modal                { transition: none; }
-      .cart-btn.pulse             { animation: none; }
-    }
-  </style>
+  <link rel="stylesheet" href="./shop.css">
 </head>
 <body>
 
 <!-- NAV -->
 <nav>
-  <div class="nav-left">
-    <span class="vdc-pill">LG</span>
+  <a class="nav-left" href="./index.html" aria-label="Bobert × LG home">
+    <span class="lg-pill">LG</span>
     <span class="nav-subtitle">Bobert × LG Collab</span>
-  </div>
-  <ul class="nav-links">
-    <li><a href="#shop">Shop</a></li>
-    <li><a href="./interest.html">Interest Form ↗</a></li>
-    <li><a href="#order" class="nav-cta">Order Now</a></li>
-  </ul>
-  <div class="nav-right">
-    <button class="cart-btn" id="cart-toggle" aria-label="Open cart">
-      CART <span class="cart-count" id="cart-count">0</span>
-    </button>
-    <button class="hamburger" id="hamburger-btn" aria-label="Open navigation" aria-expanded="false">MENU</button>
+  </a>
+  <div class="nav-right-group">
+    <ul class="nav-links">
+      <li><a href="#shop">Shop</a></li>
+      <li><a href="./about.html">About</a></li>
+      <li><a href="./feedback.html">Feedback</a></li>
+      <li><a href="#order" class="nav-cta">Order Now</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="cart-btn" id="cart-toggle" aria-label="Open cart">
+        CART <span class="cart-count" id="cart-count">0</span>
+      </button>
+      <button class="hamburger" id="hamburger-btn" aria-label="Open navigation" aria-expanded="false">MENU</button>
+    </div>
   </div>
 </nav>
 
@@ -1054,7 +45,8 @@
 <!-- MOBILE NAV -->
 <div class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation">
   <a href="#shop">Shop</a>
-  <a href="./interest.html">Interest Form ↗</a>
+  <a href="./about.html">About</a>
+  <a href="./feedback.html">Feedback ↗</a>
   <a href="#order" class="mobile-nav-cta">Order Now</a>
 </div>
 
@@ -1065,12 +57,12 @@
   <div class="ticker-inner">
     <span>BOBERT × LG — NOW LIVE</span><span class="sep">◆</span>
     <span>HOLOGRAPHIC DIE-CUT STICKERS</span><span class="sep">◆</span>
-    <span>SWIRL PACKS · HOLO BUNDLE · SINGLES</span><span class="sep">◆</span>
+    <span>SWIRL BUNDLE · SPECIAL BUNDLE</span><span class="sep">◆</span>
     <span>RED ROSE FTW</span><span class="sep">◆</span>
     <span>PLACE YOUR ORDER BELOW</span><span class="sep">◆</span>
     <span>BOBERT × LG — NOW LIVE</span><span class="sep">◆</span>
     <span>HOLOGRAPHIC DIE-CUT STICKERS</span><span class="sep">◆</span>
-    <span>SWIRL PACKS · HOLO BUNDLE · SINGLES</span><span class="sep">◆</span>
+    <span>SWIRL BUNDLE · SPECIAL BUNDLE</span><span class="sep">◆</span>
     <span>LIMITED RUN — ONE DROP PER SEASON</span><span class="sep">◆</span>
     <span>PLACE YOUR ORDER BELOW</span><span class="sep">◆</span>
   </div>
@@ -1085,18 +77,18 @@
     <span class="dot"></span>
   </div>
   <h1>
-    <span class="line-blue">LIGHT</span><br>
-   <span class="line-blue"> GARDEN </span><br>
+    <span class="line-green">LIGHT</span><br>
+   <span class="line-green"> GARDEN </span><br>
     MERCH
   </h1>
   <p class="hero-sub">
-    <strong>Bobert × Light Garden</strong> — LG-branded merch designed by a VDC community member, for the community. Calling all past and present LG players!
+    LG-branded merch designed by a VDC community member, for the community. Calling all past and present LG players!
   </p>
   <div class="hero-actions">
     <a href="#shop" class="btn-primary">Browse the Drop</a>
     <a href="#order" class="btn-ghost">Place an Order</a>
   </div>
-  <p class="hero-story-link">Made by Bobert, a VDC community member — <a href="./interest.html#about">read the story →</a></p>
+  <p class="hero-story-link">Made by Bobert, a VDC community member — <a href="./about.html">read the story →</a></p>
 </section>
 
 <!-- TRIAL NOTICE -->
@@ -1114,141 +106,87 @@
     <h2>THE <span>DROP</span></h2>
     <div class="section-meta">
       Valorant Draft Circuit · Season Merch<br>
-      Add to cart, then email your order below
+      Add to cart and check out via Shopify
     </div>
   </div>
 
   <!--
   ══════════════════════════════════════════════════════════════
-  PRODUCT GRID — HOW TO EDIT SWATCHES (applies to all cards)
+  PRODUCT GRID — HOW TO EDIT BUNDLES (applies to both cards below)
   ──────────────────────────────────────────────────────────────
-  ADD A DESIGN:
-    1. Copy any .swatch-btn block and paste it inside .swatch-grid
-    2. Set  data-src          → image path  (./assets/stickers/...)
-            data-label        → design name (shown in cart)
-            data-variant-index → next integer in sequence
-            aria-label        → same as data-label
-    3. Append the name to data-variants on the card div (pipe-separated, same order as swatches)
+  Each bundle is a single fixed pairing — one sticker design + one digital
+  Discord graphic — with no design picker. There are no swatches here on
+  purpose; if a future drop needs a design picker again, see the swatch
+  system in git history (pre-5552c5a) for the old pattern to reuse.
 
-  REMOVE A DESIGN:
-    1. Delete the .swatch-btn block
-    2. Remove its name from data-variants
-    3. Re-number remaining data-variant-index values (0, 1, 2 …)
-       Make sure the first swatch has class="swatch-btn active" + aria-current="true"
+  CHANGE THE STICKER IMAGE:
+    Update the img src (and alt text) inside the first .product-img-half.
+
+  CHANGE THE DIGITAL GRAPHIC:
+    Update the img src (and alt text) inside the second .product-img-half.
+    Art lives in assets/digital/.
+
+  CHANGE THE NAME OR PRICE:
+    Edit data-name / data-price on the .product-card div, and mirror the
+    name change in .product-name and the price in .product-price.
+    (data-variants="Standard" should stay as-is — each bundle is one SKU.)
+
+  ADD A THIRD BUNDLE:
+    Copy an entire .product-card block, give it a unique data-product-id,
+    and update its images/copy/price as above.
   ══════════════════════════════════════════════════════════════
   -->
   <div class="product-grid">
 
-    <!-- CARD: LG Standard Pack | $5 | assets/stickers/swirly/ -->
+    <!-- CARD: LG Swirl Bundle | $10 | sticker: assets/stickers/swirly/swirly_green_logo.webp -->
     <div class="product-card"
-         data-product-id="sticker-pack"
-         data-name="LG Sticker Pack"
-         data-price="5"
-         data-variants="Green Topographic|Dark Green|Bright Topographic|Dark Edition|Black &amp; White">
-      <div class="product-img">
-        <img class="swatch-preview" src="./assets/stickers/swirly/swirly_green_logo.png" alt="Green Topographic LG sticker">
+         data-product-id="bundle-swirl"
+         data-name="LG Swirl Bundle"
+         data-price="10"
+         data-variants="Standard">
+      <div class="product-img product-img--split">
+        <div class="product-img-half">
+          <img src="./assets/stickers/swirly/swirly_green_logo.webp" alt="Green Topographic LG sticker" loading="lazy">
+          <span class="product-img-tag">Sticker</span>
+        </div>
+        <div class="product-img-half">
+          <img src="./assets/digital/CheeseBanner.webp" alt="Digital LG Discord support graphic — Cheese banner" loading="lazy">
+          <span class="product-img-tag product-img-tag--placeholder">Digital</span>
+        </div>
       </div>
       <div class="product-info">
 
-        <div class="product-name">LG Swirl Sticker</div>
-        <p class="product-desc">5 holographic die-cut stickers of your chosen design. UV coated and waterproof.</p>
-        <!-- ── SWATCHES: add / remove .swatch-btn blocks here ── -->
-        <div class="swatch-grid">
-          <button class="swatch-btn active" aria-current="true" aria-label="Green Topographic"
-                  data-src="./assets/stickers/swirly/swirly_green_logo.png"
-                  data-label="Green Topographic" data-variant-index="0">
-            <img src="./assets/stickers/swirly/swirly_green_logo.png" alt="">
-          </button>
-          <button class="swatch-btn" aria-label="Dark Green"
-                  data-src="./assets/stickers/swirly/swirly_simple_green_logo.png"
-                  data-label="Dark Green" data-variant-index="1">
-            <img src="./assets/stickers/swirly/swirly_simple_green_logo.png" alt="">
-          </button>
-          <button class="swatch-btn" aria-label="Bright Topographic"
-                  data-src="./assets/stickers/swirly/swirly_logo.png"
-                  data-label="Bright Topographic" data-variant-index="2">
-            <img src="./assets/stickers/swirly/swirly_logo.png" alt="">
-          </button>
-          <button class="swatch-btn" aria-label="Dark Edition"
-                  data-src="./assets/stickers/swirly/swirly_dark_logo.png"
-                  data-label="Dark Edition" data-variant-index="3">
-            <img src="./assets/stickers/swirly/swirly_dark_logo.png" alt="">
-          </button>
-          <button class="swatch-btn" aria-label="Black &amp; White"
-                  data-src="./assets/stickers/swirly/swirly_white.png"
-                  data-label="Black &amp; White" data-variant-index="4">
-            <img src="./assets/stickers/swirly/swirly_white.png" alt="">
-          </button>
-        </div>
-        <!-- ── END SWATCHES ── -->
-        <div class="product-variant-sel"><span class="product-variant-sel-prefix">Selected: </span><span class="product-variant-sel-value"></span></div>
+        <div class="product-name">LG Swirl Bundle</div>
+        <p class="product-desc">One Green Topographic holographic die-cut sticker — UV coated, waterproof, mailed to you — paired with a digital graphic to show you're rooting for LG in the Discord. I'll email you the file after checkout.</p>
         <div class="product-footer">
-          <div class="product-price"><span class="currency">$</span>5 <span class="currency">USD</span></div>
+          <div class="product-price"><span class="currency">$</span>10 <span class="currency">USD</span></div>
           <button class="btn-add-cart">Add to Cart</button>
         </div>
       </div>
     </div>
 
-    <!-- CARD: LG Holo Bundle | $5 | assets/stickers/special/ -->
+    <!-- CARD: LG Special Bundle | $10 | sticker: assets/stickers/special/clover_logo.webp -->
     <div class="product-card"
-         data-product-id="special-sticker"
-         data-name="LG Special Sticker"
-         data-price="5"
-         data-variants="Botanical|Classic">
-      <div class="product-img">
-        <img class="swatch-preview" src="./assets/stickers/special/clover_logo.png" alt="Botanical LG sticker">
+         data-product-id="bundle-special"
+         data-name="LG Special Bundle"
+         data-price="10"
+         data-variants="Standard">
+      <div class="product-img product-img--split">
+        <div class="product-img-half">
+          <img src="./assets/stickers/special/clover_logo.webp" alt="Botanical LG sticker" loading="lazy">
+          <span class="product-img-tag">Sticker</span>
+        </div>
+        <div class="product-img-half">
+          <img src="./assets/digital/UcklarBanner.webp" alt="Digital LG Discord support graphic — Ucklar banner" loading="lazy">
+          <span class="product-img-tag product-img-tag--placeholder">Digital</span>
+        </div>
       </div>
       <div class="product-info">
 
-        <div class="product-name">LG Special Sticker</div>
-        <p class="product-desc">Special-edition holographic die-cut stickers. Select a design with the swatches — each order is for one chosen design.</p>
-        <!-- ── SWATCHES: add / remove .swatch-btn blocks here ── -->
-        <div class="swatch-grid">
-          <button class="swatch-btn active" aria-current="true" aria-label="Botanical"
-                  data-src="./assets/stickers/special/clover_logo.png"
-                  data-label="Botanical" data-variant-index="0">
-            <img src="./assets/stickers/special/clover_logo.png" alt="">
-          </button>
-          <button class="swatch-btn" aria-label="Classic"
-                  data-src="./assets/stickers/special/logo_classic.png"
-                  data-label="Classic" data-variant-index="1">
-            <img src="./assets/stickers/special/logo_classic.png" alt="">
-          </button>
-        </div>
-        <!-- ── END SWATCHES ── -->
-        <div class="product-variant-sel"><span class="product-variant-sel-prefix">Selected: </span><span class="product-variant-sel-value"></span></div>
+        <div class="product-name">LG Special Bundle</div>
+        <p class="product-desc">One Botanical holographic die-cut sticker — UV coated, waterproof, mailed to you — paired with a digital graphic to show you're rooting for LG in the Discord. I'll email you the file after checkout.</p>
         <div class="product-footer">
-          <div class="product-price"><span class="currency">$</span>5 <span class="currency">USD</span></div>
-          <button class="btn-add-cart">Add to Cart</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- CARD: LG Individual Sticker | $5 | assets/stickers/teams/ -->
-    <div class="product-card"
-         data-product-id="individual-sticker"
-         data-name="LG Team Sticker"
-         data-price="5"
-         data-variants="Red Rose">
-      <div class="product-img">
-        <img class="swatch-preview" src="./assets/stickers/teams/red_rose.png" alt="Red Rose LG sticker">
-      </div>
-      <div class="product-info">
-
-        <div class="product-name">LG Team Sticker</div>
-        <p class="product-desc">Pick your favorite design — one holographic die-cut sticker. UV coated and waterproof.</p>
-        <!-- ── SWATCHES: add / remove .swatch-btn blocks here ── -->
-        <div class="swatch-grid">
-          <button class="swatch-btn active" aria-current="true" aria-label="Red Rose"
-                  data-src="./assets/stickers/teams/red_rose.png"
-                  data-label="Red Rose" data-variant-index="0">
-            <img src="./assets/stickers/teams/red_rose.png" alt="">
-          </button>
-        </div>
-        <!-- ── END SWATCHES ── -->
-        <div class="product-variant-sel"><span class="product-variant-sel-prefix">Selected: </span><span class="product-variant-sel-value"></span></div>
-        <div class="product-footer">
-          <div class="product-price"><span class="currency">$</span>5 <span class="currency">USD</span></div>
+          <div class="product-price"><span class="currency">$</span>10 <span class="currency">USD</span></div>
           <button class="btn-add-cart">Add to Cart</button>
         </div>
       </div>
@@ -1266,7 +204,7 @@
     <div class="order-info">
       <h2>PLACE YOUR <span>ORDER</span></h2>
       <p class="order-intro">
-        This is our first drop, so full online checkout isn't set up yet. Add your items to the cart, then email me your order directly — I'll write back to confirm the total and how to pay.
+        Browse the drop, add your items to the cart, and check out securely through Shopify. Payment is processed at checkout — all major cards accepted.
       </p>
 
       <div class="order-steps">
@@ -1274,61 +212,61 @@
           <div class="order-step-num">1</div>
           <div class="order-step-body">
             <strong>Pick your items</strong>
-            <span>Browse the drop and select your design for each sticker pack.</span>
+            <span>Browse the drop and pick your bundle(s).</span>
           </div>
         </div>
         <div class="order-step">
           <div class="order-step-num">2</div>
           <div class="order-step-body">
-            <strong>Email your order</strong>
-            <span>The "Email Your Order" button below pre-fills your cart, so you don't have to retype it.</span>
+            <strong>Add to cart &amp; check out</strong>
+            <span>Shopify handles payment securely — all major cards accepted.</span>
           </div>
         </div>
         <div class="order-step">
           <div class="order-step-num">3</div>
           <div class="order-step-body">
-            <strong>I'll confirm the details</strong>
-            <span>I'll reply with your total and how to send payment, usually within a day or two.</span>
+            <strong>I'll pack &amp; ship it</strong>
+            <span>Packed by hand, usually within 7 business days of your order — I'll message you the tracking number myself once it's on its way.</span>
           </div>
         </div>
         <div class="order-step">
           <div class="order-step-num">4</div>
           <div class="order-step-body">
-            <strong>I'll pack &amp; ship it</strong>
-            <span>Packed by hand, usually within 7 business days of payment — I'll message you the tracking number myself once it's on its way.</span>
+            <strong>Track your order</strong>
+            <span>You'll get a confirmation email with tracking once your order ships.</span>
           </div>
         </div>
       </div>
 
     </div>
 
-    <!-- MANUAL ORDER (EMAIL)
-         Full Shopify checkout isn't wired up yet, so orders are placed by email for now.
-         The "Email Your Order" link below is kept in sync with the cart automatically —
-         see updateEmailOrderLink() in the script at the bottom of this file.
+    <!-- SHOPIFY BUY BUTTON
+         Once your Shopify store is live:
+           1. Shopify Admin → Sales Channels → Buy Button
+           2. Create a Buy Button for each product (or a collection)
+           3. Copy the generated <script> + <div> snippet for each product
+           4. Paste those snippets inside .shopify-embed below, replacing the placeholder div
+         The Buy Button JS handles cart, variants, and checkout automatically.
     -->
     <div class="form-wrapper">
       <div class="form-header">
-        <span class="form-header-title">LG MERCH — PLACE YOUR ORDER</span>
+        <span class="form-header-title">LG MERCH — SHOP</span>
         <span class="form-header-badge">Bobert × LG Drop</span>
       </div>
 
-      <div class="order-panel">
-        <div class="order-panel-inner">
-          <div class="order-panel-icon" aria-hidden="true">✉️</div>
-          <p class="order-panel-title">ORDER BY EMAIL — FOR NOW</p>
-          <p class="order-panel-body">
-            Online checkout isn't set up yet, so orders go through email while we test the waters. Add your items to the cart above, then send me your order below — it'll already have everything in your cart filled in.
+      <div class="shopify-embed">
+        <!-- Paste your Shopify Buy Button embed snippets here -->
+        <div class="shopify-placeholder">
+          <div class="shopify-placeholder-icon" aria-hidden="true">🛍</div>
+          <p class="shopify-placeholder-title">SHOPIFY CHECKOUT</p>
+          <p class="shopify-placeholder-body">
+            Add your Shopify Buy Button embed code here once your store is set up.
           </p>
-          <a href="#" id="btn-email-order" class="btn-primary order-panel-btn"
-             data-u="evangelinagrimes" data-d="gmail.com">Email Your Order</a>
-          <p class="email-order-ack" id="email-order-ack" role="status" aria-live="polite"></p>
-          <p class="order-panel-hint">Cart empty? Add a sticker pack above, or just email me directly.</p>
         </div>
       </div>
 
       <div class="form-note">
-        <span aria-hidden="true">🔒</span> I only use your info to get your order right — no mailing lists, nothing shared.
+        <span aria-hidden="true">🔒</span> Once the Shopify store is connected above, checkout will be handled securely by Shopify. Payment info is never stored by us.
       </div>
     </div>
 
@@ -1350,15 +288,15 @@
   <div class="faq-list">
     <details class="faq-item">
       <summary>Do you ship internationally?</summary>
-      <p>Yep! Just know it'll likely take a bit longer and cost a little more for postage outside the US. I'll factor that into the total when I write back to confirm your order.</p>
+      <p>Yep! Just know it'll likely take a bit longer and cost a little more for postage outside the US — Shopify works out the shipping cost for you at checkout based on your address.</p>
     </details>
     <details class="faq-item">
       <summary>What if my order shows up damaged?</summary>
       <p>Email me a photo and I'll make it right — replacement or refund, whichever works for you. This is a small trial run and I want to get it right.</p>
     </details>
     <details class="faq-item">
-      <summary>Can I change or cancel my order after I email it in?</summary>
-      <p>Easily. It's all just email right now, so reply to your order thread anytime before I confirm your total and I'll update or cancel it — no forms, no fees.</p>
+      <summary>Can I change or cancel my order after checkout?</summary>
+      <p>Easily. Email me as soon as you can — if it hasn't shipped yet, I'll update or cancel it, no forms, no fees.</p>
     </details>
   </div>
 </section>
@@ -1392,8 +330,8 @@
       <span class="cart-subtotal-label">Subtotal</span>
       <span class="cart-subtotal-amount" id="cart-subtotal-amount">$0</span>
     </div>
-    <button class="btn-checkout" id="btn-checkout" disabled>Continue to Order</button>
-    <p class="cart-checkout-note">Online checkout isn't set up yet — this takes you to how to place your order by email.</p>
+    <button class="btn-checkout" id="btn-checkout" disabled>Checkout via Shopify</button>
+    <p class="cart-checkout-note">Shopify checkout coming soon — your cart is saved while you browse.</p>
   </div>
 </aside>
 
@@ -1401,8 +339,8 @@
 <footer>
   <div class="footer-inner">
     <div>
-      <div class="footer-vdc-row">
-        <span class="footer-vdc-pill">LG</span>
+      <div class="footer-brand">
+        <span class="footer-pill">LG</span>
         <span class="footer-wordmark">BOBERT × LG<span>.</span></span>
       </div>
       <div class="footer-tagline">
@@ -1419,368 +357,13 @@
   <div class="footer-inner">
     <div class="footer-legal">
       <span>Not affiliated with or sponsored by the Valorant Draft Circuit, Riot Games, Inc., or VALORANT™ Esports.</span>
+      <span>© Bobert Merch · All rights reserved</span>
     </div>
   </div>
 </footer>
 
-<script>
-  // ── SHARED SCROLL LOCK ──
-  // The cart drawer and the trial modal can each be open independently of
-  // one another. A plain counter keeps body scroll locked as long as
-  // anything is open, and only restores scrolling once everything relying
-  // on the lock has closed — so closing one doesn't clobber the other.
-  let scrollLockCount = 0;
-  function lockScroll() {
-    scrollLockCount++;
-    document.body.style.overflow = 'hidden';
-  }
-  function unlockScroll() {
-    scrollLockCount = Math.max(0, scrollLockCount - 1);
-    if (scrollLockCount === 0) document.body.style.overflow = '';
-  }
-
-  // ── CART ──
-  const PRODUCTS = {};
-  document.querySelectorAll('.product-card[data-name]').forEach(card => {
-    PRODUCTS[card.dataset.productId] = {
-      name:     card.dataset.name,
-      price:    parseInt(card.dataset.price, 10),
-      variants: card.dataset.variants.split('|'),
-    };
-  });
-
-  // Initialize active swatch state + variant labels
-  document.querySelectorAll('.product-card').forEach(card => {
-    const activeBtn = card.querySelector('.swatch-btn.active');
-    if (activeBtn) card.dataset.activeSlide = activeBtn.dataset.variantIndex ?? '0';
-
-    const lbl      = card.querySelector('.product-variant-sel');
-    const lblValue = lbl ? lbl.querySelector('.product-variant-sel-value') : null;
-    const p        = PRODUCTS[card.dataset.productId];
-    if (!lbl || !lblValue || !p) return;
-    if (p.variants.length > 1) {
-      lblValue.textContent = p.variants[0];
-    } else {
-      lbl.classList.add('is-hidden');
-    }
-  });
-
-  // Turns a data-u/data-d obfuscation pair into a real email address.
-  // Both the footer contact link and the pre-filled order mailto link
-  // (see updateEmailOrderLink below) need this same bit of assembly.
-  function emailFromDataset(el) {
-    return el.dataset.u + '@' + el.dataset.d;
-  }
-
-  // Email obfuscation
-  document.querySelectorAll('.obf-email').forEach(el => {
-    const addr = emailFromDataset(el);
-    el.href = 'mailto:' + addr;
-    if (!el.textContent.trim()) el.textContent = addr;
-  });
-
-  function esc(str) {
-    return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-  }
-
-  let cart;
-  try {
-    const stored = JSON.parse(localStorage.getItem('lg-cart') || '[]');
-    cart = Array.isArray(stored) ? stored : [];
-  } catch (_) {
-    cart = [];
-  }
-
-  function cartKey(pid, vi) { return pid + '::' + vi; }
-
-  function addToCart(productId, variantIdx) {
-    const key = cartKey(productId, variantIdx);
-    const existing = cart.find(i => i.key === key);
-    if (existing) {
-      existing.qty++;
-    } else {
-      const p = PRODUCTS[productId];
-      cart.push({ key, productId, variantIdx, name: p.name, variant: p.variants[variantIdx], price: p.price, qty: 1 });
-    }
-    saveCart();
-  }
-
-  function removeFromCart(key) {
-    cart = cart.filter(i => i.key !== key);
-    saveCart();
-  }
-
-  function updateQty(key, delta) {
-    const item = cart.find(i => i.key === key);
-    if (!item) return;
-    item.qty = Math.max(0, item.qty + delta);
-    if (item.qty === 0) cart = cart.filter(i => i.key !== key);
-    saveCart();
-  }
-
-  function saveCart() {
-    localStorage.setItem('lg-cart', JSON.stringify(cart));
-    renderCart();
-    updateCartCount();
-  }
-
-  function updateCartCount() {
-    const total = cart.reduce((s, i) => s + i.qty, 0);
-    const el = document.getElementById('cart-count');
-    el.textContent = total;
-    el.classList.toggle('visible', total > 0);
-  }
-
-  // Keeps the "Email Your Order" link's mailto body in sync with whatever's in the cart,
-  // so a shopper never has to retype what they picked. Takes the cart total as a
-  // parameter rather than recomputing it — renderCart() below is the single source
-  // of truth for the total within a given render pass.
-  function updateEmailOrderLink(total) {
-    const link = document.getElementById('btn-email-order');
-    if (!link) return;
-    const addr    = emailFromDataset(link);
-    const subject = 'LG Sticker Order';
-    let body;
-
-    if (cart.length === 0) {
-      body = "Hi! I'd like to place an order for LG merch. Here's what I want:\n\n"
-           + "(list your items here)\n\nMy name:\nShipping address:";
-    } else {
-      const lines = cart.map(i => `- ${i.qty} x ${i.name} (${i.variant}) — $${i.price * i.qty}`);
-      body = "Hi! I'd like to place this order:\n\n" + lines.join('\n')
-           + `\n\nTotal: $${total}\n\nMy name:\nShipping address:`;
-    }
-
-    link.href = `mailto:${addr}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  }
-
-  function renderCart() {
-    const container   = document.getElementById('cart-items');
-    const checkoutBtn = document.getElementById('btn-checkout');
-    const subtotalEl  = document.getElementById('cart-subtotal-amount');
-
-    const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
-    updateEmailOrderLink(total);
-
-    if (cart.length === 0) {
-      container.innerHTML = '<div class="cart-empty"><div class="cart-empty-icon" aria-hidden="true">🛒</div><span>Your cart is empty</span></div>';
-      subtotalEl.textContent = '$0';
-      checkoutBtn.disabled = true;
-      return;
-    }
-
-    checkoutBtn.disabled = false;
-    container.innerHTML = cart.map(item => `
-      <div class="cart-item">
-        <div class="cart-item-info">
-          <div class="cart-item-name">${esc(item.name)}</div>
-          <div class="cart-item-variant">${esc(item.variant)}</div>
-          <div class="cart-item-controls">
-            <button class="qty-btn" data-key="${esc(item.key)}" data-delta="-1">−</button>
-            <span class="cart-item-qty">${Number(item.qty)}</span>
-            <button class="qty-btn" data-key="${esc(item.key)}" data-delta="1">+</button>
-          </div>
-        </div>
-        <div class="cart-item-right">
-          <div class="cart-item-price">$${Number(item.price) * Number(item.qty)}</div>
-          <button class="cart-item-remove" data-key="${esc(item.key)}">Remove</button>
-        </div>
-      </div>
-    `).join('');
-
-    subtotalEl.textContent = '$' + total;
-  }
-
-  function openCart() {
-    document.getElementById('cart-drawer').classList.add('open');
-    document.getElementById('cart-overlay').classList.add('open');
-    lockScroll();
-  }
-
-  function closeCart() {
-    const drawer = document.getElementById('cart-drawer');
-    if (!drawer.classList.contains('open')) return;
-    drawer.classList.remove('open');
-    document.getElementById('cart-overlay').classList.remove('open');
-    unlockScroll();
-  }
-
-  document.getElementById('cart-toggle').addEventListener('click', openCart);
-  document.getElementById('cart-close').addEventListener('click', closeCart);
-  document.getElementById('cart-overlay').addEventListener('click', closeCart);
-  document.getElementById('btn-checkout').addEventListener('click', () => {
-    closeCart();
-    document.getElementById('order').scrollIntoView({ behavior: 'smooth' });
-  });
-
-  // We can't know whether the email actually gets sent, so this is just a
-  // warm confirmation that the click worked and their email client is opening —
-  // not a fake "order complete" state.
-  const emailOrderAck = document.getElementById('email-order-ack');
-  document.getElementById('btn-email-order').addEventListener('click', () => {
-    if (!emailOrderAck) return;
-    emailOrderAck.textContent = 'Opening your email — thanks for supporting the drop!';
-    emailOrderAck.classList.add('visible');
-    clearTimeout(emailOrderAck._hideTimer);
-    emailOrderAck._hideTimer = setTimeout(() => emailOrderAck.classList.remove('visible'), 4000);
-  });
-
-  const cartToggleBtn = document.getElementById('cart-toggle');
-
-  document.querySelectorAll('.btn-add-cart').forEach(btn => {
-    btn.addEventListener('click', e => {
-      e.stopPropagation();
-      const card = btn.closest('.product-card');
-      addToCart(card.dataset.productId, parseInt(card.dataset.activeSlide || '0', 10));
-      btn.textContent = 'Added!';
-      btn.classList.add('added');
-      setTimeout(() => { btn.textContent = 'Add to Cart'; btn.classList.remove('added'); }, 1400);
-      cartToggleBtn.classList.remove('pulse');
-      void cartToggleBtn.offsetWidth; // force reflow so re-adding the class re-triggers the animation
-      cartToggleBtn.classList.add('pulse');
-    });
-  });
-
-  updateCartCount();
-  renderCart();
-
-  document.getElementById('cart-items').addEventListener('click', e => {
-    const t = e.target;
-    if (t.classList.contains('qty-btn')) {
-      updateQty(t.dataset.key, parseInt(t.dataset.delta, 10));
-    } else if (t.classList.contains('cart-item-remove')) {
-      removeFromCart(t.dataset.key);
-    }
-  });
-
-  // ── MOBILE NAV ──
-  const hamburgerBtn = document.getElementById('hamburger-btn');
-  const mobileNavEl  = document.getElementById('mobile-nav');
-
-  function openMobileNav() {
-    mobileNavEl.classList.add('open');
-    hamburgerBtn.textContent = 'CLOSE';
-    hamburgerBtn.setAttribute('aria-expanded', 'true');
-  }
-
-  function closeMobileNav() {
-    mobileNavEl.classList.remove('open');
-    hamburgerBtn.textContent = 'MENU';
-    hamburgerBtn.setAttribute('aria-expanded', 'false');
-  }
-
-  hamburgerBtn.addEventListener('click', () => {
-    mobileNavEl.classList.contains('open') ? closeMobileNav() : openMobileNav();
-  });
-
-  mobileNavEl.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMobileNav));
-
-  // ── TRIAL NOTICE MODAL ──
-  // Same heads-up as the in-page trial-notice banner above the shop grid,
-  // surfaced once per visit shortly after the page loads. It never
-  // re-triggers on click/scroll/etc — just a single, quiet appearance so
-  // it can't turn into an annoying repeat popup.
-  const trialModalOverlay = document.getElementById('trial-modal-overlay');
-  const trialModal        = document.getElementById('trial-modal');
-  const trialModalClose   = document.getElementById('trial-modal-close');
-  const trialModalOk      = document.getElementById('trial-modal-ok');
-  let trialModalLastFocus = null;
-
-  function trapTrialModalFocus(e) {
-    if (e.key !== 'Tab') return;
-    const first = trialModalClose;
-    const last  = trialModalOk;
-    if (e.shiftKey && document.activeElement === first) {
-      e.preventDefault();
-      last.focus();
-    } else if (!e.shiftKey && document.activeElement === last) {
-      e.preventDefault();
-      first.focus();
-    }
-  }
-
-  function openTrialModal() {
-    if (!trialModal || !trialModalOverlay) return;
-    trialModalLastFocus = document.activeElement;
-    trialModal.hidden = false;
-    trialModalOverlay.hidden = false;
-    requestAnimationFrame(() => {
-      trialModalOverlay.classList.add('open');
-      trialModal.classList.add('open');
-    });
-    lockScroll();
-    trialModal.addEventListener('keydown', trapTrialModalFocus);
-    trialModalClose.focus();
-  }
-
-  function closeTrialModal() {
-    if (!trialModal || !trialModal.classList.contains('open')) return;
-    trialModalOverlay.classList.remove('open');
-    trialModal.classList.remove('open');
-    unlockScroll();
-    trialModal.removeEventListener('keydown', trapTrialModalFocus);
-    setTimeout(() => {
-      trialModal.hidden = true;
-      trialModalOverlay.hidden = true;
-    }, 250);
-    if (trialModalLastFocus && typeof trialModalLastFocus.focus === 'function') {
-      trialModalLastFocus.focus();
-    }
-  }
-
-  if (trialModalOverlay && trialModal && trialModalClose && trialModalOk) {
-    trialModalClose.addEventListener('click', closeTrialModal);
-    trialModalOk.addEventListener('click', closeTrialModal);
-    trialModalOverlay.addEventListener('click', closeTrialModal);
-
-    // Once per browser session (sessionStorage, not localStorage) — a visitor
-    // won't be interrupted again on this visit, but a genuinely new visit
-    // (new tab/session) will still see it once.
-    try {
-      if (!sessionStorage.getItem('lg-trial-notice-seen')) {
-        setTimeout(() => {
-          // Set right before the modal actually opens, not when the guard
-          // first passes — otherwise a visitor who navigates away and back
-          // within the delay would find the flag already set and never
-          // see the modal at all this session.
-          sessionStorage.setItem('lg-trial-notice-seen', '1');
-          openTrialModal();
-        }, 1200);
-      }
-    } catch (_) {
-      // sessionStorage unavailable (e.g. private browsing) — skip the popup
-      // rather than risk it reappearing on every click.
-    }
-  }
-
-  document.addEventListener('keydown', e => {
-    if (e.key !== 'Escape') return;
-    closeCart();
-    closeMobileNav();
-    closeTrialModal();
-  });
-
-  // ── SWATCH SELECTOR ──
-  document.querySelectorAll('.swatch-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const card = btn.closest('.product-card');
-      card.querySelectorAll('.swatch-btn').forEach(b => {
-        b.classList.remove('active');
-        b.removeAttribute('aria-current');
-      });
-      btn.classList.add('active');
-      btn.setAttribute('aria-current', 'true');
-      const preview = card.querySelector('.swatch-preview');
-      if (preview) {
-        preview.src = btn.dataset.src;
-        preview.alt = btn.dataset.label + ' LG sticker';
-      }
-      const sel = card.querySelector('.product-variant-sel-value');
-      if (sel) sel.textContent = btn.dataset.label;
-      card.dataset.activeSlide = btn.dataset.variantIndex;
-    });
-  });
-</script>
+<script src="./nav.js"></script>
+<script src="./shop.js"></script>
 
 </body>
 </html>

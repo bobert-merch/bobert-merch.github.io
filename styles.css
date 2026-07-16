@@ -8,8 +8,6 @@
   --surface:       #0E1A0E;
   --border:        #183018;
   --border-bright: #225022;
-  --vdc-blue:      #5CB83A;
-  --vdc-blue-dk:   #3F8A26;
   --lg-green:      #5CB83A;
   --lg-green-dk:   #3F8A26;
   --val-red:       #FF4655;
@@ -45,10 +43,15 @@ nav {
   border-bottom: 1px solid var(--border);
 }
 
-.nav-left { display: flex; align-items: center; gap: 1rem; }
+.nav-left { display: flex; align-items: center; gap: 1rem; text-decoration: none; color: inherit; }
 
-.vdc-pill, .lg-pill {
-  background: var(--vdc-blue);
+/* Groups nav-links with the cart/hamburger cluster so they sit flush against
+   the right edge as one unit, instead of nav-links landing in the visual
+   middle of the bar (the third child of a 3-way space-between). */
+.nav-right-group { display: flex; align-items: center; gap: 2rem; }
+
+.lg-pill {
+  background: var(--lg-green);
   color: #fff;
   font-family: var(--font-display);
   font-size: 1rem;
@@ -80,13 +83,13 @@ nav {
 .nav-links a:hover { color: var(--text); }
 
 .nav-cta {
-  background: var(--vdc-blue) !important;
+  background: var(--lg-green) !important;
   color: #fff !important;
   padding: 5px 14px;
   clip-path: polygon(4px 0%, 100% 0%, calc(100% - 4px) 100%, 0% 100%);
 }
 
-.nav-cta:hover { background: var(--vdc-blue-dk) !important; color: #fff !important; }
+.nav-cta:hover { background: var(--lg-green-dk) !important; color: #fff !important; }
 
 /* ── DIVIDER ── */
 .divider {
@@ -99,7 +102,7 @@ nav {
 }
 
 .divider-line { flex: 1; height: 1px; background: var(--border); }
-.divider-diamond { width: 8px; height: 8px; background: var(--vdc-blue); transform: rotate(45deg); opacity: 0.6; }
+.divider-diamond { width: 8px; height: 8px; background: var(--lg-green); transform: rotate(45deg); opacity: 0.6; }
 
 /* ── SHARED ANIMATIONS ── */
 @keyframes pulse {
@@ -128,7 +131,7 @@ nav {
   transition: border-color 0.2s, color 0.2s;
 }
 
-.hamburger:hover { border-color: var(--vdc-blue); color: var(--vdc-blue); }
+.hamburger:hover { border-color: var(--lg-green); color: var(--lg-green); }
 
 .mobile-nav {
   position: fixed;
@@ -168,7 +171,7 @@ nav {
 
 .mobile-nav .mobile-nav-cta {
   margin-top: 0.75rem;
-  background: var(--vdc-blue);
+  background: var(--lg-green);
   color: #fff !important;
   text-align: center;
   padding: 0.75rem 1rem;
@@ -176,19 +179,82 @@ nav {
   border-bottom: none !important;
 }
 
-.mobile-nav .mobile-nav-cta:hover { background: var(--vdc-blue-dk) !important; }
+.mobile-nav .mobile-nav-cta:hover { background: var(--lg-green-dk) !important; }
+
+/* ── HERO SHARED (index.html + feedback.html — page-specific background
+   effects and sizing stay in shop.css / feedback.css) ── */
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--lg-green);
+}
+
+.hero-eyebrow .dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--val-red);
+  animation: pulse 1.8s ease-in-out infinite;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.line-green { color: var(--lg-green); }
+.line-red   { color: var(--val-red); }
+
+.btn-primary {
+  display: inline-block;
+  background: var(--lg-green);
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  letter-spacing: 0.12em;
+  padding: 13px 36px 11px;
+  text-decoration: none;
+  clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+  transition: background 0.2s, transform 0.15s;
+}
+
+.btn-primary:hover { background: var(--lg-green-dk); transform: translateY(-2px); }
+
+.btn-ghost {
+  display: inline-block;
+  background: transparent;
+  border: 1px solid var(--border-bright);
+  color: var(--muted);
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  letter-spacing: 0.12em;
+  padding: 13px 28px 11px;
+  text-decoration: none;
+  clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.btn-ghost:hover { border-color: var(--lg-green); color: var(--lg-green); }
 
 /* ── REDUCED MOTION ── */
-/* Only rules that aren't re-declared by a later inline <style> block on any
-   page belong here — anything a page re-declares in its own inline <style>
-   (which loads after this stylesheet) would win the cascade at equal
-   specificity and silently cancel these overrides. Those live in the
-   relevant page's own inline <style> instead, placed after the rules they
-   need to override. See index.html for its set (ticker, hero dot, cart,
-   trial modal, product cards, primary button hover). */
+/* Only rules that aren't re-declared by a later page CSS file belong here —
+   anything a page redeclares in its own <link>ed stylesheet (which loads
+   after this one) would win the cascade at equal specificity and silently
+   cancel these overrides. Those live in the relevant page's own CSS file
+   instead, placed after the rules they need to override. See shop.css for
+   its set (ticker, cart, trial modal, product cards). */
 @media (prefers-reduced-motion: reduce) {
-  .mobile-nav   { transition: none; }
-  .concept-card { transition: none; }
+  .mobile-nav        { transition: none; }
+  .concept-card      { transition: none; }
+  .hero-eyebrow .dot { animation: none; }
+  .btn-primary:hover { transform: none; }
 }
 
 /* ── UTILITY ── */
@@ -207,7 +273,7 @@ nav {
   position: absolute;
   top: 0; left: 0; right: 0;
   height: 3px;
-  background: var(--vdc-blue);
+  background: var(--lg-green);
 }
 
 .form-header {
@@ -230,7 +296,7 @@ nav {
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--vdc-blue);
+  color: var(--lg-green);
   background: rgba(92,184,58,0.1);
   border: 1px solid rgba(92,184,58,0.25);
   padding: 3px 8px;
@@ -245,9 +311,102 @@ nav {
   line-height: 1.5;
 }
 
+/* ── SECTION LABEL/TITLE (feedback.html + about.html) ── */
+.section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--lg-green);
+  margin-bottom: 0.5rem;
+}
+
+.section-label .dot {
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: var(--val-red);
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  letter-spacing: 0.06em;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.section-title span { color: var(--lg-green); }
+
+/* ── FOOTER (feedback.html + about.html — index.html defines its own,
+   differently-structured footer in its page <style> block, which loads
+   after this file and overrides these rules there) ── */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 1.8rem 2rem;
+}
+
+.footer-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.footer-brand { display: flex; align-items: center; gap: 0.6rem; }
+
+.footer-pill {
+  background: var(--lg-green);
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  padding: 2px 8px 0;
+  clip-path: polygon(4px 0%, 100% 0%, calc(100% - 4px) 100%, 0% 100%);
+}
+
+.footer-wordmark {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  letter-spacing: 0.08em;
+}
+
+.footer-wordmark span { color: var(--val-red); }
+
+.footer-links { display: flex; gap: 1.5rem; }
+
+.footer-links a {
+  font-size: 0.72rem;
+  color: var(--muted);
+  text-decoration: none;
+  letter-spacing: 0.06em;
+  transition: color 0.2s;
+}
+
+.footer-links a:hover { color: var(--lg-green); }
+
+.footer-legal {
+  width: 100%;
+  border-top: 1px solid var(--border);
+  margin-top: 1rem;
+  padding-top: 0.8rem;
+  font-size: 0.66rem;
+  color: var(--muted);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
 /* ── RESPONSIVE BASE ── */
 @media (max-width: 768px) {
   nav        { padding: 0 1rem; }
   .nav-links { display: none; }
   .hamburger { display: flex; }
+  footer     { padding: 1.5rem 1.2rem; }
 }
