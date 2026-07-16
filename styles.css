@@ -185,6 +185,7 @@ nav {
   .cart-btn.pulse                { animation: none; }
   .mobile-nav                    { transition: none; }
   .cart-drawer, .cart-overlay    { transition: none; }
+  .trial-modal, .trial-modal-overlay { transition: none; }
   .product-card, .concept-card   { transition: none; }
   .btn-primary:hover             { transform: none; }
 }
