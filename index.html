@@ -449,6 +449,24 @@
       opacity: 0.75;
     }
 
+    /* Small, warm acknowledgment shown after "Email Your Order" is clicked —
+       not an "order complete" state, just confirming the action happened. */
+    .email-order-ack {
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--vdc-blue);
+      opacity: 0;
+      max-height: 0;
+      overflow: hidden;
+      transition: opacity 0.25s ease;
+    }
+
+    .email-order-ack.visible {
+      opacity: 1;
+      max-height: 2em;
+      margin-bottom: 0.6rem;
+    }
+
     /* ── MATCH DAY BANNER ── */
     .trial-notice {
       background: var(--surface);
@@ -862,8 +880,10 @@
       min-height: 1em;
     }
 
-    .product-variant-sel::before {
-      content: 'Selected: ';
+    /* Real text instead of ::before-generated content — CSS pseudo-content
+       isn't reliably exposed to screen readers, so "Selected: " lives in
+       the actual markup now (see .product-variant-sel-prefix below). */
+    .product-variant-sel-prefix {
       color: var(--muted);
       font-weight: 600;
       text-transform: none;
@@ -1069,7 +1089,7 @@
           </button>
         </div>
         <!-- ── END SWATCHES ── -->
-        <div class="product-variant-sel"></div>
+        <div class="product-variant-sel"><span class="product-variant-sel-prefix">Selected: </span><span class="product-variant-sel-value"></span></div>
         <div class="product-footer">
           <div class="product-price"><span class="currency">$</span>5 <span class="currency">USD</span></div>
           <button class="btn-add-cart">Add to Cart</button>
@@ -1104,7 +1124,7 @@
           </button>
         </div>
         <!-- ── END SWATCHES ── -->
-        <div class="product-variant-sel"></div>
+        <div class="product-variant-sel"><span class="product-variant-sel-prefix">Selected: </span><span class="product-variant-sel-value"></span></div>
         <div class="product-footer">
           <div class="product-price"><span class="currency">$</span>5 <span class="currency">USD</span></div>
           <button class="btn-add-cart">Add to Cart</button>
@@ -1134,7 +1154,7 @@
           </button>
         </div>
         <!-- ── END SWATCHES ── -->
-        <div class="product-variant-sel"></div>
+        <div class="product-variant-sel"><span class="product-variant-sel-prefix">Selected: </span><span class="product-variant-sel-value"></span></div>
         <div class="product-footer">
           <div class="product-price"><span class="currency">$</span>5 <span class="currency">USD</span></div>
           <button class="btn-add-cart">Add to Cart</button>
@@ -1210,6 +1230,7 @@
           </p>
           <a href="#" id="btn-email-order" class="btn-primary shopify-placeholder-btn"
              data-u="evangelinagrimes" data-d="gmail.com">Email Your Order</a>
+          <p class="email-order-ack" id="email-order-ack" role="status" aria-live="polite"></p>
           <p class="shopify-placeholder-hint">Cart empty? Add a sticker pack above, or just email me directly.</p>
         </div>
       </div>
@@ -1317,11 +1338,12 @@
     const activeBtn = card.querySelector('.swatch-btn.active');
     if (activeBtn) card.dataset.activeSlide = activeBtn.dataset.variantIndex ?? '0';
 
-    const lbl = card.querySelector('.product-variant-sel');
-    const p   = PRODUCTS[card.dataset.productId];
-    if (!lbl || !p) return;
+    const lbl      = card.querySelector('.product-variant-sel');
+    const lblValue = lbl ? lbl.querySelector('.product-variant-sel-value') : null;
+    const p        = PRODUCTS[card.dataset.productId];
+    if (!lbl || !lblValue || !p) return;
     if (p.variants.length > 1) {
-      lbl.textContent = p.variants[0];
+      lblValue.textContent = p.variants[0];
     } else {
       lbl.classList.add('is-hidden');
     }
@@ -1464,6 +1486,18 @@
     document.getElementById('order').scrollIntoView({ behavior: 'smooth' });
   });
 
+  // We can't know whether the email actually gets sent, so this is just a
+  // warm confirmation that the click worked and their email client is opening —
+  // not a fake "order complete" state.
+  const emailOrderAck = document.getElementById('email-order-ack');
+  document.getElementById('btn-email-order').addEventListener('click', () => {
+    if (!emailOrderAck) return;
+    emailOrderAck.textContent = 'Opening your email — thanks for supporting the drop!';
+    emailOrderAck.classList.add('visible');
+    clearTimeout(emailOrderAck._hideTimer);
+    emailOrderAck._hideTimer = setTimeout(() => emailOrderAck.classList.remove('visible'), 4000);
+  });
+
   const cartToggleBtn = document.getElementById('cart-toggle');
 
   document.querySelectorAll('.btn-add-cart').forEach(btn => {
@@ -1535,7 +1569,7 @@
         preview.src = btn.dataset.src;
         preview.alt = btn.dataset.label + ' LG sticker';
       }
-      const sel = card.querySelector('.product-variant-sel');
+      const sel = card.querySelector('.product-variant-sel-value');
       if (sel) sel.textContent = btn.dataset.label;
       card.dataset.activeSlide = btn.dataset.variantIndex;
     });

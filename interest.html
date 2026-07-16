@@ -407,6 +407,14 @@
       min-height: 680px;
       border: none;
       display: block;
+      /* Known fragile hack: Google Forms only renders light-mode, and its embed
+         doesn't offer a dark theme or CSS hook we control (it's a cross-origin
+         iframe), so we invert the whole thing to roughly match the site's dark
+         palette. This is brittle — if Google changes their form styling, colors
+         (esp. the blue submit button and any images/logos in the form) could
+         shift or look wrong. Verify visually after any Google Forms changes;
+         a real fix would mean building a native form or a themed Forms
+         alternative, which is out of scope for this trial run. */
       filter: invert(1) hue-rotate(180deg);
     }
 
