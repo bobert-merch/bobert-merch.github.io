@@ -374,7 +374,8 @@
       line-height: 1.5;
     }
 
-    /* Shopify Buy Button container */
+    /* Order-placement container — named "shopify" for now since it originally targeted a
+       future Shopify Buy Button embed; currently holds the manual email-order block. */
     .shopify-embed {
       padding: 1.5rem;
       min-height: 400px;
@@ -386,7 +387,7 @@
       align-items: center;
       justify-content: center;
       min-height: 360px;
-      border: 1px dashed var(--border-bright);
+      border: 1px solid var(--border);
       text-align: center;
       padding: 2rem;
     }
@@ -418,8 +419,18 @@
     .shopify-placeholder-body {
       font-size: 0.76rem;
       color: var(--muted);
-      max-width: 260px;
+      max-width: 340px;
       line-height: 1.6;
+    }
+
+    .shopify-placeholder-btn {
+      margin: 1.2rem 0 0.9rem;
+    }
+
+    .shopify-placeholder-hint {
+      font-size: 0.68rem;
+      color: var(--muted);
+      opacity: 0.75;
     }
 
     /* ── MATCH DAY BANNER ── */
@@ -756,7 +767,7 @@
     }
     .btn-checkout:hover { background: var(--vdc-blue-dk); }
     .btn-checkout:disabled { opacity: 0.35; cursor: not-allowed; }
-    .cart-shopify-note {
+    .cart-checkout-note {
       font-size: 0.65rem;
       color: var(--muted);
       text-align: center;
@@ -913,7 +924,7 @@
     <h2>THE <span>DROP</span></h2>
     <div class="section-meta">
       Valorant Draft Circuit · Season Merch<br>
-      Add to cart and check out via Shopify
+      Add to cart, then email your order below
     </div>
   </div>
 
@@ -1065,7 +1076,7 @@
     <div class="order-info">
       <h2>PLACE YOUR <span>ORDER</span></h2>
       <p class="order-intro">
-        Browse the drop, add your items to the cart, and check out securely through Shopify. Payment is processed at checkout — all major cards accepted.
+        This is our first drop, so full online checkout isn't set up yet. Add your items to the cart, then email me your order directly — I'll write back to confirm the total and how to pay.
       </p>
 
       <div class="order-steps">
@@ -1073,61 +1084,60 @@
           <div class="order-step-num">1</div>
           <div class="order-step-body">
             <strong>Pick your items</strong>
-            <span>Browse the drop and select what you want, including size or variant.</span>
+            <span>Browse the drop and select your design for each sticker pack.</span>
           </div>
         </div>
         <div class="order-step">
           <div class="order-step-num">2</div>
           <div class="order-step-body">
-            <strong>Add to cart &amp; check out</strong>
-            <span>Shopify handles payment securely — all major cards accepted.</span>
+            <strong>Email your order</strong>
+            <span>The "Email Your Order" button below pre-fills your cart, so you don't have to retype it.</span>
           </div>
         </div>
         <div class="order-step">
           <div class="order-step-num">3</div>
           <div class="order-step-body">
-            <strong>We make &amp; ship it</strong>
-            <span>Orders ship within 7 business days of the drop closing.</span>
+            <strong>I'll confirm the details</strong>
+            <span>I'll reply with your total and how to send payment, usually within a day or two.</span>
           </div>
         </div>
         <div class="order-step">
           <div class="order-step-num">4</div>
           <div class="order-step-body">
-            <strong>Track your order</strong>
-            <span>You'll get a confirmation email with tracking once your order ships.</span>
+            <strong>We make &amp; ship it</strong>
+            <span>Orders ship within 7 business days once payment's confirmed.</span>
           </div>
         </div>
       </div>
 
     </div>
 
-    <!-- SHOPIFY BUY BUTTON
-         Once your Shopify store is live:
-           1. Shopify Admin → Sales Channels → Buy Button
-           2. Create a Buy Button for each product (or a collection)
-           3. Copy the generated <script> + <div> snippet for each product
-           4. Paste those snippets inside .shopify-embed below, replacing the placeholder div
-         The Buy Button JS handles cart, variants, and checkout automatically.
+    <!-- MANUAL ORDER (EMAIL)
+         Full Shopify checkout isn't wired up yet, so orders are placed by email for now.
+         The "Email Your Order" link below is kept in sync with the cart automatically —
+         see updateEmailOrderLink() in the script at the bottom of this file.
     -->
     <div class="form-wrapper">
       <div class="form-header">
-        <span class="form-header-title">LG MERCH — SHOP</span>
+        <span class="form-header-title">LG MERCH — PLACE YOUR ORDER</span>
         <span class="form-header-badge">Bobert × LG Drop</span>
       </div>
 
       <div class="shopify-embed">
-        <!-- Paste your Shopify Buy Button embed snippets here -->
         <div class="shopify-placeholder">
-          <div class="shopify-placeholder-icon" aria-hidden="true">🛍</div>
-          <p class="shopify-placeholder-title">SHOPIFY CHECKOUT</p>
+          <div class="shopify-placeholder-icon" aria-hidden="true">✉️</div>
+          <p class="shopify-placeholder-title">ORDER BY EMAIL — FOR NOW</p>
           <p class="shopify-placeholder-body">
-            Add your Shopify Buy Button embed code here once your store is set up.
+            Online checkout isn't set up yet, so orders go through email while we test the waters. Add your items to the cart above, then send me your order below — it'll already have everything in your cart filled in.
           </p>
+          <a href="#" id="btn-email-order" class="btn-primary shopify-placeholder-btn"
+             data-u="evangelinagrimes" data-d="gmail.com">Email Your Order</a>
+          <p class="shopify-placeholder-hint">Cart empty? Add a sticker pack above, or just email me directly.</p>
         </div>
       </div>
 
       <div class="form-note">
-        <span aria-hidden="true">🔒</span> Once the Shopify store is connected above, checkout will be handled securely by Shopify. Payment info is never stored by us.
+        <span aria-hidden="true">🔒</span> I only use your info to get your order right — no mailing lists, nothing shared.
       </div>
     </div>
 
@@ -1154,8 +1164,8 @@
       <span class="cart-subtotal-label">Subtotal</span>
       <span class="cart-subtotal-amount" id="cart-subtotal-amount">$0</span>
     </div>
-    <button class="btn-checkout" id="btn-checkout" disabled>Checkout via Shopify</button>
-    <p class="cart-shopify-note">Shopify checkout coming soon — your cart is saved while you browse.</p>
+    <button class="btn-checkout" id="btn-checkout" disabled>Continue to Order</button>
+    <p class="cart-checkout-note">Online checkout isn't set up yet — this takes you to how to place your order by email.</p>
   </div>
 </aside>
 
@@ -1165,7 +1175,7 @@
     <div>
       <div class="footer-vdc-row">
         <span class="footer-vdc-pill">LG</span>
-        <span class="footer-wordmark">DRIP<span>.</span></span>
+        <span class="footer-wordmark">BOBERT × LG<span>.</span></span>
       </div>
       <div class="footer-tagline">
         Bobert × Light Garden · Season Drop<br>
@@ -1270,10 +1280,34 @@
     el.classList.toggle('visible', total > 0);
   }
 
+  // Keeps the "Email Your Order" link's mailto body in sync with whatever's in the cart,
+  // so a shopper never has to retype what they picked.
+  function updateEmailOrderLink() {
+    const link = document.getElementById('btn-email-order');
+    if (!link) return;
+    const addr    = link.dataset.u + '@' + link.dataset.d;
+    const subject = 'LG Sticker Order';
+    let body;
+
+    if (cart.length === 0) {
+      body = "Hi! I'd like to place an order for LG merch. Here's what I want:\n\n"
+           + "(list your items here)\n\nMy name:\nShipping address:";
+    } else {
+      const lines = cart.map(i => `- ${i.qty} x ${i.name} (${i.variant}) — $${i.price * i.qty}`);
+      const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+      body = "Hi! I'd like to place this order:\n\n" + lines.join('\n')
+           + `\n\nTotal: $${total}\n\nMy name:\nShipping address:`;
+    }
+
+    link.href = `mailto:${addr}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  }
+
   function renderCart() {
     const container   = document.getElementById('cart-items');
     const checkoutBtn = document.getElementById('btn-checkout');
     const subtotalEl  = document.getElementById('cart-subtotal-amount');
+
+    updateEmailOrderLink();
 
     if (cart.length === 0) {
       container.innerHTML = '<div class="cart-empty"><div class="cart-empty-icon" aria-hidden="true">🛒</div><span>Your cart is empty</span></div>';
