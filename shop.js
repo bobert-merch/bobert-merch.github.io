@@ -11,6 +11,29 @@ document.querySelectorAll('.obf-email').forEach(el => {
   if (!el.textContent.trim()) el.textContent = addr;
 });
 
+// ── PRODUCT IMAGE CAROUSEL ──
+// Purely a visual gallery — browsing to a different image never changes
+// what Add to Cart actually adds (still the one fixed SKU per card). Each
+// .product-img with 2+ slides gets its own independent prev/next state.
+document.querySelectorAll('.product-img').forEach(container => {
+  const slides = container.querySelectorAll('.product-img-slide');
+  if (slides.length < 2) return;
+
+  let cur = Array.from(slides).findIndex(s => s.classList.contains('active'));
+  if (cur < 0) cur = 0;
+
+  function goTo(n) {
+    slides[cur].classList.remove('active');
+    cur = (n + slides.length) % slides.length;
+    slides[cur].classList.add('active');
+  }
+
+  const prev = container.querySelector('.product-img-prev');
+  const next = container.querySelector('.product-img-next');
+  if (prev) prev.addEventListener('click', e => { e.stopPropagation(); goTo(cur - 1); });
+  if (next) next.addEventListener('click', e => { e.stopPropagation(); goTo(cur + 1); });
+});
+
 // ── TRIAL NOTICE MODAL ──
 // Same heads-up as the in-page trial-notice banner above the shop grid,
 // surfaced once per visit shortly after the page loads. It never

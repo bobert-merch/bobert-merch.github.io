@@ -39,6 +39,26 @@ try {
   cart = [];
 }
 
+// The free banner add-on only makes sense alongside a real order — if
+// every paid item gets removed from the cart, drop the banner with it
+// rather than let it sit there as an orphaned "free" checkout on its own.
+const ADDON_PRODUCT_ID = 'discord-banner';
+
+function hasQualifyingItem() {
+  return cart.some(i => i.productId !== ADDON_PRODUCT_ID && i.price > 0);
+}
+
+function enforceAddonEligibility() {
+  if (!hasQualifyingItem()) {
+    cart = cart.filter(i => i.productId !== ADDON_PRODUCT_ID);
+  }
+}
+
+// Also catches a cart saved by an earlier version of this page (before the
+// add-on existed, or before this rule existed) that might already be in an
+// invalid state — not just cart mutations made from here on.
+enforceAddonEligibility();
+
 function cartKey(pid, vi) { return pid + '::' + vi; }
 
 function addToCart(productId, variantIdx) {
@@ -66,7 +86,21 @@ function updateQty(key, delta) {
   saveCart();
 }
 
+// Keeps the add-on's Add to Cart button (and its explanatory hint) in sync
+// with whether the cart currently qualifies. Safe no-op on pages without
+// the add-on card (feedback.html, about.html).
+function updateAddonAvailability() {
+  const addonCard = document.querySelector('.addon-card');
+  if (!addonCard) return;
+  const btn  = addonCard.querySelector('.btn-add-cart');
+  const hint = addonCard.querySelector('.addon-hint');
+  const eligible = hasQualifyingItem();
+  if (btn) btn.disabled = !eligible;
+  if (hint) hint.hidden = eligible;
+}
+
 function saveCart() {
+  enforceAddonEligibility();
   localStorage.setItem('lg-cart', JSON.stringify(cart));
   renderCart();
   updateCartCount();
@@ -83,6 +117,8 @@ function renderCart() {
   const container   = document.getElementById('cart-items');
   const checkoutBtn = document.getElementById('btn-checkout');
   const subtotalEl  = document.getElementById('cart-subtotal-amount');
+
+  updateAddonAvailability();
 
   const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
 
@@ -169,6 +205,22 @@ document.getElementById('cart-items').addEventListener('click', e => {
   } else if (t.classList.contains('cart-item-remove')) {
     removeFromCart(t.dataset.key);
   }
+});
+
+// ── SWATCH SELECTOR ──
+// For product cards that offer more than one design (currently just the
+// free Discord banner add-on) — picks which variant Add to Cart uses.
+document.querySelectorAll('.swatch-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const card = btn.closest('.product-card');
+    card.querySelectorAll('.swatch-btn').forEach(b => {
+      b.classList.remove('active');
+      b.removeAttribute('aria-current');
+    });
+    btn.classList.add('active');
+    btn.setAttribute('aria-current', 'true');
+    card.dataset.activeSlide = btn.dataset.variantIndex;
+  });
 });
 
 document.addEventListener('keydown', e => {

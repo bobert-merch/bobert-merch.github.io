@@ -165,9 +165,13 @@
   transition: border-color 0.25s, transform 0.2s, box-shadow 0.25s;
 }
 
+/* The "pop": image + description + Add to Cart button all live inside this
+   one card, so scaling/lifting the whole .product-card on hover moves them
+   together as a group. Excluded for .addon-card — see its own rule below,
+   which keeps the free add-on static. */
 .product-card:hover {
   border-color: var(--lg-green);
-  transform: translateY(-4px);
+  transform: translateY(-4px) scale(1.025);
   box-shadow: 0 12px 40px rgba(92,184,58,0.12);
 }
 
@@ -191,45 +195,140 @@
   background: var(--lg-green);
 }
 
-/* ── PAIRED IMAGE (bundle cards: sticker + digital graphic side by side) ── */
-.product-img--split {
-  display: flex;
-  aspect-ratio: 16/9;
+/* ── PRODUCT IMAGE CAROUSEL (purely visual — browsing images never changes
+   what Add to Cart actually adds, which stays the one fixed SKU) ── */
+.product-img-track {
+  position: relative;
+  width: 100%;
+  height: 100%;
 }
 
-.product-img-half {
-  position: relative;
-  flex: 1 1 50%;
+.product-img-slide {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  max-width: 82%;
+  max-height: 82%;
+  object-fit: contain;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s;
+}
+
+.product-img-slide.active { opacity: 1; pointer-events: auto; }
+
+.product-img-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  color: var(--lg-green-dk);
+  cursor: pointer;
+  font-size: 1.8rem;
+  line-height: 1;
+  padding: 0.2rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
+  z-index: 2;
+  transition: color 0.15s;
 }
 
-.product-img-half + .product-img-half { border-left: 1px solid var(--border); }
+.product-img-nav:hover { color: var(--lg-green); }
+.product-img-prev { left: 0.3rem; }
+.product-img-next { right: 0.3rem; }
 
-.product-img-half img {
+/* ── FREE ADD-ON (Discord banner) ──
+   Deliberately static — the sticker cards' hover "pop" (border-color,
+   scale, shadow) comes from .product-card:hover, which this also
+   inherits since it carries the .product-card class too. The rule
+   below cancels all of it back out so the box just sits there, while
+   still matching the sticker cards' resting border/background style. */
+.addon-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 1.8rem 2rem 2rem;
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.addon-card:hover {
+  border-color: var(--border);
+  transform: none;
+  box-shadow: none;
+}
+
+.addon-badge {
+  display: inline-block;
+  background: var(--lg-green);
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 3px 10px 1px;
+  clip-path: polygon(4px 0%, 100% 0%, calc(100% - 4px) 100%, 0% 100%);
+  align-self: flex-start;
+}
+
+.addon-title {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  letter-spacing: 0.04em;
+}
+
+.addon-desc {
+  font-size: 0.8rem;
+  color: var(--muted);
+  line-height: 1.6;
+  max-width: 560px;
+  margin-top: -0.6rem;
+}
+
+.addon-price { color: var(--lg-green); }
+
+/* ── SWATCH PICKER (free add-on design choice) ── */
+.swatch-grid {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.swatch-btn {
+  background: #f2f2f2;
+  border: 2px solid var(--border-bright);
+  cursor: pointer;
+  width: 160px;
+  padding: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: border-color 0.15s;
+}
+
+.swatch-btn img {
   width: 100%;
-  height: 100%;
+  aspect-ratio: 16/9;
   object-fit: contain;
-  padding: 1.1rem 0.9rem 1.7rem;
+  padding: 0.6rem;
   display: block;
 }
 
-.product-img-tag {
-  position: absolute;
-  left: 0.5rem;
-  bottom: 0.5rem;
-  font-size: 0.58rem;
-  font-weight: 700;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
-  color: var(--muted);
-  background: rgba(255,255,255,0.85);
-  padding: 2px 6px;
+.swatch-btn-label {
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  color: var(--text);
+  background: var(--bg-mid);
+  padding: 5px 0;
+  text-align: center;
 }
 
-.product-img-tag--placeholder { color: var(--lg-green); }
+.swatch-btn:hover { border-color: var(--lg-green); }
+.swatch-btn.active { border-color: var(--lg-green); outline: 1px solid var(--lg-green); }
 
 .product-info {
   padding: 1.5rem 1.6rem 1.8rem;
@@ -643,6 +742,18 @@ footer {
 }
 .btn-add-cart:hover { background: var(--lg-green); color: #fff; }
 .btn-add-cart.added { background: var(--lg-green-dk); color: #fff; border-color: var(--lg-green-dk); }
+.btn-add-cart:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  background: transparent;
+  color: var(--lg-green);
+}
+
+.addon-hint {
+  font-size: 0.68rem;
+  color: var(--muted);
+  font-style: italic;
+}
 
 /* .cart-overlay / .cart-drawer / .cart-item* / .btn-checkout / cart-pulse
    are shared in styles.css. */
