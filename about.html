@@ -25,21 +25,28 @@
     <span class="lg-pill">LG</span>
     <span class="nav-subtitle">Bobert × LG Collab</span>
   </a>
-  <ul class="nav-links">
-    <li><a href="./index.html">← Back to Shop</a></li>
-    <li><a href="./about.html">About</a></li>
-    <li><a href="./feedback.html#concepts">Concepts</a></li>
-    <li><a href="./feedback.html#form" class="nav-cta">Feedback</a></li>
-  </ul>
-  <button class="hamburger" id="hamburger-btn" aria-label="Open navigation" aria-expanded="false">MENU</button>
+  <div class="nav-right-group">
+    <ul class="nav-links">
+      <li><a href="./index.html#shop">Shop</a></li>
+      <li><a href="./about.html">About</a></li>
+      <li><a href="./feedback.html">Feedback</a></li>
+      <li><a href="./index.html#order" class="nav-cta">Order Now</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="cart-btn" id="cart-toggle" aria-label="Open cart">
+        CART <span class="cart-count" id="cart-count">0</span>
+      </button>
+      <button class="hamburger" id="hamburger-btn" aria-label="Open navigation" aria-expanded="false">MENU</button>
+    </div>
+  </div>
 </nav>
 
 <!-- MOBILE NAV -->
 <div class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation">
-  <a href="./index.html">← Back to Shop</a>
+  <a href="./index.html#shop">Shop</a>
   <a href="./about.html">About</a>
-  <a href="./feedback.html#concepts">Concepts</a>
-  <a href="./feedback.html#form" class="mobile-nav-cta">Feedback</a>
+  <a href="./feedback.html">Feedback</a>
+  <a href="./index.html#order" class="mobile-nav-cta">Order Now</a>
 </div>
 
 <main>
@@ -100,6 +107,29 @@
 
 </main>
 
+<!-- CART OVERLAY + DRAWER -->
+<div class="cart-overlay" id="cart-overlay"></div>
+<aside class="cart-drawer" id="cart-drawer" aria-label="Shopping cart">
+  <div class="cart-drawer-header">
+    <span class="cart-drawer-title">YOUR CART</span>
+    <button class="cart-close-btn" id="cart-close" aria-label="Close cart">✕</button>
+  </div>
+  <div class="cart-items" id="cart-items">
+    <div class="cart-empty">
+      <div class="cart-empty-icon" aria-hidden="true">🛒</div>
+      <span>Your cart is empty</span>
+    </div>
+  </div>
+  <div class="cart-footer">
+    <div class="cart-subtotal">
+      <span class="cart-subtotal-label">Subtotal</span>
+      <span class="cart-subtotal-amount" id="cart-subtotal-amount">$0</span>
+    </div>
+    <button class="btn-checkout" id="btn-checkout" disabled>Checkout via Shopify</button>
+    <p class="cart-checkout-note">Shopify checkout coming soon — your cart is saved while you browse.</p>
+  </div>
+</aside>
+
 <!-- FOOTER -->
 <footer>
   <div class="footer-inner">
@@ -108,7 +138,6 @@
       <span class="footer-wordmark">BOBERT × LG<span>.</span></span>
     </div>
     <div class="footer-links">
-      <a href="./index.html">← Main Shop</a>
       <a href="https://vdc.gg" target="_blank" rel="noopener">vdc.gg ↗</a>
       <a href="https://discord.gg/valorantdraftcircuit" target="_blank" rel="noopener">VDC Discord ↗</a>
     </div>
@@ -122,5 +151,6 @@
 </footer>
 
 <script src="./nav.js"></script>
+<script src="./cart.js"></script>
 </body>
 </html>
