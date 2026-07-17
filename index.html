@@ -15,11 +15,12 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="./styles.css">
-  <link rel="stylesheet" href="./shop.css">
 </head>
-<body>
+<body class="page-shop">
 
-<!-- NAV -->
+<!-- NAV — kept in sync by hand across index.html/feedback.html/about.html;
+     same for the cart drawer below. Deliberately not JS-injected so each
+     page stays fully self-describing when read on its own. -->
 <nav>
   <a class="nav-left" href="./index.html" aria-label="Bobert × LG home">
     <span class="lg-pill">LG</span>
@@ -194,18 +195,18 @@
   FREE ADD-ON — HOW TO EDIT
   ──────────────────────────────────────────────────────────────
   A $0 cart item, same generic product-card/add-to-cart wiring as the
-  stickers above (see cart.js — it builds PRODUCTS from any
+  stickers above (see site.js — it builds PRODUCTS from any
   .product-card[data-name] and doesn't care that the price is 0).
-  Gated in cart.js (updateAddonAvailability / enforceAddonEligibility):
+  Gated in site.js (updateAddonAvailability / enforceAddonEligibility):
   Add to Cart stays disabled until a paid item is in the cart, and the
   banner is auto-removed if the cart's paid items ever drop to zero —
   see the .addon-hint paragraph below for the message shown while gated.
 
   ADD A DESIGN:
-    Copy a .swatch-btn block inside .swatch-grid, point data-src/img src
-    at a file in assets/digital/, set data-label + a unique
-    data-variant-index (next integer), and append the label to
-    data-variants on the .product-card div (pipe-separated).
+    Copy a .swatch-btn block inside .swatch-grid, point the img src at a
+    file in assets/digital/, set data-label + a unique data-variant-index
+    (next integer), and append the label to data-variants on the
+    .product-card div (pipe-separated).
 
   REMOVE A DESIGN:
     Delete its .swatch-btn block, remove its name from data-variants,
@@ -224,13 +225,11 @@
     <p class="addon-desc">Show you're rooting for LG — grab a free banner graphic when you order a sticker above. Pick a design and I'll email you the file after checkout.</p>
     <div class="swatch-grid">
       <button class="swatch-btn active" aria-current="true" aria-label="Cheese"
-              data-src="./assets/digital/CheeseBanner.webp"
               data-label="Cheese" data-variant-index="0">
         <img src="./assets/digital/CheeseBanner.webp" alt="Cheese Discord banner design" loading="lazy">
         <span class="swatch-btn-label">Cheese</span>
       </button>
       <button class="swatch-btn" aria-label="Ucklar"
-              data-src="./assets/digital/UcklarBanner.webp"
               data-label="Ucklar" data-variant-index="1">
         <img src="./assets/digital/UcklarBanner.webp" alt="Ucklar Discord banner design" loading="lazy">
         <span class="swatch-btn-label">Ucklar</span>
@@ -384,7 +383,7 @@
 </aside>
 
 <!-- FOOTER -->
-<footer>
+<footer class="footer--shop">
   <div class="footer-inner">
     <div>
       <div class="footer-brand">
@@ -408,9 +407,7 @@
   </div>
 </footer>
 
-<script src="./nav.js"></script>
-<script src="./cart.js"></script>
-<script src="./shop.js"></script>
+<script src="./site.js"></script>
 
 </body>
 </html>
