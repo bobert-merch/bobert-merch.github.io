@@ -953,20 +953,12 @@ footer {
   letter-spacing: 0.04em;
 }
 
-.addon-desc {
-  font-size: 0.8rem;
-  color: var(--muted);
-  line-height: 1.6;
-  max-width: 560px;
-  margin-top: -0.6rem;
-}
-
 .addon-price { color: var(--lg-green); }
 
 /* ── SWATCH PICKER (free add-on design choice) ── */
 .swatch-grid {
   display: flex;
-  gap: 1rem;
+  gap: 1.25rem;
   flex-wrap: wrap;
 }
 
@@ -974,7 +966,8 @@ footer {
   background: #f2f2f2;
   border: 2px solid var(--border-bright);
   cursor: pointer;
-  width: 160px;
+  width: 280px;
+  max-width: 100%;
   padding: 0;
   overflow: hidden;
   display: flex;
@@ -986,17 +979,17 @@ footer {
   width: 100%;
   aspect-ratio: 16/9;
   object-fit: contain;
-  padding: 0.6rem;
+  padding: 0.8rem;
   display: block;
 }
 
 .swatch-btn-label {
   font-family: var(--font-display);
-  font-size: 0.8rem;
+  font-size: 0.95rem;
   letter-spacing: 0.06em;
   color: var(--text);
   background: var(--bg-mid);
-  padding: 5px 0;
+  padding: 7px 0;
   text-align: center;
 }
 
