@@ -4,9 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Bobert × LG Merch Drop</title>
-  <meta name="description" content="LG-branded merch designed by Bobert — holographic sticker + digital Discord graphic bundles for the Light Garden VDC franchise. Limited run, one drop per season.">
+  <meta name="description" content="LG-branded merch designed by Bobert — holographic stickers, plus a free Discord banner add-on, for the Light Garden VDC franchise. Limited run, one drop per season.">
   <meta property="og:title" content="Bobert × LG Merch Drop">
-  <meta property="og:description" content="LG-branded merch designed by a VDC community member. Holographic sticker + digital Discord graphic bundles — limited run, one drop per season.">
+  <meta property="og:description" content="LG-branded merch designed by a VDC community member. Holographic stickers, plus a free Discord banner add-on — limited run, one drop per season.">
   <meta property="og:image" content="https://bobert-merch.github.io/assets/LG_LOGO.png">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://bobert-merch.github.io/">
@@ -57,12 +57,14 @@
   <div class="ticker-inner">
     <span>BOBERT × LG — NOW LIVE</span><span class="sep">◆</span>
     <span>HOLOGRAPHIC DIE-CUT STICKERS</span><span class="sep">◆</span>
-    <span>SWIRL BUNDLE · SPECIAL BUNDLE</span><span class="sep">◆</span>
+    <span>SWIRL STICKER · SPECIAL STICKER</span><span class="sep">◆</span>
+    <span>FREE DISCORD BANNER ADD-ON</span><span class="sep">◆</span>
     <span>RED ROSE FTW</span><span class="sep">◆</span>
     <span>PLACE YOUR ORDER BELOW</span><span class="sep">◆</span>
     <span>BOBERT × LG — NOW LIVE</span><span class="sep">◆</span>
     <span>HOLOGRAPHIC DIE-CUT STICKERS</span><span class="sep">◆</span>
-    <span>SWIRL BUNDLE · SPECIAL BUNDLE</span><span class="sep">◆</span>
+    <span>SWIRL STICKER · SPECIAL STICKER</span><span class="sep">◆</span>
+    <span>FREE DISCORD BANNER ADD-ON</span><span class="sep">◆</span>
     <span>LIMITED RUN — ONE DROP PER SEASON</span><span class="sep">◆</span>
     <span>PLACE YOUR ORDER BELOW</span><span class="sep">◆</span>
   </div>
@@ -112,86 +114,133 @@
 
   <!--
   ══════════════════════════════════════════════════════════════
-  PRODUCT GRID — HOW TO EDIT BUNDLES (applies to both cards below)
+  PRODUCT GRID — HOW TO EDIT
   ──────────────────────────────────────────────────────────────
-  Each bundle is a single fixed pairing — one sticker design + one digital
-  Discord graphic — with no design picker. There are no swatches here on
-  purpose; if a future drop needs a design picker again, see the swatch
-  system in git history (pre-5552c5a) for the old pattern to reuse.
+  Each sticker is a single fixed design — no picker. If a future drop
+  needs a design picker again, see the swatch system used by the free
+  banner add-on below for the pattern to reuse (.swatch-grid/.swatch-btn).
 
   CHANGE THE STICKER IMAGE:
-    Update the img src (and alt text) inside the first .product-img-half.
-
-  CHANGE THE DIGITAL GRAPHIC:
-    Update the img src (and alt text) inside the second .product-img-half.
-    Art lives in assets/digital/.
+    Update the img src (and alt text) inside .product-img.
 
   CHANGE THE NAME OR PRICE:
     Edit data-name / data-price on the .product-card div, and mirror the
     name change in .product-name and the price in .product-price.
-    (data-variants="Standard" should stay as-is — each bundle is one SKU.)
 
-  ADD A THIRD BUNDLE:
+  ADD A THIRD STICKER:
     Copy an entire .product-card block, give it a unique data-product-id,
-    and update its images/copy/price as above.
+    and update its image/copy/price as above.
   ══════════════════════════════════════════════════════════════
   -->
   <div class="product-grid">
 
-    <!-- CARD: LG Swirl Bundle | $10 | sticker: assets/stickers/swirly/swirly_green_logo.webp -->
+    <!-- CARD: LG Swirl Sticker | $5 | assets/stickers/swirly/swirly_green_logo.webp -->
     <div class="product-card"
-         data-product-id="bundle-swirl"
-         data-name="LG Swirl Bundle"
-         data-price="10"
+         data-product-id="sticker-swirl"
+         data-name="LG Swirl Sticker"
+         data-price="5"
          data-variants="Standard">
-      <div class="product-img product-img--split">
-        <div class="product-img-half">
-          <img src="./assets/stickers/swirly/swirly_green_logo.webp" alt="Green Topographic LG sticker" loading="lazy">
-          <span class="product-img-tag">Sticker</span>
+      <div class="product-img">
+        <div class="product-img-track">
+          <img class="product-img-slide active" src="./assets/stickers/swirly/swirly_green_logo.webp" alt="Green Topographic LG sticker" loading="lazy">
+          <img class="product-img-slide" src="./assets/stickers/swirly/swirly_simple_green_logo.webp" alt="Dark Green LG sticker" loading="lazy">
+          <img class="product-img-slide" src="./assets/stickers/swirly/swirly_logo.webp" alt="Bright Topographic LG sticker" loading="lazy">
+          <img class="product-img-slide" src="./assets/stickers/swirly/swirly_dark_logo.webp" alt="Dark Edition LG sticker" loading="lazy">
+          <img class="product-img-slide" src="./assets/stickers/swirly/swirly_white.webp" alt="Black & White LG sticker" loading="lazy">
         </div>
-        <div class="product-img-half">
-          <img src="./assets/digital/CheeseBanner.webp" alt="Digital LG Discord support graphic — Cheese banner" loading="lazy">
-          <span class="product-img-tag product-img-tag--placeholder">Digital</span>
-        </div>
+        <button class="product-img-nav product-img-prev" aria-label="Previous image">&#8249;</button>
+        <button class="product-img-nav product-img-next" aria-label="Next image">&#8250;</button>
       </div>
       <div class="product-info">
 
-        <div class="product-name">LG Swirl Bundle</div>
-        <p class="product-desc">One Green Topographic holographic die-cut sticker — UV coated, waterproof, mailed to you — paired with a digital graphic to show you're rooting for LG in the Discord. I'll email you the file after checkout.</p>
+        <div class="product-name">LG Swirl Sticker</div>
+        <p class="product-desc">One Green Topographic holographic die-cut sticker — UV coated, waterproof, mailed to you.</p>
         <div class="product-footer">
-          <div class="product-price"><span class="currency">$</span>10 <span class="currency">USD</span></div>
+          <div class="product-price"><span class="currency">$</span>5 <span class="currency">USD</span></div>
           <button class="btn-add-cart">Add to Cart</button>
         </div>
       </div>
     </div>
 
-    <!-- CARD: LG Special Bundle | $10 | sticker: assets/stickers/special/clover_logo.webp -->
+    <!-- CARD: LG Special Sticker | $5 | assets/stickers/special/clover_logo.webp -->
     <div class="product-card"
-         data-product-id="bundle-special"
-         data-name="LG Special Bundle"
-         data-price="10"
+         data-product-id="sticker-special"
+         data-name="LG Special Sticker"
+         data-price="5"
          data-variants="Standard">
-      <div class="product-img product-img--split">
-        <div class="product-img-half">
-          <img src="./assets/stickers/special/clover_logo.webp" alt="Botanical LG sticker" loading="lazy">
-          <span class="product-img-tag">Sticker</span>
+      <div class="product-img">
+        <div class="product-img-track">
+          <img class="product-img-slide active" src="./assets/stickers/special/clover_logo.webp" alt="Botanical LG sticker" loading="lazy">
+          <img class="product-img-slide" src="./assets/stickers/special/logo_classic.webp" alt="Classic LG sticker" loading="lazy">
         </div>
-        <div class="product-img-half">
-          <img src="./assets/digital/UcklarBanner.webp" alt="Digital LG Discord support graphic — Ucklar banner" loading="lazy">
-          <span class="product-img-tag product-img-tag--placeholder">Digital</span>
-        </div>
+        <button class="product-img-nav product-img-prev" aria-label="Previous image">&#8249;</button>
+        <button class="product-img-nav product-img-next" aria-label="Next image">&#8250;</button>
       </div>
       <div class="product-info">
 
-        <div class="product-name">LG Special Bundle</div>
-        <p class="product-desc">One Botanical holographic die-cut sticker — UV coated, waterproof, mailed to you — paired with a digital graphic to show you're rooting for LG in the Discord. I'll email you the file after checkout.</p>
+        <div class="product-name">LG Special Sticker</div>
+        <p class="product-desc">One Botanical holographic die-cut sticker — UV coated, waterproof, mailed to you.</p>
         <div class="product-footer">
-          <div class="product-price"><span class="currency">$</span>10 <span class="currency">USD</span></div>
+          <div class="product-price"><span class="currency">$</span>5 <span class="currency">USD</span></div>
           <button class="btn-add-cart">Add to Cart</button>
         </div>
       </div>
     </div>
 
+  </div>
+
+  <!--
+  ══════════════════════════════════════════════════════════════
+  FREE ADD-ON — HOW TO EDIT
+  ──────────────────────────────────────────────────────────────
+  A $0 cart item, same generic product-card/add-to-cart wiring as the
+  stickers above (see cart.js — it builds PRODUCTS from any
+  .product-card[data-name] and doesn't care that the price is 0).
+  Gated in cart.js (updateAddonAvailability / enforceAddonEligibility):
+  Add to Cart stays disabled until a paid item is in the cart, and the
+  banner is auto-removed if the cart's paid items ever drop to zero —
+  see the .addon-hint paragraph below for the message shown while gated.
+
+  ADD A DESIGN:
+    Copy a .swatch-btn block inside .swatch-grid, point data-src/img src
+    at a file in assets/digital/, set data-label + a unique
+    data-variant-index (next integer), and append the label to
+    data-variants on the .product-card div (pipe-separated).
+
+  REMOVE A DESIGN:
+    Delete its .swatch-btn block, remove its name from data-variants,
+    and re-number the remaining data-variant-index values (0, 1, 2 …).
+    Keep exactly one swatch marked class="swatch-btn active" +
+    aria-current="true" (the default selection).
+  ══════════════════════════════════════════════════════════════
+  -->
+  <div class="product-card addon-card"
+       data-product-id="discord-banner"
+       data-name="LG Discord Banner"
+       data-price="0"
+       data-variants="Cheese|Ucklar">
+    <span class="addon-badge">Free Add-On</span>
+    <h3 class="addon-title">Add On a Free Discord Banner</h3>
+    <p class="addon-desc">Show you're rooting for LG — grab a free banner graphic when you order a sticker above. Pick a design and I'll email you the file after checkout.</p>
+    <div class="swatch-grid">
+      <button class="swatch-btn active" aria-current="true" aria-label="Cheese"
+              data-src="./assets/digital/CheeseBanner.webp"
+              data-label="Cheese" data-variant-index="0">
+        <img src="./assets/digital/CheeseBanner.webp" alt="Cheese Discord banner design" loading="lazy">
+        <span class="swatch-btn-label">Cheese</span>
+      </button>
+      <button class="swatch-btn" aria-label="Ucklar"
+              data-src="./assets/digital/UcklarBanner.webp"
+              data-label="Ucklar" data-variant-index="1">
+        <img src="./assets/digital/UcklarBanner.webp" alt="Ucklar Discord banner design" loading="lazy">
+        <span class="swatch-btn-label">Ucklar</span>
+      </button>
+    </div>
+    <div class="product-footer">
+      <div class="product-price addon-price">FREE</div>
+      <button class="btn-add-cart" disabled>Add to Cart</button>
+    </div>
+    <p class="addon-hint">Add a sticker to your cart first — this one's on the house.</p>
   </div>
 </section>
 
@@ -212,7 +261,7 @@
           <div class="order-step-num">1</div>
           <div class="order-step-body">
             <strong>Pick your items</strong>
-            <span>Browse the drop and pick your bundle(s).</span>
+            <span>Browse the drop, pick your stickers, and grab the free Discord banner add-on.</span>
           </div>
         </div>
         <div class="order-step">
