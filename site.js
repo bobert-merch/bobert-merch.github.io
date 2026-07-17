@@ -93,6 +93,19 @@ function cartKey(pid, vi) { return pid + '::' + vi; }
 
 function addToCart(productId, variantIdx) {
   const key = cartKey(productId, variantIdx);
+
+  // The free banner add-on is one-per-order, fixed at qty 1 — picking a
+  // different design and clicking Add to Cart again swaps it out instead
+  // of stacking a second line (see renderCart, which also hides qty
+  // controls for this product so it can't be incremented in the drawer).
+  if (productId === ADDON_PRODUCT_ID) {
+    cart = cart.filter(i => i.productId !== ADDON_PRODUCT_ID);
+    const p = PRODUCTS[productId];
+    cart.push({ key, productId, variantIdx, name: p.name, variant: p.variants[variantIdx], price: p.price, qty: 1 });
+    saveCart();
+    return;
+  }
+
   const existing = cart.find(i => i.key === key);
   if (existing) {
     existing.qty++;
@@ -160,23 +173,33 @@ function renderCart() {
   }
 
   checkoutBtn.disabled = false;
-  container.innerHTML = cart.map(item => `
+  container.innerHTML = cart.map(item => {
+    // The free banner add-on is fixed at qty 1 (see addToCart) — no +/-
+    // controls for it, just a plain "1 free" label. Still removable.
+    const isAddon = item.productId === ADDON_PRODUCT_ID;
+    const qtyMarkup = isAddon
+      ? `<span class="cart-item-qty-fixed">1 free</span>`
+      : `<div class="cart-item-controls">
+          <button class="qty-btn" data-key="${esc(item.key)}" data-delta="-1">−</button>
+          <span class="cart-item-qty">${Number(item.qty)}</span>
+          <button class="qty-btn" data-key="${esc(item.key)}" data-delta="1">+</button>
+        </div>`;
+    const priceMarkup = isAddon ? 'FREE' : `$${Number(item.price) * Number(item.qty)}`;
+
+    return `
     <div class="cart-item">
       <div class="cart-item-info">
         <div class="cart-item-name">${esc(item.name)}</div>
         <div class="cart-item-variant">${esc(item.variant)}</div>
-        <div class="cart-item-controls">
-          <button class="qty-btn" data-key="${esc(item.key)}" data-delta="-1">−</button>
-          <span class="cart-item-qty">${Number(item.qty)}</span>
-          <button class="qty-btn" data-key="${esc(item.key)}" data-delta="1">+</button>
-        </div>
+        ${qtyMarkup}
       </div>
       <div class="cart-item-right">
-        <div class="cart-item-price">$${Number(item.price) * Number(item.qty)}</div>
+        <div class="cart-item-price">${priceMarkup}</div>
         <button class="cart-item-remove" data-key="${esc(item.key)}">Remove</button>
       </div>
     </div>
-  `).join('');
+  `;
+  }).join('');
 
   subtotalEl.textContent = '$' + total;
 }

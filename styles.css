@@ -423,6 +423,17 @@ nav {
   min-width: 1.2rem;
   text-align: center;
 }
+
+/* Replaces .cart-item-controls for the free banner add-on's cart line —
+   fixed at qty 1, so there's a label instead of +/- buttons. */
+.cart-item-qty-fixed {
+  display: block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
 .cart-item-right {
   display: flex;
   flex-direction: column;
