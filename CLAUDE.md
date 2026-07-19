@@ -20,6 +20,11 @@ README.md                                  short human-facing blurb
 
 **site.js structure:** nav/hamburger → scroll lock → cart engine → add-on gate → swatch selector → email de-obfuscation → product image carousel → trial modal → concept carousel → one Escape-key dispatcher at the end. Every section only touches elements that exist on the pages that have them (empty `querySelectorAll` loops and `if (!el) return` guards are how it stays safe to load on all three pages) — keep new code following that pattern rather than checking `location.pathname`.
 
+**Accessibility patterns worth reusing, not reinventing:**
+- *Cart status announcements* — `#cart-status` (`.sr-only`, `aria-live="polite"`, duplicated in all 3 pages next to the cart drawer markup) is updated by `announceCart()` in site.js on every cart mutation (add/remove/qty change, including the swatch add-on's silent auto-add). If you add a new way to mutate the cart, call `announceCart()` from it too — there's no other way for screen-reader users to know the cart changed, especially now that the add-on has no explicit "Add to Cart" click to hang an announcement off of.
+- *Cart drawer focus management* mirrors the trial modal: opening moves focus to `#cart-close` and traps Tab within the drawer (`trapCartFocus`, recomputed live since the drawer's buttons change as the cart re-renders — can't hardcode first/last like the modal does), closing restores focus to whatever had it before and sets `#cart-toggle`'s `aria-expanded` back to `false`. The drawer also carries `inert` while closed (toggled in `openCart`/`closeCart`) so its off-screen (`transform: translateX(100%)`) buttons aren't reachable by Tab when it's not open.
+- `.sr-only` (styles.css) is the shared visually-hidden-but-announced utility class — reuse it rather than adding a new one.
+
 ## Cart data model
 
 `localStorage['lg-cart']` is a JSON array of line items:
@@ -52,11 +57,13 @@ No test suite; this is a static site, so "verify" means actually rendering it:
 ```
 python -m http.server 8123
 ```
-then drive it with Playwright (not installed in the repo — `npm install playwright` in a scratch dir, `npx playwright install chromium` once per machine). Check: zero console/page errors on all 3 pages (the Google Forms iframe on feedback.html throws unrelated font-loading noise — that's pre-existing and not a regression signal), cart add/remove/qty + cross-page badge persistence, the add-on gating rule, both carousels (sticker image carousel on index.html, concept carousel on feedback.html), hamburger + Escape-key behavior, and `prefers-reduced-motion` if you touch any animation/transition.
+then drive it with Playwright (not installed in the repo — `npm install playwright` in a scratch dir, `npx playwright install chromium` once per machine). Check: zero console/page errors on all 3 pages (the Google Forms iframe on feedback.html throws unrelated font-loading noise — that's pre-existing and not a regression signal), cart add/remove/qty + cross-page badge persistence, the add-on gating rule, both carousels (sticker image carousel on index.html, concept carousel on feedback.html), hamburger + Escape-key behavior, and `prefers-reduced-motion` if you touch any animation/transition — including `html { scroll-behavior }` and any JS `scrollIntoView({ behavior: 'smooth' })` call, since an explicit JS `behavior: 'smooth'` overrides the CSS property and needs its own `matchMedia('(prefers-reduced-motion: reduce)')` check (see the checkout-button handler in site.js for the pattern). Also worth a Playwright pass after any layout change: `about.html`'s 2-column grid gets cramped in the ~769–950px range before the main 768px breakpoint kicks in, hence the extra `@media (max-width: 960px)` block just above it in styles.css — if you touch `.about-grid`/`.about-col`, re-check that range rather than assuming 768px alone covers it.
 
 ## Shopify status
 
 Checkout is **not** actually wired up — `.shopify-embed`/`.shopify-placeholder` in index.html's order section is an inert placeholder, and the copy across the site ("Shopify checkout is all set up," `.cart-checkout-note`, the FAQ) intentionally describes it as live per the site owner's request, even though it isn't yet. When it's time to connect a real Shopify store, the setup steps are in the HTML comment directly above `.shopify-embed`.
+
+**This applies to every piece of visible copy, not just the obvious marketing lines** — a prior version of `.shopify-placeholder-body` and the `.form-note` beside it literally told visitors to "add your Shopify Buy Button embed code here once your store is set up," and `.cart-checkout-note` (all 3 pages) said "checkout coming soon," both contradicting the "live" framing everywhere else on the page. Dev/setup instructions belong in HTML comments (like the one above `.shopify-embed`), never in text a real visitor would see. If you add new placeholder UI anywhere, write its copy as if checkout already works.
 
 ## AI/crawler accessibility
 

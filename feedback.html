@@ -34,7 +34,7 @@
       <li><a href="./index.html#order" class="nav-cta">Order Now</a></li>
     </ul>
     <div class="nav-right">
-      <button class="cart-btn" id="cart-toggle" aria-label="Open cart">
+      <button class="cart-btn" id="cart-toggle" aria-label="Open cart" aria-expanded="false">
         CART <span class="cart-count" id="cart-count">0</span>
       </button>
       <button class="hamburger" id="hamburger-btn" aria-label="Open navigation" aria-expanded="false">MENU</button>
@@ -167,9 +167,16 @@
 
 </main>
 
+
+<!-- Announces cart changes to screen readers (added/removed/qty updates —
+     see announceCart() in site.js). There's no visible cart button click to
+     anchor these to anymore now that the banner add-on can add itself when
+     a swatch is clicked, so this is the only signal assistive tech gets. -->
+<div id="cart-status" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+
 <!-- CART OVERLAY + DRAWER -->
 <div class="cart-overlay" id="cart-overlay"></div>
-<aside class="cart-drawer" id="cart-drawer" aria-label="Shopping cart">
+<aside class="cart-drawer" id="cart-drawer" aria-label="Shopping cart" inert>
   <div class="cart-drawer-header">
     <span class="cart-drawer-title">YOUR CART</span>
     <button class="cart-close-btn" id="cart-close" aria-label="Close cart">✕</button>
@@ -186,7 +193,7 @@
       <span class="cart-subtotal-amount" id="cart-subtotal-amount">$0</span>
     </div>
     <button class="btn-checkout" id="btn-checkout" disabled>Checkout via Shopify</button>
-    <p class="cart-checkout-note">Shopify checkout coming soon — your cart is saved while you browse.</p>
+    <p class="cart-checkout-note">Your cart is saved while you browse — checkout is handled securely by Shopify.</p>
   </div>
 </aside>
 

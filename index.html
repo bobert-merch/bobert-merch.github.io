@@ -66,7 +66,7 @@
       <li><a href="./index.html#order" class="nav-cta">Order Now</a></li>
     </ul>
     <div class="nav-right">
-      <button class="cart-btn" id="cart-toggle" aria-label="Open cart">
+      <button class="cart-btn" id="cart-toggle" aria-label="Open cart" aria-expanded="false">
         CART <span class="cart-count" id="cart-count">0</span>
       </button>
       <button class="hamburger" id="hamburger-btn" aria-label="Open navigation" aria-expanded="false">MENU</button>
@@ -123,7 +123,6 @@
     <a href="#shop" class="btn-primary">Browse the Drop</a>
     <a href="#order" class="btn-ghost">Place an Order</a>
   </div>
-  <p class="hero-story-link">Brought to you by Bobert  — <a href="./about.html">read the story →</a></p>
 </section>
 
 <!-- TRIAL NOTICE -->
@@ -296,7 +295,7 @@
          src is kept in sync with whichever swatch is .active by the swatch
          click handler in site.js (and set once on load to match). -->
     <div class="addon-preview">
-      <span class="addon-preview-label">Preview on Discord</span>
+      <span class="addon-preview-label">Discord Preview</span>
       <div class="discord-card">
         <div class="discord-card-banner">
           <img id="discord-preview-banner" src="./assets/digital/BrimBanner.webp" alt="Selected banner design previewed on a Discord profile">
@@ -368,6 +367,10 @@
            3. Copy the generated <script> + <div> snippet for each product
            4. Paste those snippets inside .shopify-embed below, replacing the placeholder div
          The Buy Button JS handles cart, variants, and checkout automatically.
+         The placeholder's visible copy (.shopify-placeholder-body, .form-note
+         below) is customer-facing — keep it reading as if checkout is live,
+         per CLAUDE.md's Shopify status note. Don't put dev/setup instructions
+         in text a real visitor would see; save those for comments like this one.
     -->
     <div class="form-wrapper">
       <div class="form-header">
@@ -381,13 +384,13 @@
           <div class="shopify-placeholder-icon" aria-hidden="true">🛍</div>
           <p class="shopify-placeholder-title">SHOPIFY CHECKOUT</p>
           <p class="shopify-placeholder-body">
-            Add your Shopify Buy Button embed code here once your store is set up.
+            Review your cart above, then complete checkout securely through Shopify.
           </p>
         </div>
       </div>
 
       <div class="form-note">
-        <span aria-hidden="true">🔒</span> Once the Shopify store is connected above, checkout will be handled securely by Shopify. Payment info is never stored by us.
+        <span aria-hidden="true">🔒</span> Checkout above is handled securely by Shopify. Payment info is never stored by us.
       </div>
     </div>
 
@@ -432,9 +435,16 @@
   <button class="btn-checkout trial-modal-ok" id="trial-modal-ok" type="button">Got it</button>
 </div>
 
+
+<!-- Announces cart changes to screen readers (added/removed/qty updates —
+     see announceCart() in site.js). There's no visible cart button click to
+     anchor these to anymore now that the banner add-on can add itself when
+     a swatch is clicked, so this is the only signal assistive tech gets. -->
+<div id="cart-status" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+
 <!-- CART OVERLAY + DRAWER -->
 <div class="cart-overlay" id="cart-overlay"></div>
-<aside class="cart-drawer" id="cart-drawer" aria-label="Shopping cart">
+<aside class="cart-drawer" id="cart-drawer" aria-label="Shopping cart" inert>
   <div class="cart-drawer-header">
     <span class="cart-drawer-title">YOUR CART</span>
     <button class="cart-close-btn" id="cart-close" aria-label="Close cart">✕</button>
@@ -451,7 +461,7 @@
       <span class="cart-subtotal-amount" id="cart-subtotal-amount">$0</span>
     </div>
     <button class="btn-checkout" id="btn-checkout" disabled>Checkout via Shopify</button>
-    <p class="cart-checkout-note">Shopify checkout coming soon — your cart is saved while you browse.</p>
+    <p class="cart-checkout-note">Your cart is saved while you browse — checkout is handled securely by Shopify.</p>
   </div>
 </aside>
 

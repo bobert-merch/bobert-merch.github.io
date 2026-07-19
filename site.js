@@ -64,7 +64,14 @@ function esc(str) {
 let cart;
 try {
   const stored = JSON.parse(localStorage.getItem('lg-cart') || '[]');
-  cart = Array.isArray(stored) ? stored : [];
+  // Filters out malformed entries (e.g. a `null` slipped into the array by
+  // a bug or manual localStorage editing) — enforceAddonEligibility() and
+  // renderCart() below assume every item is a real line-item object, so a
+  // bad entry here would throw and break the cart (and every section of
+  // this script after it) on every future page load until storage is cleared.
+  cart = Array.isArray(stored)
+    ? stored.filter(i => i && typeof i === 'object' && typeof i.key === 'string' && typeof i.qty === 'number')
+    : [];
 } catch (_) {
   cart = [];
 }
@@ -91,8 +98,27 @@ enforceAddonEligibility();
 
 function cartKey(pid, vi) { return pid + '::' + vi; }
 
+// Cart mutations are otherwise silent to screen readers (the drawer content
+// re-renders, but nothing announces it — and since fdab144, clicking a
+// swatch can add to the cart as a side effect with no separate "Add to
+// Cart" click to anchor the change to). One polite live region, updated by
+// every mutation below, covers all of that in one place. Present on every
+// page via the cart-drawer markup, so this is a safe no-op if it's ever
+// missing.
+const cartStatusEl = document.getElementById('cart-status');
+function announceCart(msg) {
+  if (!cartStatusEl) return;
+  // Clearing first (and forcing a reflow) makes the live region announce
+  // even when the new message is identical to the last one — e.g. clicking
+  // the already-selected swatch again.
+  cartStatusEl.textContent = '';
+  void cartStatusEl.offsetWidth;
+  cartStatusEl.textContent = msg;
+}
+
 function addToCart(productId, variantIdx) {
   const key = cartKey(productId, variantIdx);
+  const p = PRODUCTS[productId];
 
   // The free banner add-on is one-per-order, fixed at qty 1 — picking a
   // different design (see the swatch-btn click handler below) swaps it
@@ -101,33 +127,43 @@ function addToCart(productId, variantIdx) {
   // the drawer).
   if (productId === ADDON_PRODUCT_ID) {
     cart = cart.filter(i => i.productId !== ADDON_PRODUCT_ID);
-    const p = PRODUCTS[productId];
-    cart.push({ key, productId, variantIdx, name: p.name, variant: p.variants[variantIdx], price: p.price, qty: 1 });
+    const variant = p.variants[variantIdx];
+    cart.push({ key, productId, variantIdx, name: p.name, variant, price: p.price, qty: 1 });
     saveCart();
+    announceCart(`${p.name} (${variant}) added to cart, free`);
     return;
   }
 
   const existing = cart.find(i => i.key === key);
   if (existing) {
     existing.qty++;
+    announceCart(`${p.name} quantity increased to ${existing.qty}`);
   } else {
-    const p = PRODUCTS[productId];
     cart.push({ key, productId, variantIdx, name: p.name, variant: p.variants[variantIdx], price: p.price, qty: 1 });
+    announceCart(`${p.name} added to cart`);
   }
   saveCart();
 }
 
 function removeFromCart(key) {
+  const item = cart.find(i => i.key === key);
   cart = cart.filter(i => i.key !== key);
   saveCart();
+  if (item) announceCart(`${item.name} removed from cart`);
 }
 
 function updateQty(key, delta) {
   const item = cart.find(i => i.key === key);
   if (!item) return;
   item.qty = Math.max(0, item.qty + delta);
-  if (item.qty === 0) cart = cart.filter(i => i.key !== key);
-  saveCart();
+  if (item.qty === 0) {
+    cart = cart.filter(i => i.key !== key);
+    saveCart();
+    announceCart(`${item.name} removed from cart`);
+  } else {
+    saveCart();
+    announceCart(`${item.name} quantity ${item.qty}`);
+  }
 }
 
 // Keeps the add-on's explanatory hint in sync with whether the cart
@@ -203,18 +239,50 @@ function renderCart() {
   subtotalEl.textContent = '$' + total;
 }
 
+// Focus trap for the open drawer — same idea as the trial modal's below,
+// but computed fresh on every Tab press instead of against fixed first/last
+// elements, since the drawer's buttons (qty/remove/checkout) come and go
+// as renderCart() re-renders the cart contents.
+let cartLastFocus = null;
+function trapCartFocus(e) {
+  if (e.key !== 'Tab') return;
+  const focusable = document.getElementById('cart-drawer').querySelectorAll('button:not([disabled]), a[href]');
+  if (focusable.length === 0) return;
+  const first = focusable[0];
+  const last = focusable[focusable.length - 1];
+  if (e.shiftKey && document.activeElement === first) {
+    e.preventDefault();
+    last.focus();
+  } else if (!e.shiftKey && document.activeElement === last) {
+    e.preventDefault();
+    first.focus();
+  }
+}
+
 function openCart() {
-  document.getElementById('cart-drawer').classList.add('open');
+  const drawer = document.getElementById('cart-drawer');
+  cartLastFocus = document.activeElement;
+  drawer.classList.add('open');
+  drawer.inert = false;
   document.getElementById('cart-overlay').classList.add('open');
+  document.getElementById('cart-toggle').setAttribute('aria-expanded', 'true');
   lockScroll();
+  drawer.addEventListener('keydown', trapCartFocus);
+  document.getElementById('cart-close').focus();
 }
 
 function closeCart() {
   const drawer = document.getElementById('cart-drawer');
   if (!drawer.classList.contains('open')) return;
   drawer.classList.remove('open');
+  drawer.inert = true;
   document.getElementById('cart-overlay').classList.remove('open');
+  document.getElementById('cart-toggle').setAttribute('aria-expanded', 'false');
   unlockScroll();
+  drawer.removeEventListener('keydown', trapCartFocus);
+  if (cartLastFocus && typeof cartLastFocus.focus === 'function') {
+    cartLastFocus.focus();
+  }
 }
 
 document.getElementById('cart-toggle').addEventListener('click', openCart);
@@ -224,8 +292,9 @@ document.getElementById('btn-checkout').addEventListener('click', () => {
   closeCart();
   // #order only exists on index.html — from any other page, go there first.
   const orderSection = document.getElementById('order');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (orderSection) {
-    orderSection.scrollIntoView({ behavior: 'smooth' });
+    orderSection.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' });
   } else {
     window.location.href = './index.html#order';
   }
