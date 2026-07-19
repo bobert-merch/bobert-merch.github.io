@@ -924,14 +924,23 @@ footer {
   padding: 1.8rem 2rem 2rem;
   margin-top: 2rem;
   display: flex;
-  flex-direction: column;
-  gap: 1.2rem;
+  flex-direction: row;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 2rem;
 }
 
 .addon-card:hover {
   border-color: var(--border);
   transform: none;
   box-shadow: none;
+}
+
+.addon-main {
+  flex: 1 1 380px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
 }
 
 .addon-badge {
@@ -975,9 +984,11 @@ footer {
   transition: border-color 0.15s;
 }
 
+/* 5:2 matches Discord's actual recommended banner size (600×240) — see
+   .discord-card-banner below, which uses the same ratio for the preview. */
 .swatch-btn img {
   width: 100%;
-  aspect-ratio: 16/9;
+  aspect-ratio: 5/2;
   object-fit: contain;
   padding: 0.8rem;
   display: block;
@@ -995,6 +1006,102 @@ footer {
 
 .swatch-btn:hover { border-color: var(--lg-green); }
 .swatch-btn.active { border-color: var(--lg-green); outline: 1px solid var(--lg-green); }
+
+/* ── DISCORD PROFILE PREVIEW ──
+   Mocks Discord's own profile popup so the selected banner can be judged
+   in context, not just as a flat rectangle. Colors intentionally match
+   Discord's actual dark theme (not this site's palette) since the point
+   is to preview how it looks over there. .discord-card-banner uses
+   object-fit: cover (not contain, unlike the swatch thumbnails above) —
+   that's how Discord itself renders a banner that isn't exactly 600×240,
+   so the preview should crop the same way rather than letterbox it. */
+.addon-preview {
+  flex: 0 0 260px;
+  max-width: 100%;
+}
+
+.addon-preview-label {
+  display: block;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.6rem;
+}
+
+.discord-card {
+  width: 260px;
+  max-width: 100%;
+  background: #313338;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+}
+
+.discord-card-banner {
+  aspect-ratio: 5/2;
+  background: #1e1f22;
+  overflow: hidden;
+}
+
+.discord-card-banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.discord-card-avatar-row {
+  padding: 0 16px;
+  margin-top: -34px;
+}
+
+.discord-card-avatar {
+  position: relative;
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  border: 4px solid #313338;
+  background: #313338;
+}
+
+.discord-card-avatar img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
+
+.discord-card-status {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #23a55a;
+  border: 3px solid #313338;
+}
+
+.discord-card-body {
+  padding: 8px 16px 18px;
+}
+
+.discord-card-name {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 1rem;
+  color: #f2f3f5;
+}
+
+.discord-card-username {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  color: #b5bac1;
+  margin-top: 2px;
+}
 
 .product-info {
   padding: 1.5rem 1.6rem 1.8rem;

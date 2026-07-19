@@ -37,6 +37,8 @@ README.md                                  short human-facing blurb
 
 index.html has in-file HOW-TO comments directly above the product grid and above the add-on card — read those before changing prices, adding a sticker, or adding a banner design. Short version: a sticker is a `.product-card` with `data-price`/`data-variants="Standard"` and a single fixed image; the add-on is the only thing using the `.swatch-grid`/`.swatch-btn` picker pattern right now.
 
+The add-on card also has a live preview (`.addon-preview`) mocking a Discord profile popup, so a design can be judged in context instead of as a flat rectangle. `#discord-preview-banner`'s `src` is kept in sync with whichever swatch is `.active` by the swatch click handler in site.js (and set once on load) — no markup changes needed there when adding/removing a design. Banner images are shown at Discord's actual recommended ratio, 5:2 (600×240) — both `.swatch-btn img` (contain, so you see the whole design when picking) and `.discord-card-banner img` (cover, matching how Discord itself crops a banner) use `aspect-ratio: 5/2`. Keep new banner art close to that ratio or it'll crop harder than expected in the preview.
+
 ## Images
 
 Product/concept photos are WebP, resized to a 1200px max dimension, quality ~85 (via `sharp`, run through `npx` in a scratch directory — no image-processing deps are installed in the repo itself). Originals are **not** committed; they're kept outside the repo at `../bobert-merch-image-originals/` (sibling to this repo's own folder) in case a design needs to be re-exported. `LG_LOGO.png` stays a PNG on purpose — it's the favicon and `og:image`, and transparency/format compatibility matter more there than file size (it's only 109KB).

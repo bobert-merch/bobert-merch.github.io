@@ -262,7 +262,7 @@ document.getElementById('cart-items').addEventListener('click', e => {
 
 // ── SWATCH SELECTOR (product cards with more than one design — currently
 // just the free Discord banner add-on) — picks which variant Add to Cart
-// uses. ──
+// uses, and (where present) keeps the Discord profile preview in sync. ──
 document.querySelectorAll('.swatch-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     const card = btn.closest('.product-card');
@@ -273,8 +273,21 @@ document.querySelectorAll('.swatch-btn').forEach(btn => {
     btn.classList.add('active');
     btn.setAttribute('aria-current', 'true');
     card.dataset.activeSlide = btn.dataset.variantIndex;
+
+    const previewBanner = card.querySelector('#discord-preview-banner');
+    const swatchImg = btn.querySelector('img');
+    if (previewBanner && swatchImg) previewBanner.src = swatchImg.src;
   });
 });
+
+// Sets the Discord preview's initial image from whichever swatch starts
+// .active, so that's the single source of truth rather than duplicating
+// the src by hand in the preview's own markup.
+(function () {
+  const activeSwatchImg = document.querySelector('.addon-card .swatch-btn.active img');
+  const previewBanner = document.getElementById('discord-preview-banner');
+  if (activeSwatchImg && previewBanner) previewBanner.src = activeSwatchImg.src;
+})();
 
 // ── EMAIL DE-OBFUSCATION (footer contact link, index.html) ──
 function emailFromDataset(el) {

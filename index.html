@@ -245,6 +245,10 @@
     and re-number the remaining data-variant-index values (0, 1, 2 …).
     Keep exactly one swatch marked class="swatch-btn active" +
     aria-current="true" (the default selection).
+
+  The .addon-preview mock Discord card just mirrors whichever swatch is
+  active (site.js keeps #discord-preview-banner's src in sync) — no
+  markup changes needed there when adding/removing a design.
   ══════════════════════════════════════════════════════════════
   -->
   <div class="product-card addon-card"
@@ -252,35 +256,61 @@
        data-name="LG Discord Banner"
        data-price="0"
        data-variants="Brim|Chamber|Clover|Omen">
-    <span class="addon-badge">Free Add-On</span>
-    <h3 class="addon-title">Add On a Free Discord Banner</h3>
-    <div class="swatch-grid">
-      <button class="swatch-btn active" aria-current="true" aria-label="Brim"
-              data-label="Brim" data-variant-index="0">
-        <img src="./assets/digital/BrimBanner.webp" alt="Brim Discord banner design" loading="lazy">
-        <span class="swatch-btn-label">Brim</span>
-      </button>
-      <button class="swatch-btn" aria-label="Chamber"
-              data-label="Chamber" data-variant-index="1">
-        <img src="./assets/digital/ChamberBanner.webp" alt="Chamber Discord banner design" loading="lazy">
-        <span class="swatch-btn-label">Chamber</span>
-      </button>
-      <button class="swatch-btn" aria-label="Clover"
-              data-label="Clover" data-variant-index="2">
-        <img src="./assets/digital/CloverBanner.webp" alt="Clover Discord banner design" loading="lazy">
-        <span class="swatch-btn-label">Clover</span>
-      </button>
-      <button class="swatch-btn" aria-label="Omen"
-              data-label="Omen" data-variant-index="3">
-        <img src="./assets/digital/OmenBanner.webp" alt="Omen Discord banner design" loading="lazy">
-        <span class="swatch-btn-label">Omen</span>
-      </button>
+    <div class="addon-main">
+      <span class="addon-badge">Free Add-On</span>
+      <h3 class="addon-title">Add On a Free Discord Banner</h3>
+      <div class="swatch-grid">
+        <button class="swatch-btn active" aria-current="true" aria-label="Brim"
+                data-label="Brim" data-variant-index="0">
+          <img src="./assets/digital/BrimBanner.webp" alt="Brim Discord banner design" loading="lazy">
+          <span class="swatch-btn-label">Brim</span>
+        </button>
+        <button class="swatch-btn" aria-label="Chamber"
+                data-label="Chamber" data-variant-index="1">
+          <img src="./assets/digital/ChamberBanner.webp" alt="Chamber Discord banner design" loading="lazy">
+          <span class="swatch-btn-label">Chamber</span>
+        </button>
+        <button class="swatch-btn" aria-label="Clover"
+                data-label="Clover" data-variant-index="2">
+          <img src="./assets/digital/CloverBanner.webp" alt="Clover Discord banner design" loading="lazy">
+          <span class="swatch-btn-label">Clover</span>
+        </button>
+        <button class="swatch-btn" aria-label="Omen"
+                data-label="Omen" data-variant-index="3">
+          <img src="./assets/digital/OmenBanner.webp" alt="Omen Discord banner design" loading="lazy">
+          <span class="swatch-btn-label">Omen</span>
+        </button>
+      </div>
+      <div class="product-footer">
+        <div class="product-price addon-price">FREE</div>
+        <button class="btn-add-cart" disabled>Add to Cart</button>
+      </div>
+      <p class="addon-hint">Add a sticker to your cart first — this one's on the house.</p>
     </div>
-    <div class="product-footer">
-      <div class="product-price addon-price">FREE</div>
-      <button class="btn-add-cart" disabled>Add to Cart</button>
+
+    <!-- Live preview of the selected design on a mock Discord profile
+         popup — proportioned to Discord's actual recommended banner size
+         (600×240, a 5:2 aspect ratio). Purely visual: #discord-preview-banner's
+         src is kept in sync with whichever swatch is .active by the swatch
+         click handler in site.js (and set once on load to match). -->
+    <div class="addon-preview">
+      <span class="addon-preview-label">Preview on Discord</span>
+      <div class="discord-card">
+        <div class="discord-card-banner">
+          <img id="discord-preview-banner" src="./assets/digital/BrimBanner.webp" alt="Selected banner design previewed on a Discord profile">
+        </div>
+        <div class="discord-card-avatar-row">
+          <div class="discord-card-avatar">
+            <img src="./assets/disc_pfp.webp" alt="">
+            <span class="discord-card-status"></span>
+          </div>
+        </div>
+        <div class="discord-card-body">
+          <div class="discord-card-name">!bobert</div>
+          <div class="discord-card-username">bobert_tt</div>
+        </div>
+      </div>
     </div>
-    <p class="addon-hint">Add a sticker to your cart first — this one's on the house.</p>
   </div>
 </section>
 
