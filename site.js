@@ -95,9 +95,10 @@ function addToCart(productId, variantIdx) {
   const key = cartKey(productId, variantIdx);
 
   // The free banner add-on is one-per-order, fixed at qty 1 — picking a
-  // different design and clicking Add to Cart again swaps it out instead
-  // of stacking a second line (see renderCart, which also hides qty
-  // controls for this product so it can't be incremented in the drawer).
+  // different design (see the swatch-btn click handler below) swaps it
+  // out instead of stacking a second line (see renderCart, which also
+  // hides qty controls for this product so it can't be incremented in
+  // the drawer).
   if (productId === ADDON_PRODUCT_ID) {
     cart = cart.filter(i => i.productId !== ADDON_PRODUCT_ID);
     const p = PRODUCTS[productId];
@@ -129,17 +130,15 @@ function updateQty(key, delta) {
   saveCart();
 }
 
-// Keeps the add-on's Add to Cart button (and its explanatory hint) in sync
-// with whether the cart currently qualifies. Safe no-op on pages without
-// the add-on card (feedback.html, about.html).
+// Keeps the add-on's explanatory hint in sync with whether the cart
+// currently qualifies (there's no Add to Cart button on this card — see
+// the swatch-btn click handler below). Safe no-op on pages without the
+// add-on card (feedback.html, about.html).
 function updateAddonAvailability() {
   const addonCard = document.querySelector('.addon-card');
   if (!addonCard) return;
-  const btn  = addonCard.querySelector('.btn-add-cart');
   const hint = addonCard.querySelector('.addon-hint');
-  const eligible = hasQualifyingItem();
-  if (btn) btn.disabled = !eligible;
-  if (hint) hint.hidden = eligible;
+  if (hint) hint.hidden = hasQualifyingItem();
 }
 
 function saveCart() {
@@ -261,8 +260,10 @@ document.getElementById('cart-items').addEventListener('click', e => {
 });
 
 // ── SWATCH SELECTOR (product cards with more than one design — currently
-// just the free Discord banner add-on) — picks which variant Add to Cart
-// uses, and (where present) keeps the Discord profile preview in sync. ──
+// just the free Discord banner add-on) — picks which variant, keeps the
+// Discord profile preview in sync, and (for the add-on specifically, once
+// eligible) adds/swaps the cart line directly — there's no separate Add
+// to Cart button on this card. ──
 document.querySelectorAll('.swatch-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     const card = btn.closest('.product-card');
@@ -277,6 +278,17 @@ document.querySelectorAll('.swatch-btn').forEach(btn => {
     const previewBanner = card.querySelector('#discord-preview-banner');
     const swatchImg = btn.querySelector('img');
     if (previewBanner && swatchImg) previewBanner.src = swatchImg.src;
+
+    // Before a paid item is in the cart this only updates the visual
+    // selection above — see updateAddonAvailability's .addon-hint. Once
+    // eligible, every click re-syncs the cart to match (addToCart already
+    // replaces rather than stacks for this product).
+    if (card.dataset.productId === ADDON_PRODUCT_ID && hasQualifyingItem()) {
+      addToCart(card.dataset.productId, parseInt(btn.dataset.variantIndex, 10));
+      cartToggleBtn.classList.remove('pulse');
+      void cartToggleBtn.offsetWidth; // force reflow so re-adding the class re-triggers the animation
+      cartToggleBtn.classList.add('pulse');
+    }
   });
 });
 

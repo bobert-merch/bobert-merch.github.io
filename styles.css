@@ -925,7 +925,7 @@ footer {
   margin-top: 2rem;
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: center;
   flex-wrap: wrap;
   gap: 2rem;
 }
@@ -936,8 +936,12 @@ footer {
   box-shadow: none;
 }
 
+/* Capped (not flex-grow) so it doesn't stretch to fill the row and push
+   .addon-preview off to the far edge — the two sit close together instead,
+   with any leftover row width left unused. 600px comfortably fits the
+   swatch-grid's 2-up wrap (280px swatches × 2 + gap). */
 .addon-main {
-  flex: 1 1 380px;
+  flex: 0 1 600px;
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
@@ -979,29 +983,20 @@ footer {
   max-width: 100%;
   padding: 0;
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
+  display: block;
   transition: border-color 0.15s;
 }
 
-/* 5:2 matches Discord's actual recommended banner size (600×240) — see
-   .discord-card-banner below, which uses the same ratio for the preview. */
+/* No visible label (aria-label carries the name for screen readers instead)
+   — the image fills the whole button edge-to-edge, cropped the same way
+   .discord-card-banner crops it below, so the swatch itself previews how
+   the banner actually reads rather than a padded, letterboxed thumbnail.
+   5:2 matches Discord's actual recommended banner size (600×240). */
 .swatch-btn img {
   width: 100%;
   aspect-ratio: 5/2;
-  object-fit: contain;
-  padding: 0.8rem;
+  object-fit: cover;
   display: block;
-}
-
-.swatch-btn-label {
-  font-family: var(--font-display);
-  font-size: 0.95rem;
-  letter-spacing: 0.06em;
-  color: var(--text);
-  background: var(--bg-mid);
-  padding: 7px 0;
-  text-align: center;
 }
 
 .swatch-btn:hover { border-color: var(--lg-green); }
@@ -1012,12 +1007,20 @@ footer {
    in context, not just as a flat rectangle. Colors intentionally match
    Discord's actual dark theme (not this site's palette) since the point
    is to preview how it looks over there. .discord-card-banner uses
-   object-fit: cover (not contain, unlike the swatch thumbnails above) —
-   that's how Discord itself renders a banner that isn't exactly 600×240,
-   so the preview should crop the same way rather than letterbox it. */
+   object-fit: cover, same as the swatch thumbnails now — that's how
+   Discord itself renders a banner that isn't exactly 600×240, so both
+   should crop the same way rather than letterbox it. */
 .addon-preview {
-  flex: 0 0 260px;
+  flex: 1 1 260px;
   max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* flex-grow:1 (unlike .addon-main's capped growth above) lets this claim
+     the rest of the row as its own section rather than hugging up against
+     .addon-main — align-items: center then centers the label+card within
+     that whole section instead of just within a content-sized box.
+     Vertical centering comes from .addon-card's align-items: center. */
 }
 
 .addon-preview-label {

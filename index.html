@@ -226,19 +226,26 @@
   ══════════════════════════════════════════════════════════════
   FREE ADD-ON — HOW TO EDIT
   ──────────────────────────────────────────────────────────────
-  A $0 cart item, same generic product-card/add-to-cart wiring as the
-  stickers above (see site.js — it builds PRODUCTS from any
-  .product-card[data-name] and doesn't care that the price is 0).
+  A $0 cart item, no Add to Cart button — clicking a swatch adds/swaps it
+  directly (see the swatch-btn click handler in site.js). Uses the same
+  generic PRODUCTS lookup as the stickers above (built from any
+  .product-card[data-name], doesn't care that the price is 0), just a
+  different trigger for addToCart().
   Gated in site.js (updateAddonAvailability / enforceAddonEligibility):
-  Add to Cart stays disabled until a paid item is in the cart, and the
-  banner is auto-removed if the cart's paid items ever drop to zero —
-  see the .addon-hint paragraph below for the message shown while gated.
+  clicking a swatch before a paid item is in the cart only updates the
+  visual selection/preview, it doesn't touch the cart — see the
+  .addon-hint paragraph below for the message shown while gated. The
+  banner is also auto-removed if the cart's paid items ever drop to
+  zero. If you pick a design while ineligible, add a sticker, then
+  click the swatch again to actually add it (no automatic retry).
 
   ADD A DESIGN:
     Copy a .swatch-btn block inside .swatch-grid, point the img src at a
     file in assets/digital/, set data-label + a unique data-variant-index
     (next integer), and append the label to data-variants on the
-    .product-card div (pipe-separated).
+    .product-card div (pipe-separated). No visible label needed — the
+    image is the only identifier now, so keep aria-label accurate for
+    screen readers.
 
   REMOVE A DESIGN:
     Delete its .swatch-btn block, remove its name from data-variants,
@@ -263,27 +270,22 @@
         <button class="swatch-btn active" aria-current="true" aria-label="Brim"
                 data-label="Brim" data-variant-index="0">
           <img src="./assets/digital/BrimBanner.webp" alt="Brim Discord banner design" loading="lazy">
-          <span class="swatch-btn-label">Brim</span>
         </button>
         <button class="swatch-btn" aria-label="Chamber"
                 data-label="Chamber" data-variant-index="1">
           <img src="./assets/digital/ChamberBanner.webp" alt="Chamber Discord banner design" loading="lazy">
-          <span class="swatch-btn-label">Chamber</span>
         </button>
         <button class="swatch-btn" aria-label="Clover"
                 data-label="Clover" data-variant-index="2">
           <img src="./assets/digital/CloverBanner.webp" alt="Clover Discord banner design" loading="lazy">
-          <span class="swatch-btn-label">Clover</span>
         </button>
         <button class="swatch-btn" aria-label="Omen"
                 data-label="Omen" data-variant-index="3">
           <img src="./assets/digital/OmenBanner.webp" alt="Omen Discord banner design" loading="lazy">
-          <span class="swatch-btn-label">Omen</span>
         </button>
       </div>
       <div class="product-footer">
         <div class="product-price addon-price">FREE</div>
-        <button class="btn-add-cart" disabled>Add to Cart</button>
       </div>
       <p class="addon-hint">Add a sticker to your cart first — this one's on the house.</p>
     </div>
