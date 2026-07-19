@@ -1,0 +1,9 @@
+# Bobert × LG Merch
+
+> A small, hand-run merch drop for the Light Garden (LG) Valorant Draft Circuit community — holographic stickers designed by a VDC community member, plus a free Discord banner add-on. First trial drop; proceeds fund future items.
+
+## Pages
+
+- [Shop](https://bobert-merch.github.io/index.html): Browse and order stickers, add the free Discord banner, FAQ
+- [Feedback](https://bobert-merch.github.io/feedback.html): Vote on concept directions for the next drop, submit feedback
+- [About](https://bobert-merch.github.io/about.html): The story behind the collab — Bobert and Light Garden
