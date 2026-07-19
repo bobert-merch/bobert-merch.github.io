@@ -980,8 +980,6 @@ footer {
   letter-spacing: 0.04em;
 }
 
-.addon-price { color: var(--lg-green); }
-
 /* ── SWATCH PICKER (free add-on design choice) ── */
 .swatch-grid {
   display: flex;
