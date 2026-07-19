@@ -53,6 +53,10 @@ then drive it with Playwright (not installed in the repo — `npm install playwr
 
 Checkout is **not** actually wired up — `.shopify-embed`/`.shopify-placeholder` in index.html's order section is an inert placeholder, and the copy across the site ("Shopify checkout is all set up," `.cart-checkout-note`, the FAQ) intentionally describes it as live per the site owner's request, even though it isn't yet. When it's time to connect a real Shopify store, the setup steps are in the HTML comment directly above `.shopify-embed`.
 
+## AI/crawler accessibility
+
+`robots.txt` and `llms.txt` at the repo root, plus `sitemap.xml` (3 URLs — the site is just 3 pages). All plain static files, no server config needed since this is GitHub Pages. index.html also has a `FAQPage` JSON-LD block in `<head>`, generated from the FAQ `<details>`/`<summary>` content in the `#faq` section — **if you edit the FAQ copy, update the JSON-LD to match** (same questions/answers, verbatim); nothing enforces that they stay in sync, it's just a convention. No `Product` schema was added since Shopify checkout isn't actually wired up yet (see below) — adding price/availability markup would overclaim purchasability.
+
 ## Do not touch
 
 - `id_bobert_merch` / `id_bobert_merch.pub` at the repo root are real SSH keys, gitignored on purpose. Never `git add` them, never read their contents into a response.
