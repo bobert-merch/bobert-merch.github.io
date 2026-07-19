@@ -30,7 +30,7 @@ README.md                                  short human-facing blurb
 
 **Free add-on rules** (`discord-banner` product ID):
 - *Gating* — it can only be in the cart alongside a real paid item. `hasQualifyingItem()` checks for any cart line with `price > 0` and `productId !== 'discord-banner'`. `enforceAddonEligibility()` strips the banner out if that's false — called on every `saveCart()` and once at load (to catch a cart saved before this rule existed). `updateAddonAvailability()` disables the add-on's Add to Cart button and shows `.addon-hint` while ineligible.
-- *One design, fixed qty 1* — `addToCart` special-cases `ADDON_PRODUCT_ID`: adding a design removes any existing banner line first (so switching from Cheese to Ucklar swaps it rather than stacking a second line), and always pushes `qty: 1`. `renderCart` renders `.cart-item-qty-fixed` (a plain "1 free" label) instead of the qty +/- controls for this line, so there's no UI path to increment it.
+- *One design, fixed qty 1* — `addToCart` special-cases `ADDON_PRODUCT_ID`: adding a design removes any existing banner line first (so switching designs swaps it rather than stacking a second line), and always pushes `qty: 1`. `renderCart` renders `.cart-item-qty-fixed` (a plain "1 free" label) instead of the qty +/- controls for this line, so there's no UI path to increment it.
 - If you add more free/zero-price items, decide whether they share these rules or need their own.
 
 ## Editing products
