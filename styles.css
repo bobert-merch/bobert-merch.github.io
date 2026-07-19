@@ -19,6 +19,20 @@
 /* ── RESET ── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+/* Visually hidden but still reachable by screen readers — used for the
+   aria-live cart-status region (see #cart-status in each page + site.js). */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* ── VARIABLES ── */
 :root {
   --bg:            #060D06;
@@ -1726,6 +1740,17 @@ footer {
 .about-body p strong { color: var(--text); }
 
 /* ── RESPONSIVE (all pages, one breakpoint) ── */
+/* .about-grid's 2-column split gets uncomfortably tight before the main
+   768px breakpoint kicks in — each column is a fixed 180px photo + 2rem
+   gap + text, which leaves the text well under 150px wide in the 769-950px
+   range. A wider, narrower-scoped breakpoint just for this grid collapses
+   it to one column earlier, while .about-col's photo-beside-text row
+   layout (handled below at 768px) stays intact since there's room for it
+   again once the grid itself isn't splitting the width in half. */
+@media (max-width: 960px) {
+  .about-grid { grid-template-columns: 1fr; }
+}
+
 @media (max-width: 768px) {
   nav        { padding: 0 1rem; }
   .nav-links { display: none; }
@@ -1755,6 +1780,10 @@ footer {
    construction, this always wins over the rules above without needing to
    track load order across files) ── */
 @media (prefers-reduced-motion: reduce) {
+  /* Covers anchor-link jumps (e.g. #shop) that rely on the CSS property.
+     The JS-driven checkout scroll (site.js) checks matchMedia itself since
+     an explicit behavior:'smooth' passed to scrollIntoView overrides this. */
+  html                         { scroll-behavior: auto; }
   .mobile-nav                 { transition: none; }
   .hero-eyebrow .dot          { animation: none; }
   .btn-primary:hover          { transform: none; }
@@ -1767,5 +1796,7 @@ footer {
   .swatch-btn                 { transition: none; }
   .trial-modal                { transition: none; }
   .concept-card                 { transition: none; }
+  .faq-item summary           { transition: none; }
+  .faq-item summary::after    { transition: none; }
 }
 
