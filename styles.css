@@ -940,6 +940,7 @@ footer {
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: center;
   flex-wrap: wrap;
   gap: 2rem;
 }
@@ -981,10 +982,20 @@ footer {
 }
 
 /* ── SWATCH PICKER (free add-on design choice) ── */
+/* justify-content: center matters most once .addon-card wraps to a
+   stacked column (roughly <900px, well before the 768px breakpoint —
+   this is flexbox's own auto-wrap, not a media query) — without it,
+   the swatch row sits flush against .swatch-grid's stretched full-width
+   box (default flex-start) while .addon-preview below it is genuinely
+   centered (align-items: center), so the two drift apart as the column
+   gets wider — up to ~190px off-center just before the 2-up desktop
+   layout kicks in. At desktop width (swatch-grid ≈ addon-main's 600px
+   cap) this only redistributes ~20px of slack evenly, imperceptible. */
 .swatch-grid {
   display: flex;
   gap: 1.25rem;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .swatch-btn {
