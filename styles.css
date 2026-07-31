@@ -121,11 +121,23 @@ nav {
 
 .nav-links a:hover { color: var(--text); }
 
+/* A <button> now (opens the Shopify cart drawer, doesn't navigate — see
+   .cart-open-btn in site.js), so it can't rely on .nav-links a for its
+   base text styling/cursor like the rest of the nav links do — set
+   everything it needs directly instead. */
 .nav-cta {
+  font-family: inherit;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
   background: var(--lg-green) !important;
   color: #fff !important;
   padding: 5px 14px;
   clip-path: polygon(4px 0%, 100% 0%, calc(100% - 4px) 100%, 0% 100%);
+  transition: background 0.2s;
 }
 
 .nav-cta:hover { background: var(--lg-green-dk) !important; color: #fff !important; }
@@ -208,7 +220,19 @@ nav {
 
 .mobile-nav a:hover { color: var(--text); }
 
+/* A <button> now (opens the Shopify cart drawer, doesn't navigate — see
+   .cart-open-btn in site.js), so — same as .nav-cta above — it can't rely
+   on .mobile-nav a for base text styling, block layout, or cursor. */
 .mobile-nav .mobile-nav-cta {
+  display: block;
+  width: 100%;
+  font-family: inherit;
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
   margin-top: 0.75rem;
   background: var(--lg-green);
   color: #fff !important;

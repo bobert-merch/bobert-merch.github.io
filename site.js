@@ -33,7 +33,10 @@ hamburgerBtn.addEventListener('click', () => {
   mobileNavEl.classList.contains('open') ? closeMobileNav() : openMobileNav();
 });
 
-mobileNavEl.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMobileNav));
+// 'a, button' rather than just 'a' — the mobile nav's cart button
+// (.mobile-nav-cta) is a <button> now, not a link, since it opens the
+// Shopify cart drawer instead of navigating (see .cart-open-btn below).
+mobileNavEl.querySelectorAll('a, button').forEach(el => el.addEventListener('click', closeMobileNav));
 
 // ── SHARED SCROLL LOCK ──
 // Used by the trial-run modal (index.html). A plain counter keeps body
@@ -359,6 +362,17 @@ function shopifyBuyInit() {
     loadShopifySdk();
   }
 })();
+
+// Nav "Cart" button (every page) — opens the same shared Shopify cart
+// drawer the floating toggle does, via the cart component's own open()
+// method (see shopifyCart above). No-ops if clicked before the SDK
+// finishes loading, same "no automatic retry" pattern used elsewhere in
+// this file — in practice that window is a second or two at most.
+document.querySelectorAll('.cart-open-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    if (shopifyCart) shopifyCart.open();
+  });
+});
 
 // ── SWATCH SELECTOR (free Discord banner add-on design picker) ──
 // Picks which design is selected, keeps the Discord profile preview in
