@@ -6,6 +6,11 @@
 // early `if (!el) return` guards) rather than throwing on pages
 // missing that markup. See CLAUDE.md's "File organization" section
 // for why this is one file instead of one-per-page.
+//
+// Section order: nav/hamburger → scroll lock → Shopify Buy Button
+// bootstrap → swatch selector (banner design preview) → email
+// de-obfuscation → trial modal → concept carousel → one Escape-key
+// dispatcher at the end.
 // ══════════════════════════════════════════════════════════════
 
 // ── NAV: hamburger / mobile-nav toggle (every page) ──
@@ -31,9 +36,9 @@ hamburgerBtn.addEventListener('click', () => {
 mobileNavEl.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMobileNav));
 
 // ── SHARED SCROLL LOCK ──
-// Used by the cart drawer (every page) and, on index.html, the trial-run
-// modal too. A plain counter keeps body scroll locked as long as anything
-// relying on it is open, so closing one doesn't clobber the other.
+// Used by the trial-run modal (index.html). A plain counter keeps body
+// scroll locked as long as anything relying on it is open, so closing one
+// doesn't clobber another if a second lock is ever added later.
 let scrollLockCount = 0;
 function lockScroll() {
   scrollLockCount++;
@@ -44,320 +49,337 @@ function unlockScroll() {
   if (scrollLockCount === 0) document.body.style.overflow = '';
 }
 
-// ── CART ENGINE (every page — the drawer/badge are in every page's markup) ──
-// PRODUCTS is built from whatever .product-card elements exist on the
-// current page — empty on pages with no products (feedback.html,
-// about.html), which is fine since nothing there calls addToCart().
-const PRODUCTS = {};
-document.querySelectorAll('.product-card[data-name]').forEach(card => {
-  PRODUCTS[card.dataset.productId] = {
-    name:     card.dataset.name,
-    price:    parseInt(card.dataset.price, 10),
-    variants: card.dataset.variants.split('|'),
-  };
-});
+// ── SHOPIFY BUY BUTTON (every page — cart + checkout are handled entirely
+// by Shopify's own SDK now; there is no local cart. See CLAUDE.md's
+// "Shopify" section for the full picture.) ──
+//
+// Bootstrapped once here rather than pasting each product's own copy of
+// the loader/client snippet Shopify's Buy Button admin generates — pasting
+// both verbatim would load the SDK twice and build two separate
+// `ShopifyBuy.UI` instances, which renders two floating cart toggles.
+// Instead: one loader, one client, one `ui`, and every product component
+// on the page is created from markup rather than hard-coded here — see
+// "Editing products" in CLAUDE.md for how to add one.
+const SHOPIFY_DOMAIN = 'ncpp8a-eh.myshopify.com';
+const SHOPIFY_STOREFRONT_TOKEN = 'bafc21af27d4b2a2a89fb2a461966af2';
 
-function esc(str) {
-  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+// Storefront API *publishable* token — this is meant to ship in
+// client-side code (it can only read products/build checkouts, nothing
+// account-level) and is safe to commit. Unrelated to the SSH keys in
+// CLAUDE.md's "Do not touch" section.
+
+// One shared style/config object for every product component — Shopify's
+// generated snippets were byte-identical per product apart from the id,
+// so there's no reason to duplicate the whole options block per product.
+// Colors/fonts are nudged from Shopify's defaults to match the site's
+// palette (--lg-green / --lg-green-dk) and type (Bebas Neue / Inter).
+const SHOPIFY_UI_OPTIONS = {
+  product: {
+    styles: {
+      product: {
+        '@media (min-width: 601px)': {
+          'max-width': '100%',
+          'margin-left': '0',
+          'margin-bottom': '0',
+        },
+        'text-align': 'left',
+      },
+      // Fixed 4:3 box (matches the site's old hand-built .product-img
+      // ratio) with object-fit: cover, so the two side-by-side cards stay
+      // the same height regardless of the two products' actual source
+      // image dimensions — without this, whichever image is taller/wider
+      // pushes its own card to a different height than its neighbor.
+      imgWrapper: {
+        width: '100%',
+        'aspect-ratio': '4 / 3',
+        overflow: 'hidden',
+        margin: '0 auto 15px auto',
+        background: '#f2f2f2',
+      },
+      img: { width: '100%', height: '100%', 'object-fit': 'cover', margin: '0' },
+      title: {
+        'font-family': 'Bebas Neue, sans-serif',
+        'font-size': '26px',
+        color: '#EEF5EE',
+      },
+      price: { 'font-family': 'Inter, sans-serif', 'font-size': '18px', color: '#EEF5EE' },
+      compareAt: { 'font-family': 'Inter, sans-serif', 'font-size': '15.3px', color: '#587858' },
+      unitPrice: { 'font-family': 'Inter, sans-serif', 'font-size': '15.3px', color: '#587858' },
+      description: { color: '#587858' },
+      button: {
+        'font-family': 'Bebas Neue, sans-serif',
+        'background-color': '#5CB83A',
+        ':hover': { 'background-color': '#3F8A26' },
+        ':focus': { 'background-color': '#3F8A26' },
+        'border-radius': '0px',
+      },
+    },
+    contents: { img: false, imgWithCarousel: true, description: true },
+    // Vertical (image on top, details below) rather than horizontal
+    // (image-left/text-right) — horizontal wants the full row width per
+    // product, which is why the two ended up stacked instead of side by
+    // side; vertical renders as a card that fits two-up in a grid.
+    layout: 'vertical',
+    width: '100%',
+    text: { button: 'Add to cart' },
+  },
+  productSet: {
+    styles: { products: { '@media (min-width: 601px)': { 'margin-left': '-20px' } } },
+  },
+  modalProduct: {
+    contents: { img: false, imgWithCarousel: true, button: false, buttonWithQuantity: true },
+    styles: {
+      product: {
+        '@media (min-width: 601px)': { 'max-width': '100%', 'margin-left': '0px', 'margin-bottom': '0px' },
+      },
+      title: { 'font-family': 'Bebas Neue, sans-serif', 'font-size': '26px', color: '#EEF5EE' },
+      price: { 'font-family': 'Inter, sans-serif', 'font-size': '18px', color: '#EEF5EE' },
+      compareAt: { 'font-family': 'Inter, sans-serif', 'font-size': '15.3px', color: '#587858' },
+      unitPrice: { 'font-family': 'Inter, sans-serif', 'font-size': '15.3px', color: '#587858' },
+      button: {
+        'font-family': 'Bebas Neue, sans-serif',
+        'background-color': '#5CB83A',
+        ':hover': { 'background-color': '#3F8A26' },
+        ':focus': { 'background-color': '#3F8A26' },
+        'border-radius': '0px',
+      },
+    },
+    text: { button: 'Add to cart' },
+  },
+  option: {},
+  cart: {
+    styles: {
+      cart: { background: '#0E1A0E' },
+      title: { color: '#EEF5EE' },
+      header: { color: '#EEF5EE', background: '#0A130A', 'border-color': '#183018' },
+      lineItems: { color: '#EEF5EE' },
+      subtotalText: { color: '#EEF5EE' },
+      subtotal: { color: '#EEF5EE' },
+      notice: { color: '#587858' },
+      currency: { color: '#EEF5EE' },
+      close: { color: '#EEF5EE', ':hover': { color: '#5CB83A' } },
+      empty: { color: '#EEF5EE' },
+      noteDescription: { color: '#587858' },
+      discountText: { color: '#EEF5EE' },
+      discountIcon: { fill: '#EEF5EE' },
+      discountAmount: { color: '#EEF5EE' },
+      footer: { background: '#0A130A' },
+      button: {
+        'font-family': 'Bebas Neue, sans-serif',
+        'background-color': '#5CB83A',
+        ':hover': { 'background-color': '#3F8A26' },
+        ':focus': { 'background-color': '#3F8A26' },
+        'border-radius': '0px',
+      },
+    },
+    text: { total: 'Subtotal', button: 'Checkout' },
+  },
+  toggle: {
+    styles: {
+      toggle: {
+        'background-color': '#5CB83A',
+        ':hover': { 'background-color': '#3F8A26' },
+        ':focus': { 'background-color': '#3F8A26' },
+      },
+      count: { color: '#EEF5EE', ':hover': { color: '#EEF5EE' } },
+      iconPath: { fill: '#fff' },
+    },
+  },
+};
+
+// ── FREE DISCORD BANNER ADD-ON (Shopify-backed) ──
+// The banner is product 9694852481267 ("LG Discord Banner", $0.00). It has
+// only one variant ("Default Title") — the four named variants
+// (Brim/Chamber/Clove/Omen) this was originally planned around were never
+// created in Shopify — so which *design* was picked can't be represented
+// as a variant choice. Instead every add/swap writes a `Design` line-item
+// custom attribute (visible on the order in Shopify admin) alongside the
+// single real variant. getBannerVariantForLabel() still checks for a
+// title match first, so if named variants are added later this
+// automatically switches to using them — no code change needed.
+const BANNER_PRODUCT_ID = '9694852481267';
+
+// Populated once shopifyBuyInit's product.fetch resolves.
+let shopifyClient = null;
+let shopifyCart = null;
+let bannerProduct = null;
+let bannerVariantIds = new Set();
+
+function getBannerVariantForLabel(label) {
+  if (!bannerProduct) return null;
+  return bannerProduct.variants.find(v => v.title === label) || bannerProduct.variants[0] || null;
 }
 
-let cart;
-try {
-  const stored = JSON.parse(localStorage.getItem('lg-cart') || '[]');
-  // Filters out malformed entries (e.g. a `null` slipped into the array by
-  // a bug or manual localStorage editing) — enforceAddonEligibility() and
-  // renderCart() below assume every item is a real line-item object, so a
-  // bad entry here would throw and break the cart (and every section of
-  // this script after it) on every future page load until storage is cleared.
-  cart = Array.isArray(stored)
-    ? stored.filter(i => i && typeof i === 'object' && typeof i.key === 'string' && typeof i.qty === 'number')
-    : [];
-} catch (_) {
-  cart = [];
+function cartLineItems() {
+  return (shopifyCart && shopifyCart.model && shopifyCart.model.lineItems) || [];
 }
 
-// The free banner add-on only makes sense alongside a real order — if
-// every paid item gets removed from the cart, drop the banner with it
-// rather than let it sit there as an orphaned "free" checkout on its own.
-const ADDON_PRODUCT_ID = 'discord-banner';
-
+// A "qualifying" item is any cart line that isn't the free banner itself —
+// mirrors the old local-cart's `price > 0` check without depending on the
+// exact shape Shopify's line-item price comes back in.
 function hasQualifyingItem() {
-  return cart.some(i => i.productId !== ADDON_PRODUCT_ID && i.price > 0);
+  return cartLineItems().some(li => !bannerVariantIds.has(li.variant.id));
 }
 
-function enforceAddonEligibility() {
-  if (!hasQualifyingItem()) {
-    cart = cart.filter(i => i.productId !== ADDON_PRODUCT_ID);
-  }
+function findBannerLineItem() {
+  return cartLineItems().find(li => bannerVariantIds.has(li.variant.id)) || null;
 }
 
-// Also catches a cart saved by an earlier version of this page (before the
-// add-on existed, or before this rule existed) that might already be in an
-// invalid state — not just cart mutations made from here on.
-enforceAddonEligibility();
-
-function cartKey(pid, vi) { return pid + '::' + vi; }
-
-// Cart mutations are otherwise silent to screen readers (the drawer content
-// re-renders, but nothing announces it — and since fdab144, clicking a
-// swatch can add to the cart as a side effect with no separate "Add to
-// Cart" click to anchor the change to). One polite live region, updated by
-// every mutation below, covers all of that in one place. Present on every
-// page via the cart-drawer markup, so this is a safe no-op if it's ever
-// missing.
-const cartStatusEl = document.getElementById('cart-status');
-function announceCart(msg) {
-  if (!cartStatusEl) return;
-  // Clearing first (and forcing a reflow) makes the live region announce
-  // even when the new message is identical to the last one — e.g. clicking
-  // the already-selected swatch again.
-  cartStatusEl.textContent = '';
-  void cartStatusEl.offsetWidth;
-  cartStatusEl.textContent = msg;
+// Replays the same view-refresh sequence Buy Button's own
+// cart.addVariantToCart() runs internally after a checkout mutation —
+// needed here because we're calling client.checkout.* directly (to attach
+// the Design custom attribute, which addVariantToCart's own shortcut
+// doesn't support), so nothing else updates the visible cart/toggle for us.
+function afterCartMutation(checkout) {
+  shopifyCart.model = checkout;
+  shopifyCart.updateCache(shopifyCart.model.lineItems);
+  shopifyCart.view.render();
+  shopifyCart.toggles.forEach(t => t.view.render());
+  updateAddonHint();
 }
 
-function addToCart(productId, variantIdx) {
-  const key = cartKey(productId, variantIdx);
-  const p = PRODUCTS[productId];
-
-  // The free banner add-on is one-per-order, fixed at qty 1 — picking a
-  // different design (see the swatch-btn click handler below) swaps it
-  // out instead of stacking a second line (see renderCart, which also
-  // hides qty controls for this product so it can't be incremented in
-  // the drawer).
-  if (productId === ADDON_PRODUCT_ID) {
-    cart = cart.filter(i => i.productId !== ADDON_PRODUCT_ID);
-    const variant = p.variants[variantIdx];
-    cart.push({ key, productId, variantIdx, name: p.name, variant, price: p.price, qty: 1 });
-    saveCart();
-    announceCart(`${p.name} (${variant}) added to cart, free`);
-    return;
-  }
-
-  const existing = cart.find(i => i.key === key);
-  if (existing) {
-    existing.qty++;
-    announceCart(`${p.name} quantity increased to ${existing.qty}`);
-  } else {
-    cart.push({ key, productId, variantIdx, name: p.name, variant: p.variants[variantIdx], price: p.price, qty: 1 });
-    announceCart(`${p.name} added to cart`);
-  }
-  saveCart();
-}
-
-function removeFromCart(key) {
-  const item = cart.find(i => i.key === key);
-  cart = cart.filter(i => i.key !== key);
-  saveCart();
-  if (item) announceCart(`${item.name} removed from cart`);
-}
-
-function updateQty(key, delta) {
-  const item = cart.find(i => i.key === key);
-  if (!item) return;
-  item.qty = Math.max(0, item.qty + delta);
-  if (item.qty === 0) {
-    cart = cart.filter(i => i.key !== key);
-    saveCart();
-    announceCart(`${item.name} removed from cart`);
-  } else {
-    saveCart();
-    announceCart(`${item.name} quantity ${item.qty}`);
-  }
-}
-
-// Keeps the add-on's explanatory hint in sync with whether the cart
-// currently qualifies (there's no Add to Cart button on this card — see
-// the swatch-btn click handler below). Safe no-op on pages without the
-// add-on card (feedback.html, about.html).
-function updateAddonAvailability() {
+function updateAddonHint() {
   const addonCard = document.querySelector('.addon-card');
-  if (!addonCard) return;
-  const hint = addonCard.querySelector('.addon-hint');
+  const hint = addonCard && addonCard.querySelector('.addon-hint');
   if (hint) hint.hidden = hasQualifyingItem();
 }
 
-function saveCart() {
-  enforceAddonEligibility();
-  localStorage.setItem('lg-cart', JSON.stringify(cart));
-  renderCart();
-  updateCartCount();
-}
-
-function updateCartCount() {
-  const total = cart.reduce((s, i) => s + i.qty, 0);
-  const el = document.getElementById('cart-count');
-  el.textContent = total;
-  el.classList.toggle('visible', total > 0);
-}
-
-function renderCart() {
-  const container   = document.getElementById('cart-items');
-  const checkoutBtn = document.getElementById('btn-checkout');
-  const subtotalEl  = document.getElementById('cart-subtotal-amount');
-
-  updateAddonAvailability();
-
-  const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
-
-  if (cart.length === 0) {
-    container.innerHTML = '<div class="cart-empty"><div class="cart-empty-icon" aria-hidden="true">🛒</div><span>Your cart is empty</span></div>';
-    subtotalEl.textContent = '$0';
-    checkoutBtn.disabled = true;
-    return;
-  }
-
-  checkoutBtn.disabled = false;
-  container.innerHTML = cart.map(item => {
-    // The free banner add-on is fixed at qty 1 (see addToCart) — no +/-
-    // controls for it, just a plain "1 free" label. Still removable.
-    const isAddon = item.productId === ADDON_PRODUCT_ID;
-    const qtyMarkup = isAddon
-      ? `<span class="cart-item-qty-fixed">1 free</span>`
-      : `<div class="cart-item-controls">
-          <button class="qty-btn" data-key="${esc(item.key)}" data-delta="-1">−</button>
-          <span class="cart-item-qty">${Number(item.qty)}</span>
-          <button class="qty-btn" data-key="${esc(item.key)}" data-delta="1">+</button>
-        </div>`;
-    const priceMarkup = isAddon ? 'FREE' : `$${Number(item.price) * Number(item.qty)}`;
-
-    return `
-    <div class="cart-item">
-      <div class="cart-item-info">
-        <div class="cart-item-name">${esc(item.name)}</div>
-        <div class="cart-item-variant">${esc(item.variant)}</div>
-        ${qtyMarkup}
-      </div>
-      <div class="cart-item-right">
-        <div class="cart-item-price">${priceMarkup}</div>
-        <button class="cart-item-remove" data-key="${esc(item.key)}">Remove</button>
-      </div>
-    </div>
-  `;
-  }).join('');
-
-  subtotalEl.textContent = '$' + total;
-}
-
-// Focus trap for the open drawer — same idea as the trial modal's below,
-// but computed fresh on every Tab press instead of against fixed first/last
-// elements, since the drawer's buttons (qty/remove/checkout) come and go
-// as renderCart() re-renders the cart contents.
-let cartLastFocus = null;
-function trapCartFocus(e) {
-  if (e.key !== 'Tab') return;
-  const focusable = document.getElementById('cart-drawer').querySelectorAll('button:not([disabled]), a[href]');
-  if (focusable.length === 0) return;
-  const first = focusable[0];
-  const last = focusable[focusable.length - 1];
-  if (e.shiftKey && document.activeElement === first) {
-    e.preventDefault();
-    last.focus();
-  } else if (!e.shiftKey && document.activeElement === last) {
-    e.preventDefault();
-    first.focus();
+// Polled rather than event-driven: the Buy Button SDK doesn't expose a
+// "cart changed" hook we can subscribe to (its cart drawer's own
+// remove/qty buttons live inside an iframe we don't control), so this is
+// the only way to notice a paid item was removed *from the cart drawer
+// itself* and react — same end result as the old synchronous
+// enforceAddonEligibility(), just on a ~3s delay instead of instant.
+function syncAddonState() {
+  if (!shopifyCart) return;
+  updateAddonHint();
+  if (!hasQualifyingItem()) {
+    const bannerLine = findBannerLineItem();
+    if (bannerLine) {
+      shopifyClient.checkout.removeLineItems(shopifyCart.model.id, [bannerLine.id]).then(afterCartMutation);
+    }
   }
 }
 
-function openCart() {
-  const drawer = document.getElementById('cart-drawer');
-  cartLastFocus = document.activeElement;
-  drawer.classList.add('open');
-  drawer.inert = false;
-  document.getElementById('cart-overlay').classList.add('open');
-  document.getElementById('cart-toggle').setAttribute('aria-expanded', 'true');
-  lockScroll();
-  drawer.addEventListener('keydown', trapCartFocus);
-  document.getElementById('cart-close').focus();
-}
+// Called from the swatch click handler below. No-ops (silently) if the
+// cart isn't eligible yet, the banner product failed to load, or the SDK
+// hasn't finished initializing — same "no automatic retry" behavior the
+// old local-cart version had: pick a design while ineligible, add a
+// sticker, then click the swatch again to actually add it.
+function addOrSwapBannerDesign(label) {
+  if (!shopifyCart || !shopifyClient || !bannerProduct || !hasQualifyingItem()) return;
+  const variant = getBannerVariantForLabel(label);
+  if (!variant) return;
+  const existing = findBannerLineItem();
 
-function closeCart() {
-  const drawer = document.getElementById('cart-drawer');
-  if (!drawer.classList.contains('open')) return;
-  drawer.classList.remove('open');
-  drawer.inert = true;
-  document.getElementById('cart-overlay').classList.remove('open');
-  document.getElementById('cart-toggle').setAttribute('aria-expanded', 'false');
-  unlockScroll();
-  drawer.removeEventListener('keydown', trapCartFocus);
-  if (cartLastFocus && typeof cartLastFocus.focus === 'function') {
-    cartLastFocus.focus();
-  }
-}
-
-document.getElementById('cart-toggle').addEventListener('click', openCart);
-document.getElementById('cart-close').addEventListener('click', closeCart);
-document.getElementById('cart-overlay').addEventListener('click', closeCart);
-document.getElementById('btn-checkout').addEventListener('click', () => {
-  closeCart();
-  // #order only exists on index.html — from any other page, go there first.
-  const orderSection = document.getElementById('order');
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (orderSection) {
-    orderSection.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' });
+  if (existing && existing.variant.id === variant.id) {
+    // Same variant already in the cart (today's only-one-variant reality,
+    // or re-clicking the already-selected swatch) — just refresh the
+    // Design note rather than touching quantity/variant.
+    shopifyClient.checkout.updateLineItems(shopifyCart.model.id, [
+      { id: existing.id, customAttributes: [{ key: 'Design', value: label }] },
+    ]).then(afterCartMutation);
+  } else if (existing) {
+    // A different variant is in the cart (only reachable once real
+    // per-design variants exist) — swap rather than stack a second line.
+    shopifyClient.checkout.removeLineItems(shopifyCart.model.id, [existing.id])
+      .then(() => shopifyClient.checkout.addLineItems(shopifyCart.model.id, [
+        { variantId: variant.id, quantity: 1, customAttributes: [{ key: 'Design', value: label }] },
+      ]))
+      .then(afterCartMutation);
   } else {
-    window.location.href = './index.html#order';
+    shopifyClient.checkout.addLineItems(shopifyCart.model.id, [
+      { variantId: variant.id, quantity: 1, customAttributes: [{ key: 'Design', value: label }] },
+    ]).then(afterCartMutation);
   }
-});
+}
 
-const cartToggleBtn = document.getElementById('cart-toggle');
-
-document.querySelectorAll('.btn-add-cart').forEach(btn => {
-  btn.addEventListener('click', e => {
-    e.stopPropagation();
-    const card = btn.closest('.product-card');
-    addToCart(card.dataset.productId, parseInt(card.dataset.activeSlide || '0', 10));
-    btn.textContent = 'Added!';
-    btn.classList.add('added');
-    setTimeout(() => { btn.textContent = 'Add to Cart'; btn.classList.remove('added'); }, 1400);
-    cartToggleBtn.classList.remove('pulse');
-    void cartToggleBtn.offsetWidth; // force reflow so re-adding the class re-triggers the animation
-    cartToggleBtn.classList.add('pulse');
+function shopifyBuyInit() {
+  const client = ShopifyBuy.buildClient({
+    domain: SHOPIFY_DOMAIN,
+    storefrontAccessToken: SHOPIFY_STOREFRONT_TOKEN,
   });
-});
 
-updateCartCount();
-renderCart();
+  ShopifyBuy.UI.onReady(client).then(ui => {
+    shopifyClient = client;
 
-document.getElementById('cart-items').addEventListener('click', e => {
-  const t = e.target;
-  if (t.classList.contains('qty-btn')) {
-    updateQty(t.dataset.key, parseInt(t.dataset.delta, 10));
-  } else if (t.classList.contains('cart-item-remove')) {
-    removeFromCart(t.dataset.key);
+    // One shared cart + one floating toggle for the whole site — created
+    // explicitly (rather than left to lazy-auto-create on first "Add to
+    // cart") so every page gets the same styled cart/toggle even before
+    // anything's been added yet, and so there's exactly one of each no
+    // matter how many product components end up on the page.
+    ui.createComponent('cart', { options: SHOPIFY_UI_OPTIONS });
+    ui.createComponent('toggle', { options: SHOPIFY_UI_OPTIONS });
+    shopifyCart = ui.components.cart[0];
+
+    // Product components are declared in markup as
+    // <div data-shopify-product-id="…"></div> — see the HOW-TO comment
+    // above the product grid in index.html for how to add one. Zero
+    // matches (about.html, feedback.html) is a safe no-op.
+    document.querySelectorAll('[data-shopify-product-id]').forEach(node => {
+      ui.createComponent('product', {
+        id: node.dataset.shopifyProductId,
+        node,
+        moneyFormat: '%24%7B%7Bamount%7D%7D',
+        options: SHOPIFY_UI_OPTIONS,
+      });
+    });
+
+    // client.product.fetch needs the base64-encoded GraphQL id, not the
+    // plain numeric id used elsewhere (ui.createComponent resolves that
+    // itself) — found by trial against this SDK build, not documented.
+    client.product.fetch(btoa('gid://shopify/Product/' + BANNER_PRODUCT_ID)).then(product => {
+      bannerProduct = product;
+      bannerVariantIds = new Set(product.variants.map(v => v.id));
+      syncAddonState();
+      setInterval(syncAddonState, 3000);
+    }).catch(() => {
+      // Banner product missing, renamed, or the token can't see it —
+      // swatches stay preview-only (visual selection still works) rather
+      // than throwing on every click.
+    });
+  });
+}
+
+(function () {
+  function loadShopifySdk() {
+    const script = document.createElement('script');
+    script.async = true;
+    script.src = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
+    script.onload = shopifyBuyInit;
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(script);
   }
-});
+  if (window.ShopifyBuy) {
+    if (window.ShopifyBuy.UI) {
+      shopifyBuyInit();
+    } else {
+      loadShopifySdk();
+    }
+  } else {
+    loadShopifySdk();
+  }
+})();
 
-// ── SWATCH SELECTOR (product cards with more than one design — currently
-// just the free Discord banner add-on) — picks which variant, keeps the
-// Discord profile preview in sync, and (for the add-on specifically, once
-// eligible) adds/swaps the cart line directly — there's no separate Add
-// to Cart button on this card. ──
+// ── SWATCH SELECTOR (free Discord banner add-on design picker) ──
+// Picks which design is selected, keeps the Discord profile preview in
+// sync, and — once eligible (see hasQualifyingItem() above) — adds/swaps
+// that design into the real Shopify cart via addOrSwapBannerDesign().
 document.querySelectorAll('.swatch-btn').forEach(btn => {
   btn.addEventListener('click', () => {
-    const card = btn.closest('.product-card');
+    const card = btn.closest('.addon-card');
+    if (!card) return;
     card.querySelectorAll('.swatch-btn').forEach(b => {
       b.classList.remove('active');
       b.removeAttribute('aria-current');
     });
     btn.classList.add('active');
     btn.setAttribute('aria-current', 'true');
-    card.dataset.activeSlide = btn.dataset.variantIndex;
 
     const previewBanner = card.querySelector('#discord-preview-banner');
     const swatchImg = btn.querySelector('img');
     if (previewBanner && swatchImg) previewBanner.src = swatchImg.src;
 
-    // Before a paid item is in the cart this only updates the visual
-    // selection above — see updateAddonAvailability's .addon-hint. Once
-    // eligible, every click re-syncs the cart to match (addToCart already
-    // replaces rather than stacks for this product).
-    if (card.dataset.productId === ADDON_PRODUCT_ID && hasQualifyingItem()) {
-      addToCart(card.dataset.productId, parseInt(btn.dataset.variantIndex, 10));
-      cartToggleBtn.classList.remove('pulse');
-      void cartToggleBtn.offsetWidth; // force reflow so re-adding the class re-triggers the animation
-      cartToggleBtn.classList.add('pulse');
-    }
+    addOrSwapBannerDesign(btn.dataset.label);
   });
 });
 
@@ -379,29 +401,6 @@ document.querySelectorAll('.obf-email').forEach(el => {
   const addr = emailFromDataset(el);
   el.href = 'mailto:' + addr;
   if (!el.textContent.trim()) el.textContent = addr;
-});
-
-// ── PRODUCT IMAGE CAROUSEL (index.html sticker cards) ──
-// Purely a visual gallery — browsing to a different image never changes
-// what Add to Cart actually adds (still the one fixed SKU per card). Each
-// .product-img with 2+ slides gets its own independent prev/next state.
-document.querySelectorAll('.product-img').forEach(container => {
-  const slides = container.querySelectorAll('.product-img-slide');
-  if (slides.length < 2) return;
-
-  let cur = Array.from(slides).findIndex(s => s.classList.contains('active'));
-  if (cur < 0) cur = 0;
-
-  function goTo(n) {
-    slides[cur].classList.remove('active');
-    cur = (n + slides.length) % slides.length;
-    slides[cur].classList.add('active');
-  }
-
-  const prev = container.querySelector('.product-img-prev');
-  const next = container.querySelector('.product-img-next');
-  if (prev) prev.addEventListener('click', e => { e.stopPropagation(); goTo(cur - 1); });
-  if (next) next.addEventListener('click', e => { e.stopPropagation(); goTo(cur + 1); });
 });
 
 // ── TRIAL NOTICE MODAL (index.html) ──
@@ -508,11 +507,10 @@ if (trialModalOverlay && trialModal && trialModalClose && trialModalOk) {
 
 // ── ESCAPE KEY (every page) ──
 // One dispatcher instead of one per feature — each handler already guards
-// against its own overlay being absent/closed, so calling all three on
-// every page is safe even though not every page has a trial modal.
+// against its own overlay being absent/closed, so calling both on every
+// page is safe even though not every page has a trial modal.
 document.addEventListener('keydown', e => {
   if (e.key !== 'Escape') return;
   closeMobileNav();
-  closeCart();
   closeTrialModal();
 });

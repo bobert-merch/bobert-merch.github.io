@@ -19,8 +19,11 @@
 /* ── RESET ── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* Visually hidden but still reachable by screen readers — used for the
-   aria-live cart-status region (see #cart-status in each page + site.js). */
+/* Visually hidden but still reachable by screen readers — the shared
+   visually-hidden-but-announced utility class (see CLAUDE.md). Not
+   currently used by any page, but kept as documented in CLAUDE.md so a
+   future aria-live region or hidden label can reuse it instead of adding
+   a new one. */
 .sr-only {
   position: absolute;
   width: 1px;
@@ -279,41 +282,13 @@ nav {
 
 .btn-ghost:hover { border-color: var(--lg-green); color: var(--lg-green); }
 
-/* ── CART (shared — the cart drawer is reachable from every page, and the
-   cart badge/data stay in sync across all of them via localStorage) ── */
-.cart-btn {
-  background: transparent;
-  border: 1px solid var(--border-bright);
-  color: var(--muted);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 0.45rem;
-  padding: 5px 14px;
-  font-family: var(--font-display);
-  font-size: 0.9rem;
-  letter-spacing: 0.1em;
-  clip-path: polygon(4px 0%, 100% 0%, calc(100% - 4px) 100%, 0% 100%);
-  transition: border-color 0.2s, color 0.2s;
-}
-.cart-btn:hover { border-color: var(--lg-green); color: var(--lg-green); }
-
-.cart-count {
-  background: var(--lg-green);
-  color: #fff;
-  font-family: var(--font-body);
-  font-size: 0.6rem;
-  font-weight: 700;
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  line-height: 1;
-}
-.cart-count.visible { display: flex; }
-
+/* ── OVERLAY + CHECKOUT BUTTON (shared) ──
+   .cart-overlay is the dimmed backdrop — kept even though the cart drawer
+   that originally used it is gone (checkout is Shopify's own cart now),
+   because .trial-modal-overlay (index.html) reuses it wholesale and only
+   overrides z-index (see .trial-modal-overlay below). .btn-checkout is
+   likewise kept for .trial-modal-ok, which reuses its button styling
+   (colors, clip-path, hover) — see the comment near .trial-modal-body. */
 .cart-overlay {
   position: fixed;
   inset: 0;
@@ -325,172 +300,6 @@ nav {
 }
 .cart-overlay.open { opacity: 1; pointer-events: auto; }
 
-.cart-drawer {
-  position: fixed;
-  top: 0; right: 0;
-  width: 380px;
-  max-width: 100vw;
-  height: 100vh;
-  background: var(--bg-mid);
-  border-left: 1px solid var(--border);
-  z-index: 200;
-  display: flex;
-  flex-direction: column;
-  transform: translateX(100%);
-  transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
-}
-.cart-drawer.open { transform: translateX(0); }
-
-.cart-drawer-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1.2rem 1.4rem;
-  border-bottom: 1px solid var(--border);
-  flex-shrink: 0;
-}
-.cart-drawer-title {
-  font-family: var(--font-display);
-  font-size: 1.2rem;
-  letter-spacing: 0.1em;
-}
-.cart-close-btn {
-  background: transparent;
-  border: none;
-  color: var(--muted);
-  font-size: 1.2rem;
-  cursor: pointer;
-  padding: 4px;
-  line-height: 1;
-  transition: color 0.2s;
-}
-.cart-close-btn:hover { color: var(--text); }
-
-.cart-items {
-  flex: 1;
-  overflow-y: auto;
-  padding: 1rem 1.4rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.cart-empty {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  gap: 0.6rem;
-  color: var(--muted);
-  font-size: 0.78rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-.cart-empty-icon { font-size: 2rem; opacity: 0.2; }
-
-.cart-item {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  padding: 0.9rem 1rem;
-  display: flex;
-  gap: 0.8rem;
-  align-items: flex-start;
-}
-.cart-item-info { flex: 1; min-width: 0; }
-.cart-item-name {
-  font-family: var(--font-display);
-  font-size: 1rem;
-  letter-spacing: 0.04em;
-  margin-bottom: 2px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.cart-item-variant {
-  font-size: 0.65rem;
-  color: var(--lg-green);
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  margin-bottom: 0.55rem;
-}
-.cart-item-controls { display: flex; align-items: center; gap: 0.5rem; }
-.qty-btn {
-  background: var(--bg);
-  border: 1px solid var(--border-bright);
-  color: var(--text);
-  width: 24px; height: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  font-size: 1rem;
-  line-height: 1;
-  transition: border-color 0.15s;
-  padding: 0;
-}
-.qty-btn:hover { border-color: var(--lg-green); color: var(--lg-green); }
-.cart-item-qty {
-  font-family: var(--font-display);
-  font-size: 1rem;
-  min-width: 1.2rem;
-  text-align: center;
-}
-
-/* Replaces .cart-item-controls for the free banner add-on's cart line —
-   fixed at qty 1, so there's a label instead of +/- buttons. */
-.cart-item-qty-fixed {
-  display: block;
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-.cart-item-right {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 0.5rem;
-  flex-shrink: 0;
-}
-.cart-item-price { font-family: var(--font-display); font-size: 1.1rem; }
-.cart-item-remove {
-  background: transparent;
-  border: none;
-  color: var(--muted);
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  cursor: pointer;
-  padding: 0;
-  transition: color 0.15s;
-}
-.cart-item-remove:hover { color: var(--val-red); }
-
-.cart-footer {
-  border-top: 1px solid var(--border);
-  padding: 1.2rem 1.4rem;
-  flex-shrink: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-.cart-subtotal {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-}
-.cart-subtotal-label {
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-.cart-subtotal-amount { font-family: var(--font-display); font-size: 1.6rem; }
 .btn-checkout {
   width: 100%;
   background: var(--lg-green);
@@ -505,21 +314,6 @@ nav {
   transition: background 0.2s;
 }
 .btn-checkout:hover { background: var(--lg-green-dk); }
-.btn-checkout:disabled { opacity: 0.35; cursor: not-allowed; }
-.cart-checkout-note {
-  font-size: 0.65rem;
-  color: var(--muted);
-  text-align: center;
-  line-height: 1.55;
-}
-
-@keyframes cart-pulse {
-  0%   { border-color: var(--border-bright); color: var(--muted); box-shadow: none; }
-  35%  { border-color: var(--lg-green); color: var(--lg-green); box-shadow: 0 0 10px rgba(92,184,58,0.35); }
-  100% { border-color: var(--border-bright); color: var(--muted); box-shadow: none; }
-}
-
-.cart-btn.pulse { animation: cart-pulse 0.85s ease-out forwards; }
 
 /* ── FORM WRAPPER ── */
 .form-wrapper {
@@ -832,17 +626,26 @@ footer {
 }
 
 /* ── PRODUCT GRID ──
-   auto-fit (not auto-fill): with only two sticker cards, auto-fill would
-   keep reserving empty leftover column tracks on wide screens, shoving
-   both cards to the left with dead space on the right. auto-fit collapses
-   those empty tracks so the two cards stretch to fill the row evenly —
-   still collapses to a single column on narrow screens the same way. */
+   Each product is a Shopify Buy Button "vertical" component (image on
+   top, details below — see SHOPIFY_UI_OPTIONS in site.js, which also
+   fixes the image box to a 4:3 aspect-ratio so both cards render the
+   same height regardless of the two products' actual source image
+   dimensions). auto-fit (not auto-fill): with only two cards, auto-fill
+   would keep reserving empty leftover column tracks on wide screens,
+   shoving both cards to the left with dead space on the right; auto-fit
+   collapses those empty tracks so the two stretch to fill the row evenly
+   side by side, still collapsing to one column on narrow screens. */
 .product-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 2rem;
+  align-items: start;
 }
 
+/* .product-card is no longer used by the stickers (Shopify's own
+   component supplies their box/hover styling) — kept only because
+   .addon-card below still carries this class for its resting
+   background/border, and .addon-card:hover cancels the hover "pop". */
 .product-card {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -852,79 +655,11 @@ footer {
   transition: border-color 0.25s, transform 0.2s, box-shadow 0.25s;
 }
 
-/* The "pop": image + description + Add to Cart button all live inside this
-   one card, so scaling/lifting the whole .product-card on hover moves them
-   together as a group. Excluded for .addon-card — see its own rule below,
-   which keeps the free add-on static. */
 .product-card:hover {
   border-color: var(--lg-green);
   transform: translateY(-4px) scale(1.025);
   box-shadow: 0 12px 40px rgba(92,184,58,0.12);
 }
-
-.product-img {
-  width: 100%;
-  aspect-ratio: 4/3;
-  background: #f2f2f2;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  border-bottom: 1px solid var(--border);
-  position: relative;
-}
-
-.product-img::after {
-  content: '';
-  position: absolute;
-  bottom: 0; left: 0;
-  width: 40px; height: 3px;
-  background: var(--lg-green);
-}
-
-/* ── PRODUCT IMAGE CAROUSEL (purely visual — browsing images never changes
-   what Add to Cart actually adds, which stays the one fixed SKU) ── */
-.product-img-track {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
-
-.product-img-slide {
-  position: absolute;
-  inset: 0;
-  margin: auto;
-  max-width: 82%;
-  max-height: 82%;
-  object-fit: contain;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.25s;
-}
-
-.product-img-slide.active { opacity: 1; pointer-events: auto; }
-
-.product-img-nav {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: transparent;
-  border: none;
-  color: var(--lg-green-dk);
-  cursor: pointer;
-  font-size: 1.8rem;
-  line-height: 1;
-  padding: 0.2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 2;
-  transition: color 0.15s;
-}
-
-.product-img-nav:hover { color: var(--lg-green); }
-.product-img-prev { left: 0.3rem; }
-.product-img-next { right: 0.3rem; }
 
 /* ── FREE ADD-ON (Discord banner) ──
    Deliberately static — the sticker cards' hover "pop" (border-color,
@@ -1129,161 +864,8 @@ footer {
   margin-top: 2px;
 }
 
-.product-info {
-  padding: 1.5rem 1.6rem 1.8rem;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.product-name {
-  font-family: var(--font-display);
-  font-size: 1.35rem;
-  letter-spacing: 0.04em;
-  line-height: 1.1;
-  margin-bottom: 0.5rem;
-}
-
-.product-desc {
-  font-size: 0.77rem;
-  color: var(--muted);
-  line-height: 1.55;
-  flex: 1;
-}
-
-.product-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 1.1rem;
-}
-
-.product-price {
-  font-family: var(--font-display);
-  font-size: 1.6rem;
-  color: var(--text);
-}
-
-.product-price .currency {
-  font-size: 0.85rem;
-  color: var(--muted);
-  vertical-align: super;
-  font-family: var(--font-body);
-  font-weight: 600;
-}
-
-/* ── ORDER FORM SECTION ── */
-#order {
-  padding: 80px 2rem;
-  max-width: 1280px;
-  margin: 0 auto;
-}
-
-.order-layout {
-  display: grid;
-  grid-template-columns: 1fr 1.6fr;
-  gap: 4.5rem;
-  align-items: start;
-}
-
-.order-info h2 {
-  font-family: var(--font-display);
-  font-size: 2.2rem;
-  letter-spacing: 0.06em;
-  line-height: 1;
-  margin-bottom: 1rem;
-}
-
-.order-info h2 span { color: var(--lg-green); }
-
-.order-steps {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin-top: 1.5rem;
-}
-
-.order-step {
-  display: flex;
-  gap: 0.9rem;
-  align-items: flex-start;
-}
-
-.order-step-num {
-  width: 26px;
-  height: 26px;
-  background: var(--lg-green);
-  color: #fff;
-  font-family: var(--font-display);
-  font-size: 0.9rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  clip-path: polygon(3px 0%, 100% 0%, calc(100% - 3px) 100%, 0% 100%);
-}
-
-.order-step-body strong {
-  display: block;
-  font-size: 0.82rem;
-  font-weight: 700;
-  margin-bottom: 2px;
-}
-
-.order-step-body span {
-  font-size: 0.74rem;
-  color: var(--muted);
-  line-height: 1.5;
-}
-
-/* Shopify Buy Button container — checkout isn't wired up yet, so this
-   just shows an inert placeholder until the store is connected. */
-.shopify-embed {
-  padding: 1.5rem;
-  min-height: 400px;
-}
-
-.shopify-placeholder {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 360px;
-  border: 1px dashed var(--border-bright);
-  text-align: center;
-  padding: 2rem;
-}
-
-.order-intro {
-  color: var(--muted);
-  font-size: 0.85rem;
-  line-height: 1.7;
-  margin-top: 0.8rem;
-}
 
 .divider--spaced { margin-top: 2.5rem; }
-
-.shopify-placeholder-icon {
-  font-size: 2.5rem;
-  opacity: 0.2;
-  line-height: 1;
-  margin-bottom: 0.8rem;
-}
-
-.shopify-placeholder-title {
-  font-family: var(--font-display);
-  font-size: 1.1rem;
-  letter-spacing: 0.08em;
-  color: var(--muted);
-  margin-bottom: 0.6rem;
-}
-
-.shopify-placeholder-body {
-  font-size: 0.76rem;
-  color: var(--muted);
-  max-width: 260px;
-  line-height: 1.6;
-}
 
 /* ── MATCH DAY BANNER ── */
 .trial-notice {
@@ -1423,30 +1005,6 @@ footer {
   font-size: 0.8rem;
   color: var(--muted);
   line-height: 1.65;
-}
-
-/* ── ADD TO CART BUTTON ── */
-.btn-add-cart {
-  display: inline-block;
-  background: transparent;
-  border: 1px solid var(--lg-green);
-  color: var(--lg-green);
-  font-family: var(--font-display);
-  font-size: 0.95rem;
-  letter-spacing: 0.1em;
-  padding: 8px 20px 6px;
-  cursor: pointer;
-  clip-path: polygon(5px 0%, 100% 0%, calc(100% - 5px) 100%, 0% 100%);
-  transition: background 0.18s, color 0.18s, border-color 0.18s;
-  white-space: nowrap;
-}
-.btn-add-cart:hover { background: var(--lg-green); color: #fff; }
-.btn-add-cart.added { background: var(--lg-green-dk); color: #fff; border-color: var(--lg-green-dk); }
-.btn-add-cart:disabled {
-  opacity: 0.35;
-  cursor: not-allowed;
-  background: transparent;
-  color: var(--lg-green);
 }
 
 .addon-hint {
@@ -1770,9 +1328,8 @@ footer {
   .page-shop .hero     { padding: 70px 1.2rem 90px; }
   .page-feedback .hero { padding: 70px 1.2rem 85px; }
 
-  #shop, #order { padding: 50px 1.2rem; }
+  #shop { padding: 50px 1.2rem; }
   #faq { padding: 0 1.2rem 50px; }
-  .order-layout { grid-template-columns: 1fr; gap: 2rem; }
   .section-header { flex-direction: column; align-items: flex-start; }
   .section-meta { text-align: left; }
 
@@ -1789,19 +1346,15 @@ footer {
    construction, this always wins over the rules above without needing to
    track load order across files) ── */
 @media (prefers-reduced-motion: reduce) {
-  /* Covers anchor-link jumps (e.g. #shop) that rely on the CSS property.
-     The JS-driven checkout scroll (site.js) checks matchMedia itself since
-     an explicit behavior:'smooth' passed to scrollIntoView overrides this. */
+  /* Covers anchor-link jumps (e.g. #shop) that rely on the CSS property —
+     no JS-driven scrollIntoView left in site.js to need its own check. */
   html                         { scroll-behavior: auto; }
   .mobile-nav                 { transition: none; }
   .hero-eyebrow .dot          { animation: none; }
   .btn-primary:hover          { transform: none; }
-  .cart-drawer, .cart-overlay { transition: none; }
-  .cart-btn.pulse             { animation: none; }
+  .cart-overlay               { transition: none; }
   .ticker-inner               { animation: none; }
   .product-card               { transition: none; }
-  .product-img-slide          { transition: none; }
-  .product-img-nav            { transition: none; }
   .swatch-btn                 { transition: none; }
   .trial-modal                { transition: none; }
   .concept-card                 { transition: none; }

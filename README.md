@@ -17,4 +17,4 @@ GitHub Pages serves directly from the `main` branch. Push to `main` and the live
 
 ## Maintaining this repo
 
-See [CLAUDE.md](./CLAUDE.md) for the file organization rationale, the cart data model, how to edit products, and the image pipeline.
+See [CLAUDE.md](./CLAUDE.md) for the file organization rationale, how Shopify checkout is wired up, how to edit products, and the image pipeline.

@@ -50,9 +50,11 @@
 </head>
 <body class="page-shop">
 
-<!-- NAV — kept in sync by hand across index.html/feedback.html/about.html;
-     same for the cart drawer below. Deliberately not JS-injected so each
-     page stays fully self-describing when read on its own. -->
+<!-- NAV — kept in sync by hand across index.html/feedback.html/about.html.
+     Deliberately not JS-injected so each page stays fully self-describing
+     when read on its own. The cart itself isn't in this markup at all —
+     it's Shopify's own cart + floating toggle, mounted by site.js (see
+     CLAUDE.md's "Shopify" section). -->
 <nav>
   <a class="nav-left" href="./index.html" aria-label="Bobert × LG home">
     <span class="lg-pill">LG</span>
@@ -63,12 +65,9 @@
       <li><a href="./index.html#shop">Shop</a></li>
       <li><a href="./about.html">About</a></li>
       <li><a href="./feedback.html">Feedback</a></li>
-      <li><a href="./index.html#order" class="nav-cta">Order Now</a></li>
+      <li><a href="./index.html#shop" class="nav-cta">Order Now</a></li>
     </ul>
     <div class="nav-right">
-      <button class="cart-btn" id="cart-toggle" aria-label="Open cart" aria-expanded="false">
-        CART <span class="cart-count" id="cart-count">0</span>
-      </button>
       <button class="hamburger" id="hamburger-btn" aria-label="Open navigation" aria-expanded="false">MENU</button>
     </div>
   </div>
@@ -80,7 +79,7 @@
   <a href="./index.html#shop">Shop</a>
   <a href="./about.html">About</a>
   <a href="./feedback.html">Feedback</a>
-  <a href="./index.html#order" class="mobile-nav-cta">Order Now</a>
+  <a href="./index.html#shop" class="mobile-nav-cta">Order Now</a>
 </div>
 
 <main>
@@ -90,16 +89,16 @@
   <div class="ticker-inner">
     <span>BOBERT × LG — NOW LIVE</span><span class="sep">◆</span>
     <span>HOLOGRAPHIC DIE-CUT STICKERS</span><span class="sep">◆</span>
-    <span>SWIRL STICKER · SPECIAL STICKER</span><span class="sep">◆</span>
+    <span>BLACK AND WHITE · GREEN SWIRL</span><span class="sep">◆</span>
     <span>FREE DISCORD BANNER ADD-ON</span><span class="sep">◆</span>
     <span>RED ROSE FTW</span><span class="sep">◆</span>
-    <span>PLACE YOUR ORDER BELOW</span><span class="sep">◆</span>
+    <span>SHOP THE DROP TO ORDER</span><span class="sep">◆</span>
     <span>BOBERT × LG — NOW LIVE</span><span class="sep">◆</span>
     <span>HOLOGRAPHIC DIE-CUT STICKERS</span><span class="sep">◆</span>
-    <span>SWIRL STICKER · SPECIAL STICKER</span><span class="sep">◆</span>
+    <span>BLACK AND WHITE · GREEN SWIRL</span><span class="sep">◆</span>
     <span>FREE DISCORD BANNER ADD-ON</span><span class="sep">◆</span>
     <span>LIMITED RUN — ONE DROP PER SEASON</span><span class="sep">◆</span>
-    <span>PLACE YOUR ORDER BELOW</span><span class="sep">◆</span>
+    <span>SHOP THE DROP TO ORDER</span><span class="sep">◆</span>
   </div>
 </div>
 
@@ -121,7 +120,6 @@
   </p>
   <div class="hero-actions">
     <a href="#shop" class="btn-primary">Browse the Drop</a>
-    <a href="#order" class="btn-ghost">Place an Order</a>
   </div>
 </section>
 
@@ -148,76 +146,26 @@
   ══════════════════════════════════════════════════════════════
   PRODUCT GRID — HOW TO EDIT
   ──────────────────────────────────────────────────────────────
-  Each sticker is a single fixed design — no picker. If a future drop
-  needs a design picker again, see the swatch system used by the free
-  banner add-on below for the pattern to reuse (.swatch-grid/.swatch-btn).
+  Each sticker is a live Shopify Buy Button product component — name,
+  price, description, and images all come from Shopify now, not from
+  this markup. See CLAUDE.md's "Shopify" section for how the SDK is
+  bootstrapped (one shared client/cart/toggle in site.js).
 
-  CHANGE THE STICKER IMAGE:
-    Update the img src (and alt text) inside .product-img.
-
-  CHANGE THE NAME OR PRICE:
-    Edit data-name / data-price on the .product-card div, and mirror the
-    name change in .product-name and the price in .product-price.
-
-  ADD A THIRD STICKER:
-    Copy an entire .product-card block, give it a unique data-product-id,
-    and update its image/copy/price as above.
+  ADD OR CHANGE A STICKER:
+    Create/edit the product in the Shopify admin, then either edit the
+    data-shopify-product-id below (to replace one) or add a new
+    <div data-shopify-product-id="…"></div> (to add one) — site.js finds
+    every element with that attribute and mounts a product component
+    into it automatically. No other JS/HTML edit needed.
   ══════════════════════════════════════════════════════════════
   -->
   <div class="product-grid">
 
-    <!-- CARD: LG Swirl Sticker | $5 | assets/stickers/swirly/swirly_green_logo.webp -->
-    <div class="product-card"
-         data-product-id="sticker-swirl"
-         data-name="LG Swirl Sticker"
-         data-price="5"
-         data-variants="Standard">
-      <div class="product-img">
-        <div class="product-img-track">
-          <img class="product-img-slide active" src="./assets/stickers/swirly/swirly_green_logo.webp" alt="Green Topographic LG sticker" loading="lazy">
-          <img class="product-img-slide" src="./assets/stickers/swirly/swirly_simple_green_logo.webp" alt="Dark Green LG sticker" loading="lazy">
-          <img class="product-img-slide" src="./assets/stickers/swirly/swirly_logo.webp" alt="Bright Topographic LG sticker" loading="lazy">
-          <img class="product-img-slide" src="./assets/stickers/swirly/swirly_dark_logo.webp" alt="Dark Edition LG sticker" loading="lazy">
-          <img class="product-img-slide" src="./assets/stickers/swirly/swirly_white.webp" alt="Black & White LG sticker" loading="lazy">
-        </div>
-        <button class="product-img-nav product-img-prev" aria-label="Previous image">&#8249;</button>
-        <button class="product-img-nav product-img-next" aria-label="Next image">&#8250;</button>
-      </div>
-      <div class="product-info">
+    <!-- LG Logo Vinyl Sticker | Black and White -->
+    <div class="shopify-product" data-shopify-product-id="9629261037811"></div>
 
-        <div class="product-name">LG Swirl Sticker</div>
-        <p class="product-desc">One Green Topographic holographic die-cut sticker — UV coated, waterproof, mailed to you.</p>
-        <div class="product-footer">
-          <div class="product-price"><span class="currency">$</span>5 <span class="currency">USD</span></div>
-          <button class="btn-add-cart">Add to Cart</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- CARD: LG Special Sticker | $5 | assets/stickers/special/clover_logo.webp -->
-    <div class="product-card"
-         data-product-id="sticker-special"
-         data-name="LG Special Sticker"
-         data-price="5"
-         data-variants="Standard">
-      <div class="product-img">
-        <div class="product-img-track">
-          <img class="product-img-slide active" src="./assets/stickers/special/clover_logo.webp" alt="Botanical LG sticker" loading="lazy">
-          <img class="product-img-slide" src="./assets/stickers/special/logo_classic.webp" alt="Classic LG sticker" loading="lazy">
-        </div>
-        <button class="product-img-nav product-img-prev" aria-label="Previous image">&#8249;</button>
-        <button class="product-img-nav product-img-next" aria-label="Next image">&#8250;</button>
-      </div>
-      <div class="product-info">
-
-        <div class="product-name">LG Special Sticker</div>
-        <p class="product-desc">One Botanical holographic die-cut sticker — UV coated, waterproof, mailed to you.</p>
-        <div class="product-footer">
-          <div class="product-price"><span class="currency">$</span>5 <span class="currency">USD</span></div>
-          <button class="btn-add-cart">Add to Cart</button>
-        </div>
-      </div>
-    </div>
+    <!-- LG Logo Vinyl Sticker | Green Swirl -->
+    <div class="shopify-product" data-shopify-product-id="9629262872819"></div>
 
   </div>
 
@@ -225,43 +173,46 @@
   ══════════════════════════════════════════════════════════════
   FREE ADD-ON — HOW TO EDIT
   ──────────────────────────────────────────────────────────────
-  A $0 cart item, no Add to Cart button — clicking a swatch adds/swaps it
-  directly (see the swatch-btn click handler in site.js). Uses the same
-  generic PRODUCTS lookup as the stickers above (built from any
-  .product-card[data-name], doesn't care that the price is 0), just a
-  different trigger for addToCart().
-  Gated in site.js (updateAddonAvailability / enforceAddonEligibility):
-  clicking a swatch before a paid item is in the cart only updates the
-  visual selection/preview, it doesn't touch the cart — see the
-  .addon-hint paragraph below for the message shown while gated. The
-  banner is also auto-removed if the cart's paid items ever drop to
-  zero. If you pick a design while ineligible, add a sticker, then
-  click the swatch again to actually add it (no automatic retry).
+  Backed by Shopify product 9694852481267 ("LG Discord Banner", $0.00) —
+  see BANNER_PRODUCT_ID in site.js. That product currently has only one
+  variant ("Default Title"), not the four named ones (Brim/Chamber/Clove/
+  Omen) this was originally planned around, so which *design* was picked
+  travels as a `Design` line-item custom attribute instead of a variant
+  choice — visible on the order in Shopify admin, not on the line item
+  itself in the cart drawer. addOrSwapBannerDesign() in site.js already
+  checks for a variant whose title matches data-label first, so if you
+  add real per-design variants in Shopify later (titles matching
+  data-label exactly), it automatically switches to using them — no code
+  change needed here or in site.js.
+
+  Gated the same way it always was: clicking a swatch before a paid item
+  is in the cart only updates the visual selection/preview, it doesn't
+  touch the Shopify cart — see hasQualifyingItem()/syncAddonState() in
+  site.js, and the .addon-hint paragraph below for the message shown
+  while gated. No automatic retry: pick a design while ineligible, add a
+  sticker, then click the swatch again to actually add it.
 
   ADD A DESIGN:
     Copy a .swatch-btn block inside .swatch-grid, point the img src at a
-    file in assets/digital/, set data-label + a unique data-variant-index
-    (next integer), and append the label to data-variants on the
-    .product-card div (pipe-separated). No visible label needed — the
+    file in assets/digital/, and set data-label + a unique
+    data-variant-index (next integer) — data-label doubles as the value
+    written to the Design custom attribute (and the variant title to
+    match, if/when real variants exist). No visible label needed — the
     image is the only identifier now, so keep aria-label accurate for
     screen readers.
 
   REMOVE A DESIGN:
-    Delete its .swatch-btn block, remove its name from data-variants,
-    and re-number the remaining data-variant-index values (0, 1, 2 …).
-    Keep exactly one swatch marked class="swatch-btn active" +
-    aria-current="true" (the default selection).
+    Delete its .swatch-btn block and re-number the remaining
+    data-variant-index values (0, 1, 2 …). Keep exactly one swatch marked
+    class="swatch-btn active" + aria-current="true" (the default
+    selection).
 
   The .addon-preview mock Discord card just mirrors whichever swatch is
   active (site.js keeps #discord-preview-banner's src in sync) — no
   markup changes needed there when adding/removing a design.
   ══════════════════════════════════════════════════════════════
   -->
-  <div class="product-card addon-card"
-       data-product-id="discord-banner"
-       data-name="LG Discord Banner"
-       data-price="0"
-       data-variants="Brim|Chamber|Clover|Omen">
+  <div class="product-card addon-card">
     <div class="addon-main">
       <span class="addon-badge">Free Add-On</span>
       <h3 class="addon-title">Add On a Free Discord Banner</h3>
@@ -276,7 +227,7 @@
         </button>
         <button class="swatch-btn" aria-label="Clover"
                 data-label="Clover" data-variant-index="2">
-          <img src="./assets/digital/CloverBanner.webp" alt="Clover Discord banner design" loading="lazy">
+          <img src="./assets/digital/CloveBanner.webp" alt="Clover Discord banner design" loading="lazy">
         </button>
         <button class="swatch-btn" aria-label="Omen"
                 data-label="Omen" data-variant-index="3">
@@ -309,88 +260,6 @@
         </div>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- ORDER FORM -->
-<div class="divider divider--spaced"><div class="divider-line"></div><div class="divider-diamond"></div><div class="divider-line"></div></div>
-
-<section id="order">
-  <div class="order-layout">
-
-    <div class="order-info">
-      <h2>PLACE YOUR <span>ORDER</span></h2>
-      <p class="order-intro">
-        Browse the drop, add your items to the cart, and check out securely through Shopify. Payment is processed at checkout — all major cards accepted.
-      </p>
-
-      <div class="order-steps">
-        <div class="order-step">
-          <div class="order-step-num">1</div>
-          <div class="order-step-body">
-            <strong>Pick your items</strong>
-            <span>Browse the drop, pick your stickers, and grab the free Discord banner add-on.</span>
-          </div>
-        </div>
-        <div class="order-step">
-          <div class="order-step-num">2</div>
-          <div class="order-step-body">
-            <strong>Add to cart &amp; check out</strong>
-            <span>Shopify handles payment securely — all major cards accepted.</span>
-          </div>
-        </div>
-        <div class="order-step">
-          <div class="order-step-num">3</div>
-          <div class="order-step-body">
-            <strong>I'll pack &amp; ship it</strong>
-            <span>Packed by hand, usually within 7 business days of your order — I'll message you the tracking number myself once it's on its way.</span>
-          </div>
-        </div>
-        <div class="order-step">
-          <div class="order-step-num">4</div>
-          <div class="order-step-body">
-            <strong>Track your order</strong>
-            <span>You'll get a confirmation email with tracking once your order ships.</span>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- SHOPIFY BUY BUTTON
-         Once your Shopify store is live:
-           1. Shopify Admin → Sales Channels → Buy Button
-           2. Create a Buy Button for each product (or a collection)
-           3. Copy the generated <script> + <div> snippet for each product
-           4. Paste those snippets inside .shopify-embed below, replacing the placeholder div
-         The Buy Button JS handles cart, variants, and checkout automatically.
-         The placeholder's visible copy (.shopify-placeholder-body, .form-note
-         below) is customer-facing — keep it reading as if checkout is live,
-         per CLAUDE.md's Shopify status note. Don't put dev/setup instructions
-         in text a real visitor would see; save those for comments like this one.
-    -->
-    <div class="form-wrapper">
-      <div class="form-header">
-        <span class="form-header-title">LG MERCH — SHOP</span>
-        <span class="form-header-badge">Bobert × LG Drop</span>
-      </div>
-
-      <div class="shopify-embed">
-        <!-- Paste your Shopify Buy Button embed snippets here -->
-        <div class="shopify-placeholder">
-          <div class="shopify-placeholder-icon" aria-hidden="true">🛍</div>
-          <p class="shopify-placeholder-title">SHOPIFY CHECKOUT</p>
-          <p class="shopify-placeholder-body">
-            Review your cart above, then complete checkout securely through Shopify.
-          </p>
-        </div>
-      </div>
-
-      <div class="form-note">
-        <span aria-hidden="true">🔒</span> Checkout above is handled securely by Shopify. Payment info is never stored by us.
-      </div>
-    </div>
-
   </div>
 </section>
 
@@ -433,35 +302,6 @@
 </div>
 
 
-<!-- Announces cart changes to screen readers (added/removed/qty updates —
-     see announceCart() in site.js). There's no visible cart button click to
-     anchor these to anymore now that the banner add-on can add itself when
-     a swatch is clicked, so this is the only signal assistive tech gets. -->
-<div id="cart-status" class="sr-only" aria-live="polite" aria-atomic="true"></div>
-
-<!-- CART OVERLAY + DRAWER -->
-<div class="cart-overlay" id="cart-overlay"></div>
-<aside class="cart-drawer" id="cart-drawer" aria-label="Shopping cart" inert>
-  <div class="cart-drawer-header">
-    <span class="cart-drawer-title">YOUR CART</span>
-    <button class="cart-close-btn" id="cart-close" aria-label="Close cart">✕</button>
-  </div>
-  <div class="cart-items" id="cart-items">
-    <div class="cart-empty">
-      <div class="cart-empty-icon" aria-hidden="true">🛒</div>
-      <span>Your cart is empty</span>
-    </div>
-  </div>
-  <div class="cart-footer">
-    <div class="cart-subtotal">
-      <span class="cart-subtotal-label">Subtotal</span>
-      <span class="cart-subtotal-amount" id="cart-subtotal-amount">$0</span>
-    </div>
-    <button class="btn-checkout" id="btn-checkout" disabled>Checkout via Shopify</button>
-    <p class="cart-checkout-note">Your cart is saved while you browse — checkout is handled securely by Shopify.</p>
-  </div>
-</aside>
-
 <!-- FOOTER -->
 <footer class="footer--shop">
   <div class="footer-inner">
@@ -475,7 +315,7 @@
       </div>
     </div>
     <div class="footer-links">
-      <a href="#order">Place an Order</a>
+      <a href="#shop">Shop the Drop</a>
       <a class="obf-email" data-u="bobertvdc" data-d="gmail.com">Contact</a>
     </div>
   </div>
