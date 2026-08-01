@@ -199,15 +199,16 @@ const SHOPIFY_UI_OPTIONS = {
 };
 
 // ── FREE DISCORD BANNER ADD-ON (Shopify-backed) ──
-// The banner is product 9694852481267 ("LG Discord Banner", $0.00). It has
-// only one variant ("Default Title") — the four named variants
-// (Brim/Chamber/Clove/Omen) this was originally planned around were never
-// created in Shopify — so which *design* was picked can't be represented
-// as a variant choice. Instead every add/swap writes a `Design` line-item
-// custom attribute (visible on the order in Shopify admin) alongside the
-// single real variant. getBannerVariantForLabel() still checks for a
-// title match first, so if named variants are added later this
-// automatically switches to using them — no code change needed.
+// The banner is product 9694852481267 ("LG Discord Banner", $0.00), with
+// four real variants — Brimstone/Chamber/Clove/Omen, one per swatch, each
+// with its own image in Shopify (so the correct design shows as the
+// line-item thumbnail in both Shopify admin and the cart drawer, not just
+// as text). getBannerVariantForLabel() matches a swatch click to its
+// variant by title — if a swatch's data-label and its Shopify variant
+// title ever drift apart, the match silently fails and falls back to
+// whichever variant Shopify lists first, so keep them exact. Every
+// add/swap also writes a `Design` line-item custom attribute, redundant
+// with the variant now but kept as a second, always-visible record.
 const BANNER_PRODUCT_ID = '9694852481267';
 
 // Populated once shopifyBuyInit's product.fetch resolves.
@@ -281,13 +282,23 @@ function announceCart(msg) {
 // A task returns a checkout promise, or null for "nothing left to do".
 let cartMutationQueue = Promise.resolve();
 
-function runCartMutation(task, successMessage) {
+// openCart defaults to false: syncAddonState's auto-removal runs from a
+// background poll with no click behind it, and popping the drawer open
+// out of nowhere while a visitor is doing something else would be a much
+// worse surprise than the flash-then-hide bug this file already fixed
+// once. addOrSwapBannerDesign passes true — a swatch click deserves the
+// same "cart opened" confirmation a sticker's own Add to cart button
+// already gives for free (Shopify's cart.addVariantToCart() opens the
+// drawer by default; our banner mutation bypasses that method entirely
+// to attach the Design attribute, so nothing else does this for us).
+function runCartMutation(task, successMessage, openCart) {
   cartMutationQueue = cartMutationQueue
     .then(() => task())
     .then(checkout => {
       if (!checkout) return;
       afterCartMutation(checkout);
       if (successMessage) announceCart(successMessage);
+      if (openCart && shopifyCart) shopifyCart.open();
     })
     .catch(err => {
       // Swallowed after logging on purpose: the queue has to stay resolved
@@ -358,7 +369,7 @@ function addOrSwapBannerDesign(label) {
     return shopifyClient.checkout.addLineItems(checkoutId, [
       { variantId: variant.id, quantity: 1, customAttributes: attrs },
     ]);
-  }, `Free Discord banner design set to ${label}`);
+  }, `Free Discord banner design set to ${label}`, /* openCart */ true);
 }
 
 function shopifyBuyInit() {

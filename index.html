@@ -127,7 +127,7 @@
 <div class="divider"><div class="divider-line"></div><div class="divider-diamond"></div><div class="divider-line"></div></div>
 
 <div class="trial-notice" role="note">
-  <p><strong>Trial Run.</strong> This is our first merch drop! The plan is to start small with stickers to test the waters. During this period, proceeds will go directly back into the project to fund future items like <strong>key chains</strong>, <strong>hats</strong>, and more. Your support makes the next drop possible : )</p>
+  <p><strong>Trial Run.</strong> This is our first merch drop! The plan is to start small with stickers to test the waters. During this period, proceeds will go directly back into the project to fund future items like <strong>custom stickers</strong>, <strong>key chains</strong>, <strong>hats</strong>, and more. Your support makes the next drop possible : )</p>
 </div>
 
 <!-- SHOP -->
@@ -137,7 +137,6 @@
   <div class="section-header">
     <h2>THE <span>DROP</span></h2>
     <div class="section-meta">
-      Valorant Draft Circuit · Season Merch<br>
       Add to cart and check out via Shopify
     </div>
   </div>
@@ -174,16 +173,16 @@
   FREE ADD-ON — HOW TO EDIT
   ──────────────────────────────────────────────────────────────
   Backed by Shopify product 9694852481267 ("LG Discord Banner", $0.00) —
-  see BANNER_PRODUCT_ID in site.js. That product currently has only one
-  variant ("Default Title"), not the four named ones (Brim/Chamber/Clove/
-  Omen) this was originally planned around, so which *design* was picked
-  travels as a `Design` line-item custom attribute instead of a variant
-  choice — visible on the order in Shopify admin, not on the line item
-  itself in the cart drawer. addOrSwapBannerDesign() in site.js already
-  checks for a variant whose title matches data-label first, so if you
-  add real per-design variants in Shopify later (titles matching
-  data-label exactly), it automatically switches to using them — no code
-  change needed here or in site.js.
+  see BANNER_PRODUCT_ID in site.js. It has four real variants now, each
+  with its own image (so the correct design shows up as the line-item
+  thumbnail in both Shopify admin and the cart drawer) — titled exactly
+  Brimstone / Chamber / Clove / Omen, matching data-label below.
+  getBannerVariantForLabel() in site.js matches swatch clicks to these by
+  title; a design also still writes a `Design` line-item custom attribute
+  as a redundant, always-there record even though the variant itself now
+  carries that information. If you rename a variant in Shopify, update
+  its swatch's data-label (and aria-label/alt) to match exactly — a
+  mismatch silently falls back to whichever variant is listed first.
 
   Gated the same way it always was: clicking a swatch before a paid item
   is in the cart only updates the visual selection/preview, it doesn't
@@ -221,17 +220,17 @@
       <span class="addon-badge">Free Add-On</span>
       <h3 class="addon-title">Add On a Free Discord Banner</h3>
       <div class="swatch-grid">
-        <button class="swatch-btn active" aria-current="true" aria-label="Brim"
-                data-label="Brim">
-          <img src="./assets/digital/BrimBanner.webp" alt="Brim Discord banner design" loading="lazy">
+        <button class="swatch-btn active" aria-current="true" aria-label="Brimstone"
+                data-label="Brimstone">
+          <img src="./assets/digital/BrimBanner.webp" alt="Brimstone Discord banner design" loading="lazy">
         </button>
         <button class="swatch-btn" aria-label="Chamber"
                 data-label="Chamber">
           <img src="./assets/digital/ChamberBanner.webp" alt="Chamber Discord banner design" loading="lazy">
         </button>
-        <button class="swatch-btn" aria-label="Clover"
-                data-label="Clover">
-          <img src="./assets/digital/CloveBanner.webp" alt="Clover Discord banner design" loading="lazy">
+        <button class="swatch-btn" aria-label="Clove"
+                data-label="Clove">
+          <img src="./assets/digital/CloveBanner.webp" alt="Clove Discord banner design" loading="lazy">
         </button>
         <button class="swatch-btn" aria-label="Omen"
                 data-label="Omen">
