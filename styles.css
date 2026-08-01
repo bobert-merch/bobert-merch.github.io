@@ -823,6 +823,17 @@ footer {
   margin-top: 2px;
 }
 
+/* Empty (zero height) until site.js populates it — see the comment on
+   #addon-added-text in index.html. */
+.addon-added-text {
+  margin-top: 0.75rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--lg-green);
+  text-align: center;
+}
+
 
 .divider--spaced { margin-top: 2.5rem; }
 

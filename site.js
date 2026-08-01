@@ -265,6 +265,18 @@ function announceCart(msg) {
   cartStatusEl.textContent = msg;
 }
 
+// Sighted-user counterpart to announceCart() — sits under the Discord
+// preview card in index.html. Kept as its own element rather than making
+// #cart-status visible because the two don't always say the same thing:
+// #cart-status announces every cart change including background
+// auto-removal, but this text only reflects a swatch actually being
+// pressed — see setBannerAddedText()'s call sites below.
+const addonAddedTextEl = document.getElementById('addon-added-text');
+
+function setBannerAddedText(msg) {
+  if (addonAddedTextEl) addonAddedTextEl.textContent = msg;
+}
+
 // ── CART MUTATION QUEUE ──
 // Every banner add/swap/remove goes through here rather than calling
 // client.checkout.* directly. Three things this buys us:
@@ -282,23 +294,20 @@ function announceCart(msg) {
 // A task returns a checkout promise, or null for "nothing left to do".
 let cartMutationQueue = Promise.resolve();
 
-// openCart defaults to false: syncAddonState's auto-removal runs from a
-// background poll with no click behind it, and popping the drawer open
-// out of nowhere while a visitor is doing something else would be a much
-// worse surprise than the flash-then-hide bug this file already fixed
-// once. addOrSwapBannerDesign passes true — a swatch click deserves the
-// same "cart opened" confirmation a sticker's own Add to cart button
-// already gives for free (Shopify's cart.addVariantToCart() opens the
-// drawer by default; our banner mutation bypasses that method entirely
-// to attach the Design attribute, so nothing else does this for us).
-function runCartMutation(task, successMessage, openCart) {
+// visibleText updates #addon-added-text on success — omit the argument
+// entirely (leave it undefined) for a mutation that shouldn't touch it.
+// Pass '' to clear it (syncAddonState's auto-removal does this: leaving
+// "Omen added to cart" on screen after the banner's gone would be wrong,
+// even though that removal wasn't a swatch press and shouldn't get its
+// own "added to cart" message).
+function runCartMutation(task, successMessage, visibleText) {
   cartMutationQueue = cartMutationQueue
     .then(() => task())
     .then(checkout => {
       if (!checkout) return;
       afterCartMutation(checkout);
       if (successMessage) announceCart(successMessage);
-      if (openCart && shopifyCart) shopifyCart.open();
+      if (visibleText !== undefined) setBannerAddedText(visibleText);
     })
     .catch(err => {
       // Swallowed after logging on purpose: the queue has to stay resolved
@@ -329,7 +338,7 @@ function syncAddonState() {
     const line = findBannerLineItem();
     if (!line) return null;
     return shopifyClient.checkout.removeLineItems(shopifyCart.model.id, [line.id]);
-  }, 'Free Discord banner removed from your cart');
+  }, 'Free Discord banner removed from your cart', '');
 }
 
 // Called from the swatch click handler below. No-ops (silently) if the
@@ -351,9 +360,9 @@ function addOrSwapBannerDesign(label) {
     const existing = findBannerLineItem();
 
     if (existing && existing.variant.id === variant.id) {
-      // Same variant already in the cart (today's only-one-variant reality,
-      // or re-clicking the selected swatch) — just refresh the Design note
-      // rather than touching quantity or variant.
+      // Same variant already in the cart (re-clicking the selected swatch)
+      // — just refresh the Design note rather than touching quantity or
+      // variant, since there's nothing to swap.
       return shopifyClient.checkout.updateLineItems(checkoutId, [
         { id: existing.id, customAttributes: attrs },
       ]);
@@ -369,7 +378,7 @@ function addOrSwapBannerDesign(label) {
     return shopifyClient.checkout.addLineItems(checkoutId, [
       { variantId: variant.id, quantity: 1, customAttributes: attrs },
     ]);
-  }, `Free Discord banner design set to ${label}`, /* openCart */ true);
+  }, `Free Discord banner design set to ${label}`, `${label} banner added to cart`);
 }
 
 function shopifyBuyInit() {
