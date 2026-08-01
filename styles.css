@@ -152,9 +152,15 @@ nav {
   50%       { opacity: 0.4; transform: scale(0.7); }
 }
 
-/* ── HAMBURGER + MOBILE NAV ── */
+/* ── HAMBURGER + MOBILE NAV ──
+   Hidden by default (not just its .hamburger child) — on desktop this div
+   has nothing to show, but .nav-right-group's `gap` still counts an empty
+   flex item, leaving a blank space between the nav links and the right
+   edge. display:none removes it from the flex layout entirely so the nav
+   links sit flush right; the 768px breakpoint below brings it back for
+   the hamburger. */
 .nav-right {
-  display: flex;
+  display: none;
   align-items: center;
   gap: 0.5rem;
 }
@@ -1369,6 +1375,7 @@ footer {
 @media (max-width: 768px) {
   nav        { padding: 0 1rem; }
   .nav-links { display: none; }
+  .nav-right { display: flex; }
   .hamburger { display: flex; }
   footer     { padding: 1.5rem 1.2rem; }
   .footer--shop .footer-links { text-align: left; }

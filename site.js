@@ -165,6 +165,30 @@ const SHOPIFY_UI_OPTIONS = {
     text: { button: 'Add to cart' },
   },
   option: {},
+  // Quantity controls on each cart line item — unstyled, these inherit
+  // Shopify's own dark default treatment, which reads as a near-black box
+  // (and near-black text) against this site's already-dark cart
+  // background. +/- forced to a white box with a dark symbol so the two
+  // stay legible against each other; the quantity number itself just
+  // needs its text recolored since it sits directly on the cart's own
+  // dark background rather than a box of its own.
+  lineItem: {
+    styles: {
+      quantityIncrement: {
+        'background-color': '#fff',
+        color: SHOPIFY_THEME.bgMid,
+        'border-color': SHOPIFY_THEME.border,
+        ':hover': { 'background-color': SHOPIFY_THEME.text },
+      },
+      quantityDecrement: {
+        'background-color': '#fff',
+        color: SHOPIFY_THEME.bgMid,
+        'border-color': SHOPIFY_THEME.border,
+        ':hover': { 'background-color': SHOPIFY_THEME.text },
+      },
+      quantityInput: { color: '#fff' },
+    },
+  },
   cart: {
     styles: {
       cart: { background: SHOPIFY_THEME.surface },
