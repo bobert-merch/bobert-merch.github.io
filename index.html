@@ -25,7 +25,7 @@
         "name": "Do you ship internationally?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Yep! Just know it'll likely take a bit longer and cost a little more for postage outside the US — Shopify works out the shipping cost for you at checkout based on your address."
+          "text": "Yes and no. These products are only available to those in the United States and Canada."
         }
       },
       {
@@ -33,7 +33,7 @@
         "name": "What if my order shows up damaged?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Email me a photo and I'll make it right — replacement or refund, whichever works for you. This is a small trial run and I want to get it right."
+          "text": "Email me a photo and replacement or refund, whichever works for you."
         }
       },
       {
@@ -41,7 +41,7 @@
         "name": "Can I change or cancel my order after checkout?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Easily. Email me as soon as you can — if it hasn't shipped yet, I'll update or cancel it, no forms, no fees."
+          "text": "Of course! Email me as soon as you can and if it hasn't shipped yet, I'll update or cancel it."
         }
       }
     ]
@@ -188,22 +188,26 @@
   Gated the same way it always was: clicking a swatch before a paid item
   is in the cart only updates the visual selection/preview, it doesn't
   touch the Shopify cart — see hasQualifyingItem()/syncAddonState() in
-  site.js, and the .addon-hint paragraph below for the message shown
-  while gated. No automatic retry: pick a design while ineligible, add a
-  sticker, then click the swatch again to actually add it.
+  site.js. No automatic retry: pick a design while ineligible, add a
+  sticker, then click the swatch again to actually add it. The
+  .addon-hint paragraph below is a permanent fixture (always visible,
+  regardless of cart state) rather than toggled by eligibility — it used
+  to hide once a paid item qualified, but that meant it could flash
+  visible-then-vanish for a returning visitor whose cart already
+  qualified, which read as broken. Always-on trades that flash for the
+  hint being slightly stale once you already have the banner, on
+  purpose.
 
   ADD A DESIGN:
     Copy a .swatch-btn block inside .swatch-grid, point the img src at a
-    file in assets/digital/, and set data-label + a unique
-    data-variant-index (next integer) — data-label doubles as the value
-    written to the Design custom attribute (and the variant title to
-    match, if/when real variants exist). No visible label needed — the
-    image is the only identifier now, so keep aria-label accurate for
-    screen readers.
+    file in assets/digital/, and set data-label — data-label doubles as
+    the value written to the Design custom attribute (and the variant
+    title to match, if/when real variants exist). No visible label
+    needed — the image is the only identifier now, so keep aria-label
+    accurate for screen readers.
 
   REMOVE A DESIGN:
-    Delete its .swatch-btn block and re-number the remaining
-    data-variant-index values (0, 1, 2 …). Keep exactly one swatch marked
+    Delete its .swatch-btn block. Keep exactly one swatch marked
     class="swatch-btn active" + aria-current="true" (the default
     selection).
 
@@ -212,28 +216,30 @@
   markup changes needed there when adding/removing a design.
   ══════════════════════════════════════════════════════════════
   -->
-  <div class="product-card addon-card">
+  <div class="addon-card">
     <div class="addon-main">
       <span class="addon-badge">Free Add-On</span>
       <h3 class="addon-title">Add On a Free Discord Banner</h3>
       <div class="swatch-grid">
         <button class="swatch-btn active" aria-current="true" aria-label="Brim"
-                data-label="Brim" data-variant-index="0">
+                data-label="Brim">
           <img src="./assets/digital/BrimBanner.webp" alt="Brim Discord banner design" loading="lazy">
         </button>
         <button class="swatch-btn" aria-label="Chamber"
-                data-label="Chamber" data-variant-index="1">
+                data-label="Chamber">
           <img src="./assets/digital/ChamberBanner.webp" alt="Chamber Discord banner design" loading="lazy">
         </button>
         <button class="swatch-btn" aria-label="Clover"
-                data-label="Clover" data-variant-index="2">
+                data-label="Clover">
           <img src="./assets/digital/CloveBanner.webp" alt="Clover Discord banner design" loading="lazy">
         </button>
         <button class="swatch-btn" aria-label="Omen"
-                data-label="Omen" data-variant-index="3">
+                data-label="Omen">
           <img src="./assets/digital/OmenBanner.webp" alt="Omen Discord banner design" loading="lazy">
         </button>
       </div>
+      <!-- Always visible — see the FREE ADD-ON comment above for why this
+           doesn't toggle with cart eligibility anymore. -->
       <p class="addon-hint">Add a sticker to your cart first — this one's on the house.</p>
     </div>
 
@@ -326,6 +332,13 @@
     </div>
   </div>
 </footer>
+
+<!-- Announces cart changes driven by our own code (the banner swatches —
+     see announceCart() in site.js). Shopify's own drawer is a cross-origin
+     iframe we can't announce from, and a swatch click has no visual
+     "added" confirmation either, so this is the only signal assistive
+     tech gets for it. -->
+<div id="cart-status" class="sr-only" aria-live="polite" aria-atomic="true"></div>
 
 <script src="./site.js"></script>
 

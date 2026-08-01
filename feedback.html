@@ -65,7 +65,7 @@
     THE DROP.
   </h1>
   <p class="hero-sub">
-    These are my working concepts for an LG collab merch drop. <strong>Your input shapes the final designs</strong> — vote on what you want to see, and drop your info so I can keep you posted.
+    These are my working concepts for an LG collab merch drop. <strong>Your input shapes the final designs</strong> — vote on what you want to see.
   </p>
   <div class="hero-actions">
     <a href="#concepts" class="btn-primary">See the Concepts</a>
@@ -80,7 +80,7 @@
   <div class="concepts-section">
     <div class="section-label"><span class="dot"></span> Upcoming Ideas</div>
     <h2 class="section-title">CONCEPT <span>IDEAS</span></h2>
-    <p class="section-desc">Nothing is finalized yet — these are early directions we’re exploring for the drop. Let us know which vibe you’d want to see made real.</p>
+    <p class="section-desc">Nothing is finalized yet — these are early directions we’re exploring for future drops. Let me know which vibe you’d want to see made real.</p>
 
     <div class="concepts-form-grid">
 
@@ -91,7 +91,7 @@
           <div class="concept-slide active">
             <div class="concept-card">
               <div class="concept-img">
-                <img src="./assets/stickers/swirly/swirly_white.webp" alt="Concept A — black and white topographic LG crest sticker" loading="lazy">
+                <img src="./assets/concept_designs/swirly/swirly_white.webp" alt="Concept A — black and white topographic LG crest sticker" loading="lazy">
               </div>
               <div class="concept-info">
                 <div class="concept-tag">Direction 1</div>
@@ -104,7 +104,7 @@
           <div class="concept-slide">
             <div class="concept-card">
               <div class="concept-img">
-                <img src="./assets/stickers/special/clover_logo.webp" alt="Concept B — botanical clover LG crest sticker" loading="lazy">
+                <img src="./assets/concept_designs/special/clover_logo.webp" alt="Concept B — botanical clover LG crest sticker" loading="lazy">
               </div>
               <div class="concept-info">
                 <div class="concept-tag">Direction 2</div>
@@ -117,7 +117,7 @@
           <div class="concept-slide">
             <div class="concept-card">
               <div class="concept-img">
-                <img src="./assets/stickers/swirly/swirly_dark_logo.webp" alt="Concept C — dark topographic LG crest sticker" loading="lazy">
+                <img src="./assets/concept_designs/swirly/swirly_dark_logo.webp" alt="Concept C — dark topographic LG crest sticker" loading="lazy">
               </div>
               <div class="concept-info">
                 <div class="concept-tag">Direction 3</div>
@@ -145,10 +145,6 @@
           <span class="form-header-title">BOBERT × LG — FEEDBACK</span>
           <span class="form-header-badge">Design Input</span>
         </div>
-        <!--
-          REPLACE src BELOW with your Google Form embed URL.
-          In Google Forms: Send → Embed (< >) → copy the URL inside src="..."
-        -->
         <iframe
           src="https://docs.google.com/forms/d/e/1FAIpQLSegdoxNO8LeBpTzMb1CQyIf8BLtPWtMP-Wy2yBaS44pMzh8vw/viewform?embedded=true"
           title="Light Garden Feedback Form"
@@ -182,6 +178,13 @@
     </div>
   </div>
 </footer>
+
+<!-- Announces cart changes driven by our own code (the banner swatches —
+     see announceCart() in site.js). Shopify's own drawer is a cross-origin
+     iframe we can't announce from, and a swatch click has no visual
+     "added" confirmation either, so this is the only signal assistive
+     tech gets for it. -->
+<div id="cart-status" class="sr-only" aria-live="polite" aria-atomic="true"></div>
 
 <script src="./site.js"></script>
 </body>

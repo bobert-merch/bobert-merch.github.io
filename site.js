@@ -71,6 +71,35 @@ const SHOPIFY_STOREFRONT_TOKEN = 'bafc21af27d4b2a2a89fb2a461966af2';
 // account-level) and is safe to commit. Unrelated to the SSH keys in
 // CLAUDE.md's "Do not touch" section.
 
+// Mirrors the custom properties in styles.css's :root. Shopify's SDK needs
+// real color values (its styles are injected into iframes that never see
+// this page's CSS), so these can't just be var() references — but keeping
+// them named and in one place means a palette change is two files, not
+// twenty scattered literals.
+const SHOPIFY_THEME = {
+  green:     '#5CB83A', // --lg-green
+  greenDark: '#3F8A26', // --lg-green-dk
+  text:      '#EEF5EE', // --text
+  muted:     '#587858', // --muted
+  surface:   '#0E1A0E', // --surface
+  bgMid:     '#0A130A', // --bg-mid
+  border:    '#183018', // --border
+};
+
+// The same button treatment is wanted in three places (product,
+// modalProduct, cart) — declared once and reused so they can't drift
+// apart. Not reused for `toggle` below: that's Shopify's round floating
+// cart bubble, not one of this site's sharp-cornered buttons, so it
+// deliberately skips font-family/border-radius rather than inheriting
+// them and changing shape.
+const SHOPIFY_BUTTON_STYLE = {
+  'font-family': 'Bebas Neue, sans-serif',
+  'background-color': SHOPIFY_THEME.green,
+  ':hover': { 'background-color': SHOPIFY_THEME.greenDark },
+  ':focus': { 'background-color': SHOPIFY_THEME.greenDark },
+  'border-radius': '0px',
+};
+
 // One shared style/config object for every product component — Shopify's
 // generated snippets were byte-identical per product apart from the id,
 // so there's no reason to duplicate the whole options block per product.
@@ -103,19 +132,13 @@ const SHOPIFY_UI_OPTIONS = {
       title: {
         'font-family': 'Bebas Neue, sans-serif',
         'font-size': '26px',
-        color: '#EEF5EE',
+        color: SHOPIFY_THEME.text,
       },
-      price: { 'font-family': 'Inter, sans-serif', 'font-size': '18px', color: '#EEF5EE' },
-      compareAt: { 'font-family': 'Inter, sans-serif', 'font-size': '15.3px', color: '#587858' },
-      unitPrice: { 'font-family': 'Inter, sans-serif', 'font-size': '15.3px', color: '#587858' },
-      description: { color: '#587858' },
-      button: {
-        'font-family': 'Bebas Neue, sans-serif',
-        'background-color': '#5CB83A',
-        ':hover': { 'background-color': '#3F8A26' },
-        ':focus': { 'background-color': '#3F8A26' },
-        'border-radius': '0px',
-      },
+      price: { 'font-family': 'Inter, sans-serif', 'font-size': '18px', color: SHOPIFY_THEME.text },
+      compareAt: { 'font-family': 'Inter, sans-serif', 'font-size': '15.3px', color: SHOPIFY_THEME.muted },
+      unitPrice: { 'font-family': 'Inter, sans-serif', 'font-size': '15.3px', color: SHOPIFY_THEME.muted },
+      description: { color: SHOPIFY_THEME.muted },
+      button: SHOPIFY_BUTTON_STYLE,
     },
     contents: { img: false, imgWithCarousel: true, description: true },
     // Vertical (image on top, details below) rather than horizontal
@@ -135,56 +158,44 @@ const SHOPIFY_UI_OPTIONS = {
       product: {
         '@media (min-width: 601px)': { 'max-width': '100%', 'margin-left': '0px', 'margin-bottom': '0px' },
       },
-      title: { 'font-family': 'Bebas Neue, sans-serif', 'font-size': '26px', color: '#EEF5EE' },
-      price: { 'font-family': 'Inter, sans-serif', 'font-size': '18px', color: '#EEF5EE' },
-      compareAt: { 'font-family': 'Inter, sans-serif', 'font-size': '15.3px', color: '#587858' },
-      unitPrice: { 'font-family': 'Inter, sans-serif', 'font-size': '15.3px', color: '#587858' },
-      button: {
-        'font-family': 'Bebas Neue, sans-serif',
-        'background-color': '#5CB83A',
-        ':hover': { 'background-color': '#3F8A26' },
-        ':focus': { 'background-color': '#3F8A26' },
-        'border-radius': '0px',
-      },
+      title: { 'font-family': 'Bebas Neue, sans-serif', 'font-size': '26px', color: SHOPIFY_THEME.text },
+      price: { 'font-family': 'Inter, sans-serif', 'font-size': '18px', color: SHOPIFY_THEME.text },
+      compareAt: { 'font-family': 'Inter, sans-serif', 'font-size': '15.3px', color: SHOPIFY_THEME.muted },
+      unitPrice: { 'font-family': 'Inter, sans-serif', 'font-size': '15.3px', color: SHOPIFY_THEME.muted },
+      button: SHOPIFY_BUTTON_STYLE,
     },
     text: { button: 'Add to cart' },
   },
   option: {},
   cart: {
     styles: {
-      cart: { background: '#0E1A0E' },
-      title: { color: '#EEF5EE' },
-      header: { color: '#EEF5EE', background: '#0A130A', 'border-color': '#183018' },
-      lineItems: { color: '#EEF5EE' },
-      subtotalText: { color: '#EEF5EE' },
-      subtotal: { color: '#EEF5EE' },
-      notice: { color: '#587858' },
-      currency: { color: '#EEF5EE' },
-      close: { color: '#EEF5EE', ':hover': { color: '#5CB83A' } },
-      empty: { color: '#EEF5EE' },
-      noteDescription: { color: '#587858' },
-      discountText: { color: '#EEF5EE' },
-      discountIcon: { fill: '#EEF5EE' },
-      discountAmount: { color: '#EEF5EE' },
-      footer: { background: '#0A130A' },
-      button: {
-        'font-family': 'Bebas Neue, sans-serif',
-        'background-color': '#5CB83A',
-        ':hover': { 'background-color': '#3F8A26' },
-        ':focus': { 'background-color': '#3F8A26' },
-        'border-radius': '0px',
-      },
+      cart: { background: SHOPIFY_THEME.surface },
+      title: { color: SHOPIFY_THEME.text },
+      header: { color: SHOPIFY_THEME.text, background: SHOPIFY_THEME.bgMid, 'border-color': SHOPIFY_THEME.border },
+      lineItems: { color: SHOPIFY_THEME.text },
+      subtotalText: { color: SHOPIFY_THEME.text },
+      subtotal: { color: SHOPIFY_THEME.text },
+      notice: { color: SHOPIFY_THEME.muted },
+      currency: { color: SHOPIFY_THEME.text },
+      close: { color: SHOPIFY_THEME.text, ':hover': { color: SHOPIFY_THEME.green } },
+      empty: { color: SHOPIFY_THEME.text },
+      noteDescription: { color: SHOPIFY_THEME.muted },
+      discountText: { color: SHOPIFY_THEME.text },
+      discountIcon: { fill: SHOPIFY_THEME.text },
+      discountAmount: { color: SHOPIFY_THEME.text },
+      footer: { background: SHOPIFY_THEME.bgMid },
+      button: SHOPIFY_BUTTON_STYLE,
     },
     text: { total: 'Subtotal', button: 'Checkout' },
   },
   toggle: {
     styles: {
       toggle: {
-        'background-color': '#5CB83A',
-        ':hover': { 'background-color': '#3F8A26' },
-        ':focus': { 'background-color': '#3F8A26' },
+        'background-color': SHOPIFY_THEME.green,
+        ':hover': { 'background-color': SHOPIFY_THEME.greenDark },
+        ':focus': { 'background-color': SHOPIFY_THEME.greenDark },
       },
-      count: { color: '#EEF5EE', ':hover': { color: '#EEF5EE' } },
+      count: { color: SHOPIFY_THEME.text, ':hover': { color: SHOPIFY_THEME.text } },
       iconPath: { fill: '#fff' },
     },
   },
@@ -238,13 +249,57 @@ function afterCartMutation(checkout) {
   shopifyCart.updateCache(shopifyCart.model.lineItems);
   shopifyCart.view.render();
   shopifyCart.toggles.forEach(t => t.view.render());
-  updateAddonHint();
 }
 
-function updateAddonHint() {
-  const addonCard = document.querySelector('.addon-card');
-  const hint = addonCard && addonCard.querySelector('.addon-hint');
-  if (hint) hint.hidden = hasQualifyingItem();
+// Cart changes driven by our own code (the banner swatches) have no visual
+// confirmation — no button state change, no toast — and Shopify's drawer
+// lives in a cross-origin iframe we can't announce from. This polite live
+// region is the only signal assistive tech gets for them. Present on every
+// page next to the site.js tag; safe no-op if it's ever missing.
+const cartStatusEl = document.getElementById('cart-status');
+
+function announceCart(msg) {
+  if (!cartStatusEl) return;
+  // Clear and force a reflow first, so an identical repeat message (e.g.
+  // re-clicking the already-selected swatch) still gets announced.
+  cartStatusEl.textContent = '';
+  void cartStatusEl.offsetWidth;
+  cartStatusEl.textContent = msg;
+}
+
+// ── CART MUTATION QUEUE ──
+// Every banner add/swap/remove goes through here rather than calling
+// client.checkout.* directly. Three things this buys us:
+//   1. One .catch() covers all of them. Without it, a network blip or an
+//      expired checkout becomes an unhandled rejection that leaves the
+//      drawer rendering a cart that no longer matches Shopify.
+//   2. Serialization, so the *last* swatch the visitor clicked is the one
+//      that ends up on the order. Overlapping mutations against the same
+//      checkout id resolve in arbitrary order, so without this the
+//      slowest request wins rather than the most recent click.
+//   3. Each task recomputes what it needs when it actually runs, not when
+//      it was queued — which is what stops syncAddonState's 3s interval
+//      from firing a second removal for a line the first one is already
+//      removing.
+// A task returns a checkout promise, or null for "nothing left to do".
+let cartMutationQueue = Promise.resolve();
+
+function runCartMutation(task, successMessage) {
+  cartMutationQueue = cartMutationQueue
+    .then(() => task())
+    .then(checkout => {
+      if (!checkout) return;
+      afterCartMutation(checkout);
+      if (successMessage) announceCart(successMessage);
+    })
+    .catch(err => {
+      // Swallowed after logging on purpose: the queue has to stay resolved
+      // or every later mutation would be skipped too. The next
+      // syncAddonState tick re-reconciles, so a transient failure heals
+      // itself once connectivity returns.
+      console.warn('[LG] Shopify cart update failed:', err);
+    });
+  return cartMutationQueue;
 }
 
 // Polled rather than event-driven: the Buy Button SDK doesn't expose a
@@ -253,15 +308,20 @@ function updateAddonHint() {
 // the only way to notice a paid item was removed *from the cart drawer
 // itself* and react — same end result as the old synchronous
 // enforceAddonEligibility(), just on a ~3s delay instead of instant.
+// Skipped while the tab is hidden: nothing can change the cart from a
+// backgrounded tab, and this runs on every page for the whole session.
 function syncAddonState() {
-  if (!shopifyCart) return;
-  updateAddonHint();
-  if (!hasQualifyingItem()) {
-    const bannerLine = findBannerLineItem();
-    if (bannerLine) {
-      shopifyClient.checkout.removeLineItems(shopifyCart.model.id, [bannerLine.id]).then(afterCartMutation);
-    }
-  }
+  if (!shopifyCart || document.hidden) return;
+  if (hasQualifyingItem() || !findBannerLineItem()) return;
+  runCartMutation(() => {
+    // Re-read instead of closing over the line found above: an earlier
+    // queued mutation may already have removed it, or added the paid item
+    // that makes it legitimate again.
+    if (hasQualifyingItem()) return null;
+    const line = findBannerLineItem();
+    if (!line) return null;
+    return shopifyClient.checkout.removeLineItems(shopifyCart.model.id, [line.id]);
+  }, 'Free Discord banner removed from your cart');
 }
 
 // Called from the swatch click handler below. No-ops (silently) if the
@@ -273,28 +333,35 @@ function addOrSwapBannerDesign(label) {
   if (!shopifyCart || !shopifyClient || !bannerProduct || !hasQualifyingItem()) return;
   const variant = getBannerVariantForLabel(label);
   if (!variant) return;
-  const existing = findBannerLineItem();
 
-  if (existing && existing.variant.id === variant.id) {
-    // Same variant already in the cart (today's only-one-variant reality,
-    // or re-clicking the already-selected swatch) — just refresh the
-    // Design note rather than touching quantity/variant.
-    shopifyClient.checkout.updateLineItems(shopifyCart.model.id, [
-      { id: existing.id, customAttributes: [{ key: 'Design', value: label }] },
-    ]).then(afterCartMutation);
-  } else if (existing) {
-    // A different variant is in the cart (only reachable once real
-    // per-design variants exist) — swap rather than stack a second line.
-    shopifyClient.checkout.removeLineItems(shopifyCart.model.id, [existing.id])
-      .then(() => shopifyClient.checkout.addLineItems(shopifyCart.model.id, [
-        { variantId: variant.id, quantity: 1, customAttributes: [{ key: 'Design', value: label }] },
-      ]))
-      .then(afterCartMutation);
-  } else {
-    shopifyClient.checkout.addLineItems(shopifyCart.model.id, [
-      { variantId: variant.id, quantity: 1, customAttributes: [{ key: 'Design', value: label }] },
-    ]).then(afterCartMutation);
-  }
+  runCartMutation(() => {
+    // Everything below is recomputed inside the task, so a burst of swatch
+    // clicks each sees the cart as the previous one actually left it.
+    if (!hasQualifyingItem()) return null;
+    const checkoutId = shopifyCart.model.id;
+    const attrs = [{ key: 'Design', value: label }];
+    const existing = findBannerLineItem();
+
+    if (existing && existing.variant.id === variant.id) {
+      // Same variant already in the cart (today's only-one-variant reality,
+      // or re-clicking the selected swatch) — just refresh the Design note
+      // rather than touching quantity or variant.
+      return shopifyClient.checkout.updateLineItems(checkoutId, [
+        { id: existing.id, customAttributes: attrs },
+      ]);
+    }
+    if (existing) {
+      // A different variant is in the cart (only reachable once real
+      // per-design variants exist) — swap rather than stack a second line.
+      return shopifyClient.checkout.removeLineItems(checkoutId, [existing.id])
+        .then(() => shopifyClient.checkout.addLineItems(checkoutId, [
+          { variantId: variant.id, quantity: 1, customAttributes: attrs },
+        ]));
+    }
+    return shopifyClient.checkout.addLineItems(checkoutId, [
+      { variantId: variant.id, quantity: 1, customAttributes: attrs },
+    ]);
+  }, `Free Discord banner design set to ${label}`);
 }
 
 function shopifyBuyInit() {
@@ -336,10 +403,12 @@ function shopifyBuyInit() {
       bannerVariantIds = new Set(product.variants.map(v => v.id));
       syncAddonState();
       setInterval(syncAddonState, 3000);
-    }).catch(() => {
-      // Banner product missing, renamed, or the token can't see it —
-      // swatches stay preview-only (visual selection still works) rather
-      // than throwing on every click.
+    }).catch(err => {
+      // Banner product missing, renamed, unpublished, or invisible to this
+      // token — swatches stay preview-only (visual selection still works)
+      // rather than throwing on every click. Logged rather than swallowed
+      // so this doesn't read as "nothing happened" during troubleshooting.
+      console.warn('[LG] Free banner product unavailable; swatches are preview-only.', err);
     });
   });
 }
@@ -521,10 +590,14 @@ if (trialModalOverlay && trialModal && trialModalClose && trialModalOk) {
 
 // ── ESCAPE KEY (every page) ──
 // One dispatcher instead of one per feature — each handler already guards
-// against its own overlay being absent/closed, so calling both on every
-// page is safe even though not every page has a trial modal.
+// against its own overlay being absent/closed, so calling all three on
+// every page is safe even though not every page has a trial modal.
 document.addEventListener('keydown', e => {
   if (e.key !== 'Escape') return;
   closeMobileNav();
   closeTrialModal();
+  // Only reaches the cart when focus is in the parent document — the
+  // drawer's own iframe swallows the key — but that covers the common
+  // case of opening the cart and immediately wanting out.
+  if (shopifyCart) shopifyCart.close();
 });

@@ -114,6 +114,13 @@
   </div>
 </footer>
 
+<!-- Announces cart changes driven by our own code (the banner swatches —
+     see announceCart() in site.js). Shopify's own drawer is a cross-origin
+     iframe we can't announce from, and a swatch click has no visual
+     "added" confirmation either, so this is the only signal assistive
+     tech gets for it. -->
+<div id="cart-status" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+
 <script src="./site.js"></script>
 </body>
 </html>
