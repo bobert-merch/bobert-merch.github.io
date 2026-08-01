@@ -9,8 +9,9 @@
 //
 // Section order: nav/hamburger → scroll lock → Shopify Buy Button
 // bootstrap → swatch selector (banner design preview) → email
-// de-obfuscation → trial modal → concept carousel → one Escape-key
-// dispatcher at the end.
+// de-obfuscation → trial notice milestone goal → trial notice cursor
+// sparkle → trial modal → concept carousel → one Escape-key dispatcher
+// at the end.
 // ══════════════════════════════════════════════════════════════
 
 // ── NAV: hamburger / mobile-nav toggle (every page) ──
@@ -491,6 +492,117 @@ document.querySelectorAll('.obf-email').forEach(el => {
   el.href = 'mailto:' + addr;
   if (!el.textContent.trim()) el.textContent = addr;
 });
+
+// ── TRIAL NOTICE MILESTONE GOAL (index.html) ──
+// No backend on this static site, so progress is a hand-maintained number
+// (data-current on .trial-goal — see the HOW-TO comment above it in
+// index.html) read once on load. Bar width and the "$X / $Y" label are
+// both computed from data-current/data-goal here rather than hand-edited
+// separately, so there's exactly one number to update as proceeds come in.
+(function () {
+  const goalEl = document.querySelector('.trial-goal');
+  if (!goalEl) return; // not on this page (about.html, feedback.html)
+
+  const current = Math.max(0, parseInt(goalEl.dataset.current, 10) || 0);
+  const goal = Math.max(1, parseInt(goalEl.dataset.goal, 10) || 1);
+  const pct = Math.min(100, Math.round((current / goal) * 100));
+
+  const amountEl = goalEl.querySelector('.trial-goal-amount');
+  if (amountEl) amountEl.textContent = `$${current} / $${goal}`;
+
+  const bar = goalEl.querySelector('.trial-goal-bar');
+  const fill = goalEl.querySelector('.trial-goal-bar-fill');
+  if (bar) {
+    bar.setAttribute('role', 'progressbar');
+    bar.setAttribute('aria-valuemin', '0');
+    bar.setAttribute('aria-valuemax', String(goal));
+    bar.setAttribute('aria-valuenow', String(current));
+    bar.setAttribute('aria-label', `Progress toward the $${goal} goal`);
+  }
+  if (fill) {
+    // Set after layout (rAF) rather than inline in the initial render, so
+    // the width transition actually plays on load instead of the bar
+    // appearing already full/empty with nothing to animate from.
+    requestAnimationFrame(() => { fill.style.width = pct + '%'; });
+  }
+})();
+
+// ── TRIAL NOTICE CURSOR SPARKLE (index.html) ──
+// Purely decorative — star glyphs pop in and fade out at the cursor while
+// it's over the banner, deliberately big/bright/glowing to be an obvious,
+// attention-grabbing effect rather than a subtle one. Skipped entirely
+// under prefers-reduced-motion rather than just toning it down: this is a
+// continuous effect tied to cursor position, not a one-off transition
+// with a sensible "instant" version.
+(function () {
+  const notice = document.querySelector('.trial-notice');
+  if (!notice) return; // not on this page (about.html, feedback.html)
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const SPARKLE_CHARS = ['✦', '✧', '★'];
+  // Weighted toward the brand green, with white and a red accent (the
+  // site's other established decorative accent color — see the hero
+  // eyebrow dots) mixed in for variety rather than one flat color.
+  const SPARKLE_COLORS = [
+    'var(--lg-green)', 'var(--lg-green)', 'var(--lg-green)',
+    'var(--text)', 'var(--text)',
+    'var(--val-red)',
+  ];
+  const MOVE_THROTTLE_MS = 30;   // caps spawn rate so a fast swipe can't flood the DOM
+  const SPARKLES_PER_TICK = 2;   // per movement tick and per idle tick
+  const IDLE_INTERVAL_MS = 350;  // passive spawn cadence once the cursor stops
+  const IDLE_THRESHOLD_MS = 200; // how long without movement counts as "stopped"
+
+  let lastMoveSpawn = 0;
+  let lastMoveTime = 0;
+  let lastX = null;
+  let lastY = null;
+  let insideNotice = false;
+
+  function spawnSparkleAt(x, y) {
+    const sparkle = document.createElement('span');
+    sparkle.className = 'trial-sparkle';
+    sparkle.setAttribute('aria-hidden', 'true');
+    sparkle.textContent = SPARKLE_CHARS[Math.floor(Math.random() * SPARKLE_CHARS.length)];
+    // Random jitter + size/color variety so repeated spawns at the same
+    // spot (e.g. a stationary cursor) don't stamp identical sparkles.
+    sparkle.style.left = (x + (Math.random() * 22 - 11)) + 'px';
+    sparkle.style.top = (y + (Math.random() * 22 - 11)) + 'px';
+    sparkle.style.fontSize = (16 + Math.random() * 16) + 'px';
+    sparkle.style.color = SPARKLE_COLORS[Math.floor(Math.random() * SPARKLE_COLORS.length)];
+    sparkle.addEventListener('animationend', () => sparkle.remove());
+    notice.appendChild(sparkle);
+  }
+
+  notice.addEventListener('mouseenter', () => { insideNotice = true; });
+  notice.addEventListener('mouseleave', () => {
+    insideNotice = false;
+    lastX = lastY = null;
+  });
+
+  notice.addEventListener('mousemove', e => {
+    const rect = notice.getBoundingClientRect();
+    lastX = e.clientX - rect.left;
+    lastY = e.clientY - rect.top;
+    lastMoveTime = performance.now();
+
+    if (lastMoveTime - lastMoveSpawn < MOVE_THROTTLE_MS) return;
+    lastMoveSpawn = lastMoveTime;
+    for (let i = 0; i < SPARKLES_PER_TICK; i++) spawnSparkleAt(lastX, lastY);
+  });
+
+  // Passive sparkle: once the cursor has settled (no movement for
+  // IDLE_THRESHOLD_MS) but is still inside the banner, keep sparkling at
+  // its last known position — otherwise the effect goes completely dead
+  // the moment you stop moving, which reads as broken rather than calm.
+  // document.hidden check mirrors syncAddonState's same guard elsewhere
+  // in this file: nothing needs to animate in a backgrounded tab.
+  setInterval(() => {
+    if (!insideNotice || lastX === null || document.hidden) return;
+    if (performance.now() - lastMoveTime < IDLE_THRESHOLD_MS) return; // still actively moving
+    for (let i = 0; i < SPARKLES_PER_TICK; i++) spawnSparkleAt(lastX, lastY);
+  }, IDLE_INTERVAL_MS);
+})();
 
 // ── TRIAL NOTICE MODAL (index.html) ──
 // Same heads-up as the in-page trial-notice banner above the shop grid,

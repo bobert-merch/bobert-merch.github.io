@@ -844,6 +844,41 @@ footer {
   border-bottom: 1px solid var(--border);
   padding: 20px 2rem;
   text-align: center;
+  /* Containment for the cursor-sparkle effect (site.js) — sparkles are
+     positioned relative to this element and clipped to its bounds so they
+     never visually spill past the banner's own border. */
+  position: relative;
+  overflow: hidden;
+}
+
+/* Spawned/removed by site.js on cursor movement/idle within .trial-notice
+   — purely decorative, aria-hidden, and skipped entirely under
+   prefers-reduced-motion (a continuous effect tied to cursor position
+   doesn't have a sensible "instant" fallback the way a one-off transition
+   does, so the whole feature is disabled at the JS level rather than
+   just toning down the animation here). Deliberately big/glowing/punchy
+   rather than subtle — see site.js for the "make it obvious" intent. */
+.trial-sparkle {
+  position: absolute;
+  pointer-events: none;
+  line-height: 1;
+  transform: translate(-50%, -50%);
+  text-shadow: 0 0 8px currentColor, 0 0 16px currentColor;
+  animation: trial-sparkle-pop 750ms ease-out forwards;
+}
+
+@keyframes trial-sparkle-pop {
+  0%   { transform: translate(-50%, -50%) scale(0) rotate(0deg); opacity: 1; }
+  35%  { transform: translate(-50%, -50%) scale(1.4) rotate(60deg); opacity: 1; }
+  100% { transform: translate(-50%, -50%) scale(0.2) rotate(130deg); opacity: 0; }
+}
+
+.trial-notice-title {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  letter-spacing: 0.08em;
+  color: var(--lg-green);
+  margin-bottom: 8px;
 }
 
 .trial-notice p {
@@ -856,6 +891,42 @@ footer {
 }
 
 .trial-notice strong { color: var(--text); }
+
+.trial-goal {
+  max-width: 660px;
+  margin: 28px auto 0;
+}
+
+.trial-goal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: 6px;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.trial-goal-label { color: var(--lg-green); }
+.trial-goal-amount { color: var(--muted); }
+
+.trial-goal-bar {
+  height: 8px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.trial-goal-bar-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--lg-green);
+  border-radius: 4px;
+  transition: width 0.6s ease-out;
+}
 
 /* ── TRIAL NOTICE MODAL ── */
 /* The overlay behind this modal reuses .cart-overlay's styling (position,
@@ -1331,6 +1402,7 @@ footer {
   .cart-overlay               { transition: none; }
   .ticker-inner               { animation: none; }
   .swatch-btn                 { transition: none; }
+  .trial-goal-bar-fill        { transition: none; }
   .trial-modal                { transition: none; }
   .concept-card                 { transition: none; }
   .faq-item summary           { transition: none; }

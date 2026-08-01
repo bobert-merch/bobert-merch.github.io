@@ -126,8 +126,31 @@
 <!-- TRIAL NOTICE -->
 <div class="divider"><div class="divider-line"></div><div class="divider-diamond"></div><div class="divider-line"></div></div>
 
+<!--
+  ══════════════════════════════════════════════════════════════
+  MILESTONE GOAL — HOW TO UPDATE
+  ──────────────────────────────────────────────────────────────
+  No backend/sales tracking on this static site, so this is a
+  hand-maintained number: change data-current below to the current
+  dollar amount raised toward data-goal as proceeds come in. site.js
+  reads both once on load and computes the bar width + "$X / $Y" label
+  from them — that's the only edit needed, nothing else to recalculate
+  by hand. To change the goal itself (new item, new dollar amount),
+  update data-goal and the "Goal:" label text together.
+  ══════════════════════════════════════════════════════════════
+  -->
 <div class="trial-notice" role="note">
-  <p><strong>Trial Run.</strong> This is our first merch drop! The plan is to start small with stickers to test the waters. During this period, proceeds will go directly back into the project to fund future items like <strong>custom stickers</strong>, <strong>key chains</strong>, <strong>hats</strong>, and more. Your support makes the next drop possible : )</p>
+  <h2 class="trial-notice-title">Iteration No. 1</h2>
+  <p>This is our <strong>first merch drop!</strong> The plan is to start small with stickers to test the waters. During this period, proceeds will go directly back into the project to fund future items like <strong>custom stickers</strong>, <strong>key chains</strong>, <strong>hats</strong>, and more. Your support makes the next drop possible : )</p>
+  <div class="trial-goal" data-current="0" data-goal="240">
+    <div class="trial-goal-header">
+      <span class="trial-goal-label">Goal: Ink Printer</span>
+      <span class="trial-goal-amount"></span>
+    </div>
+    <div class="trial-goal-bar">
+      <div class="trial-goal-bar-fill"></div>
+    </div>
+  </div>
 </div>
 
 <!-- SHOP -->
