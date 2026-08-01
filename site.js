@@ -351,13 +351,22 @@ function addOrSwapBannerDesign(label) {
   if (!shopifyCart || !shopifyClient || !bannerProduct || !hasQualifyingItem()) return;
   const variant = getBannerVariantForLabel(label);
   if (!variant) return;
+  // Write the *variant's own* title to the order rather than the caller-
+  // supplied label: this function is reachable from the console, and
+  // `Design` persists into Shopify admin, confirmation emails, and packing
+  // slips. Sourcing it from the fetched variant means only a real Shopify
+  // variant title can ever land there — and it also keeps the recorded
+  // name in sync with the variant actually shipped if a swatch's
+  // data-label ever drifts from its variant title (see the fallback in
+  // getBannerVariantForLabel above).
+  const safeLabel = variant.title;
 
   runCartMutation(() => {
     // Everything below is recomputed inside the task, so a burst of swatch
     // clicks each sees the cart as the previous one actually left it.
     if (!hasQualifyingItem()) return null;
     const checkoutId = shopifyCart.model.id;
-    const attrs = [{ key: 'Design', value: label }];
+    const attrs = [{ key: 'Design', value: safeLabel }];
     const existing = findBannerLineItem();
 
     if (existing && existing.variant.id === variant.id) {
@@ -379,7 +388,7 @@ function addOrSwapBannerDesign(label) {
     return shopifyClient.checkout.addLineItems(checkoutId, [
       { variantId: variant.id, quantity: 1, customAttributes: attrs },
     ]);
-  }, `Free Discord banner design set to ${label}`, `${label} banner added to cart`);
+  }, `Free Discord banner design set to ${safeLabel}`, `${safeLabel} banner added to cart`);
 }
 
 function shopifyBuyInit() {

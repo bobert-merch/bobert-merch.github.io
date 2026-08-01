@@ -2,6 +2,30 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <!-- CSP must come right after charset, before any resource-loading tag,
+       to actually apply to everything below it. Shopify's Buy Button SDK
+       injects styles/iframes at runtime and needs its own hosts allowed —
+       see the note in CLAUDE.md's Shopify section before tightening this.
+       img-src's schemeless sdks.shopifycdn.com and connect-src's
+       *.shopifysvc.com were both added after a Playwright pass through a
+       full page load AND a real add-to-cart→checkout run surfaced them as
+       genuine violations, not guessed in advance — the SDK's own bundled
+       UI icons (e.g. arrow.svg) and its telemetry beacons (observed:
+       monorail-edge.shopifysvc.com on load, otlp-http-production
+       .shopifysvc.com during checkout — wildcarded rather than enumerated
+       since Shopify can add/rotate these). Don't remove either without
+       re-testing an actual checkout, not just a page load. -->
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    script-src 'self' https://sdks.shopifycdn.com;
+    style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+    font-src 'self' https://fonts.gstatic.com;
+    img-src 'self' data: https://cdn.shopify.com sdks.shopifycdn.com;
+    frame-src 'self' https://docs.google.com https://*.myshopify.com https://shop.app;
+    connect-src 'self' https://*.myshopify.com https://*.shopifysvc.com;
+    base-uri 'none';
+    object-src 'none';
+  ">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Bobert × LG Merch Drop</title>
   <meta name="description" content="LG-branded merch — vinyl stickers, plus a free Discord banner add-on, for the Light Garden VDC franchise.">

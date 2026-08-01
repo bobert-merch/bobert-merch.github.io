@@ -2,6 +2,30 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <!-- CSP must come right after charset, before any resource-loading tag,
+       to actually apply to everything below it. Shopify's Buy Button SDK
+       injects styles/iframes at runtime and needs its own hosts allowed —
+       see the note in CLAUDE.md's Shopify section before tightening this.
+       img-src's schemeless sdks.shopifycdn.com and connect-src's
+       *.shopifysvc.com were both added after a Playwright pass through a
+       full page load AND a real add-to-cart→checkout run surfaced them as
+       genuine violations, not guessed in advance — the SDK's own bundled
+       UI icons (e.g. arrow.svg) and its telemetry beacons (observed:
+       monorail-edge.shopifysvc.com on load, otlp-http-production
+       .shopifysvc.com during checkout — wildcarded rather than enumerated
+       since Shopify can add/rotate these). Don't remove either without
+       re-testing an actual checkout, not just a page load. -->
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    script-src 'self' https://sdks.shopifycdn.com;
+    style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+    font-src 'self' https://fonts.gstatic.com;
+    img-src 'self' data: https://cdn.shopify.com sdks.shopifycdn.com;
+    frame-src 'self' https://docs.google.com https://*.myshopify.com https://shop.app;
+    connect-src 'self' https://*.myshopify.com https://*.shopifysvc.com;
+    base-uri 'none';
+    object-src 'none';
+  ">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Bobert × LG — Merch Concepts</title>
   <meta name="description" content="Help shape the Bobert × Light Garden merch drop — vote on concept directions and submit your interest for the upcoming VDC community merch release.">
@@ -145,9 +169,20 @@
           <span class="form-header-title">BOBERT × LG — FEEDBACK</span>
           <span class="form-header-badge">Design Input</span>
         </div>
+        <!-- Sandboxed to the minimum Google Forms needs to render and submit
+             (allow-scripts/-same-origin/-forms), deliberately WITHOUT
+             allow-top-navigation — an unsandboxed cross-origin frame can
+             otherwise set window.top.location and redirect visitors away.
+             allow-popups(-to-escape-sandbox) covers Forms' own "open in new
+             tab" affordances. referrerpolicy trims what Google sees about
+             this page. If a future embed stops submitting, that's the first
+             thing to loosen — see CLAUDE.md's Shopify section for the CSP
+             note this pairs with. -->
         <iframe
           src="https://docs.google.com/forms/d/e/1FAIpQLSegdoxNO8LeBpTzMb1CQyIf8BLtPWtMP-Wy2yBaS44pMzh8vw/viewform?embedded=true"
           title="Light Garden Feedback Form"
+          sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox"
+          referrerpolicy="strict-origin-when-cross-origin"
           loading="lazy">
           Loading form…
         </iframe>
