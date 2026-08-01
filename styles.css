@@ -1276,6 +1276,13 @@ footer {
 
 .about-body p strong { color: var(--text); }
 
+.about-body p a {
+  color: var(--lg-green);
+  text-decoration: none;
+}
+
+.about-body p a:hover { color: var(--lg-green-dk); text-decoration: underline; }
+
 /* ── RESPONSIVE (all pages, one breakpoint) ── */
 /* .about-grid's 2-column split gets uncomfortably tight before the main
    768px breakpoint kicks in — each column is a fixed 180px photo + 2rem
