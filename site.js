@@ -296,10 +296,29 @@ function announceCart(msg) {
 // #cart-status announces every cart change including background
 // auto-removal, but this text only reflects a swatch actually being
 // pressed — see setBannerAddedText()'s call sites below.
-const addonAddedTextEl = document.getElementById('addon-added-text');
+const addonAddedTextEl = document.getElementById('addon-added-text-msg');
+const addonSpinnerEl = document.getElementById('addon-spinner');
 
 function setBannerAddedText(msg) {
   if (addonAddedTextEl) addonAddedTextEl.textContent = msg;
+}
+
+// Spinner shown next to #addon-added-text-msg for the span of a swatch-
+// triggered cart mutation — counted rather than a plain boolean so a
+// second swatch click landing before the first mutation resolves doesn't
+// have the first one's completion hide a spinner the second click still
+// wants shown (see the two showAddonSpinner()/hideAddonSpinner() call
+// sites in addOrSwapBannerDesign()).
+let addonPendingCount = 0;
+
+function showAddonSpinner() {
+  addonPendingCount++;
+  if (addonSpinnerEl) addonSpinnerEl.hidden = false;
+}
+
+function hideAddonSpinner() {
+  addonPendingCount = Math.max(0, addonPendingCount - 1);
+  if (addonPendingCount === 0 && addonSpinnerEl) addonSpinnerEl.hidden = true;
 }
 
 // ── CART MUTATION QUEUE ──
@@ -385,6 +404,12 @@ function addOrSwapBannerDesign(label) {
   // getBannerVariantForLabel above).
   const safeLabel = variant.title;
 
+  // Interim message shown alongside the spinner for the span of the
+  // request — overwritten by the real confirmation text below once the
+  // mutation actually resolves (runCartMutation's visibleText argument).
+  showAddonSpinner();
+  setBannerAddedText(`Adding ${safeLabel} banner…`);
+
   runCartMutation(() => {
     // Everything below is recomputed inside the task, so a burst of swatch
     // clicks each sees the cart as the previous one actually left it.
@@ -412,7 +437,8 @@ function addOrSwapBannerDesign(label) {
     return shopifyClient.checkout.addLineItems(checkoutId, [
       { variantId: variant.id, quantity: 1, customAttributes: attrs },
     ]);
-  }, `Free Discord banner design set to ${safeLabel}`, `${safeLabel} banner added to cart`);
+  }, `Free Discord banner design set to ${safeLabel}`, `${safeLabel} banner added to cart`)
+    .then(hideAddonSpinner);
 }
 
 function shopifyBuyInit() {

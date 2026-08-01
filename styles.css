@@ -840,6 +840,34 @@ footer {
   text-align: center;
 }
 
+/* Shown only while a swatch click's cart mutation is in flight — see
+   showAddonSpinner()/hideAddonSpinner() in site.js. currentColor picks up
+   .addon-added-text's green, so it never needs its own color rule. */
+.addon-spinner {
+  display: inline-block;
+  width: 0.7em;
+  height: 0.7em;
+  margin-right: 0.35em;
+  vertical-align: -0.05em;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: addon-spin 0.7s linear infinite;
+}
+
+/* Author CSS overrides the UA stylesheet's [hidden]{display:none} by
+   default regardless of selector specificity, so the unconditional
+   display:inline-block above was defeating the hidden attribute entirely
+   — the spinner was visible and animating at all times. This selector's
+   higher specificity (attribute selector added) restores it. */
+.addon-spinner[hidden] {
+  display: none;
+}
+
+@keyframes addon-spin {
+  to { transform: rotate(360deg); }
+}
+
 
 .divider--spaced { margin-top: 2.5rem; }
 
@@ -1414,5 +1442,6 @@ footer {
   .concept-card                 { transition: none; }
   .faq-item summary           { transition: none; }
   .faq-item summary::after    { transition: none; }
+  .addon-spinner              { animation: none; }
 }
 

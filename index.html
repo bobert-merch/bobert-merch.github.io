@@ -314,8 +314,15 @@
       </div>
       <!-- Empty until a swatch click actually lands in the Shopify cart
            (site.js sets this — see setBannerAddedText()); stays empty while
-           gated, so it never claims something's in the cart when it isn't. -->
-      <p class="addon-added-text" id="addon-added-text"></p>
+           gated, so it never claims something's in the cart when it isn't.
+           #addon-spinner is shown by showAddonSpinner()/hideAddonSpinner()
+           for the span of the in-flight checkout request, split from the
+           message span since setBannerAddedText() replaces the message's
+           textContent and would otherwise wipe the spinner out too. -->
+      <p class="addon-added-text" id="addon-added-text">
+        <span class="addon-spinner" id="addon-spinner" hidden aria-hidden="true"></span>
+        <span id="addon-added-text-msg"></span>
+      </p>
     </div>
   </div>
 </section>
